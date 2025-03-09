@@ -15,7 +15,7 @@ const Login = () => {
 
   const handleLogin = () => {
     const data = { username: email, password: password };
-    axios.post(`http://localhost:3006/auth/login`, data).then((response) => {
+    axios.post(`http://localhost:4001/auth/login`, data).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {

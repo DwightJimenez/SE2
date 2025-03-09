@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -9,42 +9,56 @@ import Archive from "./pages/Archive";
 import Documents from "./pages/Documents";
 import Dock from "./components/Dock";
 import { AuthContext } from "./helpers/AuthContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import AuditLog from "./pages/AuditLog";
 
 function App() {
 
-  const [authState, setAuthState] = useState({
-    username: "",
-    id: 0,
-    status: false,
-    role: "",
+  // Load authState from sessionStorage if available
+  const [authState, setAuthState] = useState(() => {
+    const savedAuthState = sessionStorage.getItem("authState");
+    return savedAuthState ? JSON.parse(savedAuthState) : { username: "", id: 0, status: false, role: "" };
   });
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("accessToken");
-    if (token) {
-      axios
-        .get("http://localhost:3006/auth/auth", {
-          headers: { accessToken: token },
-        })
-        .then((response) => {
-          if (!response.data.error) {
-            setAuthState({
-              username: response.data.username,
-              id: response.data.id,
-              status: true,
-              role: response.data.role,
-            });
-          }
-        })
-        .catch(() => setAuthState((prev) => ({ ...prev, status: false })));
-    }
-  }, []);
+  // 🔹 Use React Query to fetch authentication status
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["auth"],
+    queryFn: async () => {
+      const token = sessionStorage.getItem("accessToken");
+      if (!token) return { status: false }; // No token, not authenticated
 
+      try {
+        const response = await axios.get("http://localhost:3006/auth/auth", {
+          headers: { accessToken: token },
+        });
+
+        if (!response.data.error) {
+          const newAuthState = {
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+            role: response.data.role,
+          };
+          setAuthState(newAuthState);
+          sessionStorage.setItem("authState", JSON.stringify(newAuthState)); // 🔹 Save auth state
+          return newAuthState;
+        }
+      } catch (error) {
+        sessionStorage.removeItem("authState");
+        return { status: false }; // Authentication failed
+      }
+    },
+  });
+
+  // Show loading screen while fetching auth state
+  if (isLoading) return <div>Loading...</div>;
+
+  // Logout function
   const logout = () => {
     sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("authState");
     setAuthState({ username: "", id: 0, status: false, role: "" });
     navigate("/login");
   };
@@ -59,7 +73,6 @@ function App() {
               <div className="fixed top-16 left-0 h-full bg-base-100 shadow-sm z-40 max-sm:hidden">
                 <Sidebar />
               </div>
-
               <div className="sm:hidden">
                 <Dock />
               </div>
@@ -73,13 +86,12 @@ function App() {
                   <Route path="/documents" element={<Documents />} />
                   <Route path="/roles" element={<Home />} />
                   <Route path="/archive" element={<Archive />} />
-                  <Route path="/audit-log" element={<Home />} />
-                  <Route path="/registration" element={<Home />} />
+                  <Route path="/audit-log" element={<AuditLog />} />
+                  <Route path="/registration" element={<AuditLog />} />
                 </Routes>
               </div>
             </>
           ) : (
-            /* If not authenticated, show only the login page */
             <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
               <Routes>
                 <Route path="/login" element={<Login />} />

@@ -24,25 +24,26 @@ const CreatePost = () => {
   });
 
   const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("text", data.text);
-    formData.append("file", data.file[0]);
-
     try {
-      const res = await axios.post("http://localhost:3005/posts", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          accessToken: sessionStorage.getItem("accessToken"),
-        },
-      });
+      const res = await axios.post(
+        "http://localhost:4002/posts",
+        { text: data.text },
+        {
+          headers: {
+            "Content-Type": "application/json", // ✅ Send JSON (no file)
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      );
+
       if (res.data.success) {
         alert("Post created successfully!");
-        reset();
+        reset(); // ✅ Reset form after submission
       } else {
-        throw new Error(res.data.message || "An error occurred"); // Force error handling
+        throw new Error(res.data.error || "An error occurred");
       }
     } catch (error) {
-      console.error("Error creating post", error);
+      console.error("🔥 Error creating post:", error);
     }
   };
 
@@ -60,9 +61,11 @@ const CreatePost = () => {
 
         <input
           type="file"
+          accept="image/*" // ✅ Only allows image files
           {...register("file")}
           className="file-input file-input-primary mb-2"
         />
+
         <p className="text-red-500">{errors.file?.message}</p>
 
         <button type="submit" className="btn btn-primary">

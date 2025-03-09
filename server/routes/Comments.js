@@ -3,18 +3,39 @@ const router = express.Router();
 const { Comments } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
+
 router.get("/:postId", async (req, res) => {
-  const postId = req.params.postId;
-  const comments = await Comments.findAll({ where: { PostId: postId } });
-  res.json(comments);
+  try {
+    const { postId } = req.params;
+    const comments = await Comments.findAll({
+      where: { postId },
+      order: [["createdAt", "DESC"]],
+    });
+    res.json(comments);
+  } catch (error) {
+    console.error("🔥 Error fetching comments:", error);
+    res.status(500).json({ error: "Failed to fetch comments" });
+  }
 });
 
-router.post("/", validateToken, async (req, res) => {
-  const comment = req.body;
-  const username = req.user.username;
-  comment.username = username;
-  await Comments.create(comment);
-  res.json(comment);
+router.post("/",validateToken, async (req, res) => {
+  try {
+    console.log("📥 Received Comment Data:", req.body);
+
+    const { PostId, commentBody } = req.body;
+    if (!commentBody) {
+      return res.status(400).json({ error: "Comment text is required" });
+    }
+
+    const username = req.user.username; // ✅ Get username from token
+
+    // ✅ Insert into database
+    const newComment = await Comments.create({ PostId, commentBody, username });
+    res.json({ success: true, comment: newComment });
+  } catch (error) {
+    console.error("🔥 Error posting comment:", error);
+    res.status(500).json({ error: "Failed to post comment" });
+  }
 });
 
 module.exports = router;

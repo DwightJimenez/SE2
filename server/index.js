@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const port = process.env.PORT;
 
-app.use(express.json({origin: 'http://localhost:5176', credentials: true}));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());

@@ -3,24 +3,35 @@ const router = express.Router();
 const { Posts } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
-
 router.get("/", async (req, res) => {
-  const listOfPosts = await Posts.findAll({order: [["createdAt", "DESC"]]});
+  const listOfPosts = await Posts.findAll({ order: [["createdAt", "DESC"]] });
   res.json(listOfPosts);
 });
 
-router.get("/byId/:id", async (req, res) => {
-  const id = req.params.id;
-  const post = await Posts.findByPk(id);
-  res.json(post);
-});
+
+
+
 
 router.post("/", validateToken, async (req, res) => {
-  const post = req.body;
-  const username = req.user.username;
-  post.username = username;
-  await Posts.create(post);
-  res.json(post);
+  try {
+    console.log("📥 Received Request Body:", req.body);
+    console.log("🛠️ User from Token:", req.user);
+
+    const { text } = req.body;
+    if (!text) {
+      return res.status(400).json({ error: "Text field is required" });
+    }
+
+    const username = req.user ? req.user.username : "Unknown";
+
+    const newPost = await Posts.create({ text, username });
+    res.json({ success: true, post: newPost });
+  } catch (error) {
+    console.error("🔥 Error creating post:", error); //
+    res
+      .status(500)
+      .json({ error: "Failed to create post", details: error.message });
+  }
 });
 
 module.exports = router;
