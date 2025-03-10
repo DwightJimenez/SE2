@@ -20,6 +20,8 @@ const Login = () => {
         alert(response.data.error);
       } else {
         sessionStorage.setItem("accessToken", response.data.token);
+        sessionStorage.setItem("authState", JSON.stringify(response.data));
+
         setAuthState({
           username: response.data.username,
           id: response.data.id,

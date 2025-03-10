@@ -1,5 +1,11 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,13 +19,16 @@ import { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import AuditLog from "./pages/AuditLog";
+import EventsList from "./pages/EventsList";
+import Chat from "./pages/Chat";
 
 function App() {
-
   // Load authState from sessionStorage if available
   const [authState, setAuthState] = useState(() => {
     const savedAuthState = sessionStorage.getItem("authState");
-    return savedAuthState ? JSON.parse(savedAuthState) : { username: "", id: 0, status: false, role: "" };
+    return savedAuthState
+      ? JSON.parse(savedAuthState)
+      : { username: "", id: 0, status: false, role: "" };
   });
 
   // 🔹 Use React Query to fetch authentication status
@@ -30,7 +39,7 @@ function App() {
       if (!token) return { status: false }; // No token, not authenticated
 
       try {
-        const response = await axios.get("http://localhost:3006/auth/auth", {
+        const response = await axios.get("http://localhost:4001/auth/auth", {
           headers: { accessToken: token },
         });
 
@@ -53,7 +62,12 @@ function App() {
   });
 
   // Show loading screen while fetching auth state
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
+    );
 
   // Logout function
   const logout = () => {
@@ -88,7 +102,11 @@ function App() {
                   <Route path="/archive" element={<Archive />} />
                   <Route path="/audit-log" element={<AuditLog />} />
                   <Route path="/registration" element={<AuditLog />} />
+                  <Route path="/events/lists" element={<EventsList />} />
                 </Routes>
+                <div className="fixed w-100 h-100 bg-gray-100 right-4 bottom-0 z-50 p-4 rounded-lg shadow-lg ">
+                  <Chat />
+                </div>
               </div>
             </>
           ) : (

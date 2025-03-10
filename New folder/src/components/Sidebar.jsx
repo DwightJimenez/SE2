@@ -37,7 +37,8 @@ const Sidebar = () => {
             <span className="mx-2 text-xl font-medium">Home</span>
           </Link>
 
-          <Link to='/events'
+          <Link
+            to="/events"
             className="flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="/events"
           >
@@ -58,7 +59,8 @@ const Sidebar = () => {
 
             <span className="mx-2 text-xl font-medium">Events</span>
           </Link>
-          <Link to='/archive'
+          <Link
+            to="/archive"
             className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="#"
           >
@@ -80,7 +82,8 @@ const Sidebar = () => {
             <span className="mx-2 text-xl font-medium">Archive</span>
           </Link>
 
-          <Link to='/documents'
+          <Link
+            to="/documents"
             className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="#"
           >
@@ -102,7 +105,8 @@ const Sidebar = () => {
             <span className="mx-2 text-xl font-medium">Documents</span>
           </Link>
 
-          <Link to='/audit-log'
+          <Link
+            to="/audit-log"
             className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="#"
           >
@@ -123,8 +127,28 @@ const Sidebar = () => {
 
             <span className="mx-2 text-xl font-medium">Audit Log</span>
           </Link>
+          <Link
+            to="/events/lists"
+            className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+              />
+            </svg>
 
-          
+            <span className="mx-2 text-xl font-medium">Event Lists</span>
+          </Link>
         </nav>
       </div>
     </aside>

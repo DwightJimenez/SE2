@@ -39,7 +39,7 @@ function CreateEvents() {
     };
     try {
       // Send POST request to API to create the event
-      await axios.post(`${API_URL}/events`, formattedData, {
+      await axios.post(`http://localhost:4001/events`, formattedData, {
         headers: {
           accessToken: sessionStorage.getItem("accessToken"),
         },
@@ -70,22 +70,7 @@ function CreateEvents() {
   //   fetchEvents();
   // }, []);
 
-  // Function to delete an event (currently commented out)
-  // const deleteEvent = async (id) => {
-  //   try {
-  //     // Send DELETE request to API to remove the event
-  //     await axios.delete(`${API_URL}/events/${id}`, {
-  //       headers: {
-  //         accessToken: sessionStorage.getItem("accessToken"),
-  //       }
-  //     });
-  //     // Remove the deleted event from the state
-  //     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-  //     console.log(`Event with ID ${id} deleted successfully.`);
-  //   } catch (error) {
-  //     console.error("Error deleting event:", error);
-  //   }
-  // };
+
 
   return (
     <div className="flex justify-center items-center flex-col">
@@ -155,20 +140,7 @@ function CreateEvents() {
         )}
       </Formik>
 
-      {/* Commented out the event deletion section */}
-      {/* <h1>Delete Event</h1>
-      <ul>
-        {events.length > 0 ? (
-          events.map((event) => (
-            <li key={event.id}>
-              <strong>{event.title}</strong> - {event.start} to {event.end}
-              <button onClick={() => deleteEvent(event.id)}>Delete</button>
-            </li>
-          ))
-        ) : (
-          <p>No events available to delete.</p>
-        )}
-      </ul> */}
+      
     </div>
   );
 }

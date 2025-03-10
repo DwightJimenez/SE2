@@ -26,7 +26,7 @@ const CreatePost = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:4002/posts",
+        "http://localhost:4001/posts",
         { text: data.text },
         {
           headers: {
@@ -51,11 +51,10 @@ const CreatePost = () => {
     <div className="flex flex-col justify-center items-center p-4">
       <p className="text-xl font-bold m-4">Create Post</p>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <input
-          type="text"
+        <textarea
           placeholder="Text"
           {...register("text")}
-          className="input input-md mb-2"
+          className="textarea textarea-primary w-100 mb-4"
         />
         <p className="text-red-500">{errors.text?.message}</p>
 
@@ -77,3 +76,4 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
+

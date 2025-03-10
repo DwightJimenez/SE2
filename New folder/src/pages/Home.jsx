@@ -3,6 +3,7 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CreatePost from "./CreatePost";
 import PostButton from "../components/PostButton";
+import Linkify from "react-linkify";
 
 const fetchPosts = async () => {
   const response = await axios.get("http://localhost:4001/posts");
@@ -47,28 +48,41 @@ const Home = () => {
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <div key={post.id} className="card bg-base-100 shadow-sm p-4">
-              <div
-                className="cursor-pointer"
-                onClick={() =>
-                  setExpandedPost(expandedPost === post.id ? null : post.id)
-                }
-              >
-                <div className="flex items-center space-x-2">
-                  <span className="font-semibold">@{post.username}</span>
-                  <span className="text-sm text-gray-500">
-                    {new Date(post.createdAt).toLocaleString()}
-                  </span>
+        <Linkify componentDecorator={(href, text, key) => (
+          <a
+            href={href}
+            key={key}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
+            {text}
+          </a>)}>
+          <div className="space-y-4 max-w-200">
+            {posts.map((post) => (
+              <div key={post.id} className="card bg-base-100 shadow-sm p-4">
+                <div
+                  className="cursor-pointer"
+                  onClick={() =>
+                    setExpandedPost(expandedPost === post.id ? null : post.id)
+                  }
+                >
+                  <div className="flex items-center space-x-2">
+                    <span className="font-semibold">@{post.username}</span>
+                    <span className="text-sm text-gray-500">
+                      {new Date(post.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="mt-2">{post.text}</p>
                 </div>
-                <p className="mt-2">{post.text}</p>
-              </div>
 
-              {expandedPost === post.id && <CommentsSection PostId={post.id} />}
-            </div>
-          ))}
-        </div>
+                {expandedPost === post.id && (
+                  <CommentsSection PostId={post.id} />
+                )}
+              </div>
+            ))}
+          </div>
+        </Linkify>
       )}
     </div>
   );
