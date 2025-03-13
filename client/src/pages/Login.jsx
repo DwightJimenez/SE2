@@ -37,14 +37,6 @@ const Login = () => {
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
       <div className="w-full px-6 py-8 md:px-8 max-lg:w-1/2">
-        <div className="flex justify-center mx-auto">
-          <img
-            className="w-auto h-7 sm:h-8"
-            src="https://merakiui.com/images/logo.svg"
-            alt=""
-          />
-        </div>
-
         <p className="mt-3 text-xl text-center text-gray-600 dark:text-gray-200">
           Welcome back!
         </p>

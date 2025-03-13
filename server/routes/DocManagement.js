@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { Document } = require('../models');
+const { Document, AuditLog } = require('../models');
 const { validateToken } = require('../middlewares/AuthMiddleware');
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
         await AuditLog.create({
             action: 'Upload',
-            documentName: originalname,
+            title: originalname,
             user: 'admin',
         });
         res.json(document);

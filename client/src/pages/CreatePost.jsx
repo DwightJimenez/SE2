@@ -48,21 +48,21 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-4">
+    <div className="flex flex-col justify-between items-center w-full h-full">
       <p className="text-xl font-bold m-4">Create Post</p>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
         <textarea
           placeholder="Text"
           {...register("text")}
-          className="textarea textarea-primary w-100 mb-4"
+          className="textarea textarea-primary w-100"
         />
         <p className="text-red-500">{errors.text?.message}</p>
 
         <input
           type="file"
-          accept="image/*" // ✅ Only allows image files
+          accept="image/*"
           {...register("file")}
-          className="file-input file-input-primary mb-2"
+          className="file-input file-input-primary my-4"
         />
 
         <p className="text-red-500">{errors.file?.message}</p>

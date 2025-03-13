@@ -21,6 +21,8 @@ import { useQuery } from "@tanstack/react-query";
 import AuditLog from "./pages/AuditLog";
 import EventsList from "./pages/EventsList";
 import Chat from "./pages/Chat";
+import Settings from "./pages/Settings";
+import Evaluation from "./pages/Evaluation";
 
 function App() {
   // Load authState from sessionStorage if available
@@ -103,10 +105,10 @@ function App() {
                   <Route path="/audit-log" element={<AuditLog />} />
                   <Route path="/registration" element={<AuditLog />} />
                   <Route path="/events/lists" element={<EventsList />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/evaluation" element={<Evaluation />} />
                 </Routes>
-                <div className="fixed w-100 h-100 bg-gray-100 right-4 bottom-0 z-50 p-4 rounded-lg shadow-lg ">
-                  <Chat />
-                </div>
+                
               </div>
             </>
           ) : (

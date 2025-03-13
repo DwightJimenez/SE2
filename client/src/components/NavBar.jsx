@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavBar = ({logout}) => {
   const handleLogout = () => {
@@ -45,7 +46,7 @@ const NavBar = ({logout}) => {
                   </a>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link to='/settings'>Settings</Link>
                 </li>
                 <li>
                   <a onClick={handleLogout}>Logout</a>

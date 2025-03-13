@@ -13,14 +13,16 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/:id", validateToken, async (req, res) => {
+router.post("/:id",  async (req, res) => {
   const { id } = req.params;
   try {
     const document = await Document.findByPk(id);
-
     if (!document) {
       return res.status(404).json({ error: "Document not found" });
     }
+
+    // Log the document found
+    console.log("Document found:", document);
 
     // Create a new record in the archived table
     await ArchivedDocument.create({
@@ -29,25 +31,33 @@ router.post("/:id", validateToken, async (req, res) => {
       version: document.version,
     });
 
-    // Delete the document from the original table
+    // Log after archiving
+    console.log("Document archived:", document.name);
 
+    // Delete the document from the original table
+    await document.destroy();
+    console.log("Document destroyed:", document.id);
+
+    // Create audit log
     await AuditLog.create({
       action: "Archive",
-      documentName: document.name,
+      title: document.name,
       user: "admin",
     });
-    await document.destroy();
+    console.log("Audit log created for archiving");
 
     res.json({ message: "Document archived successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("Error during archiving process:", error.message);
     res.status(500).json({ error: "Failed to archive document" });
   }
 });
 
+
 router.post("/restore/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id)
     const archivedDocument = await ArchivedDocument.findByPk(id);
 
     if (!archivedDocument) {
@@ -63,7 +73,7 @@ router.post("/restore/:id", async (req, res) => {
 
     await AuditLog.create({
       action: "Restore",
-      documentName: archivedDocument.name,
+      title: archivedDocument.name,
       user: "admin",
     });
 
@@ -88,7 +98,7 @@ router.delete("/delete/:id", async (req, res) => {
 
     await AuditLog.create({
       action: "Delete",
-      documentName: archivedDocument.name,
+      title: archivedDocument.name,
       user: "admin",
     });
     await archivedDocument.destroy();

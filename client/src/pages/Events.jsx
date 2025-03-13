@@ -22,7 +22,6 @@ function CalendarApp() {
   const plugins = [
     createEventsServicePlugin(),
     createEventModalPlugin(),
-    createResizePlugin(60),
   ];
 
   const calendar = useCalendarApp(
@@ -70,8 +69,9 @@ function CalendarApp() {
 
   return (
     <div className="flex flex-col">
-      <PageLoc currentPage="Events"/>
+      <PageLoc currentPage="Events" />
       <AddEvent />
+
       <ScheduleXCalendar calendarApp={calendar} />
     </div>
   );

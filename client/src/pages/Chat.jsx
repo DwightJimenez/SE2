@@ -58,7 +58,7 @@ export default function Chat() {
       {auth.currentUser ? (
         <>
           {/* <button onClick={logout}>Logout</button> */}
-          <div className="messages">
+          <div className="messages h-60 overflow-y-auto">
             {messages.map((msg) => (
               <p key={msg.id}>
                 <div className="chat chat-start">

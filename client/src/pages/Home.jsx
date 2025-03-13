@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CreatePost from "./CreatePost";
 import PostButton from "../components/PostButton";
 import Linkify from "react-linkify";
+import Chat from "./Chat";
 
 const fetchPosts = async () => {
   const response = await axios.get("http://localhost:4001/posts");
@@ -32,7 +33,7 @@ const Home = () => {
   if (isError) return <p className="text-red-500">Error loading posts.</p>;
 
   return (
-    <div className="flex flex-col space-y-4 p-4">
+    <div className="flex flex-col space-y-4 p-4 bg-gray-100">
       <div className="relative">
         <PostButton />
         <div
@@ -48,16 +49,19 @@ const Home = () => {
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
-        <Linkify componentDecorator={(href, text, key) => (
-          <a
-            href={href}
-            key={key}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 underline"
-          >
-            {text}
-          </a>)}>
+        <Linkify
+          componentDecorator={(href, text, key) => (
+            <a
+              href={href}
+              key={key}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+            >
+              {text}
+            </a>
+          )}
+        >
           <div className="space-y-4 max-w-200">
             {posts.map((post) => (
               <div key={post.id} className="card bg-base-100 shadow-sm p-4">
@@ -84,6 +88,9 @@ const Home = () => {
           </div>
         </Linkify>
       )}
+      <div className="fixed w-100 h-100 bg-white right-4 bottom-0 z-50 p-4 rounded-lg shadow-lg dark:bg-gray-900">
+        <Chat />
+      </div>
     </div>
   );
 };
