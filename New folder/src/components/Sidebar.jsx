@@ -16,7 +16,7 @@ const Sidebar = () => {
         <nav className="flex-1 -mx-3 space-y-3 ">
           <Link
             to="/"
-            className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="/home"
           >
             <svg
@@ -39,7 +39,7 @@ const Sidebar = () => {
 
           <Link
             to="/events"
-            className="flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="/events"
           >
             <svg
@@ -61,7 +61,7 @@ const Sidebar = () => {
           </Link>
           <Link
             to="/archive"
-            className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             href="#"
           >
             <svg
