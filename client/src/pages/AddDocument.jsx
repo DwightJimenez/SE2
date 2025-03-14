@@ -36,7 +36,12 @@ const AddDocument = () => {
 
   return (
     <div className="flex flex-col space-y-2 justify-center items-center p-4 h-full">
-      <input type="file" onChange={handleFileChange} className="file-input file-input-accent" />
+      <p className="text text-xl font-bold">Add Document</p>
+      <input
+        type="file"
+        onChange={handleFileChange}
+        className="file-input file-input-accent"
+      />
       <button
         onClick={handleUpload}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
