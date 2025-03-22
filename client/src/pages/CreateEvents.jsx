@@ -39,11 +39,7 @@ function CreateEvents() {
     };
     try {
       // Send POST request to API to create the event
-      await axios.post(`http://localhost:4001/events`, formattedData, {
-        headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
-        },
-      });
+      await axios.post(`http://localhost:4001/events`, formattedData, { withCredentials: true });
       console.log("Event Created Successfully:", formattedData);
       navigate("/events"); // Redirect to the events page
     } catch (error) {
@@ -51,24 +47,7 @@ function CreateEvents() {
     }
   };
 
-  // Fetch events (currently commented out)
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     try {
-  //       const response = await axios.get(`${API_URL}/events`);
-  //       const formattedEvents = response.data.map((event) => ({
-  //         ...event,
-  //         start: moment.utc(event.start).local().format("YYYY-MM-DD hh:mm A"),
-  //         end: moment.utc(event.end).local().format("YYYY-MM-DD hh:mm A"),
-  //       }));
-  //       setEvents(formattedEvents);
-  //     } catch (error) {
-  //       console.error("Error fetching events:", error);
-  //     }
-  //   };
 
-  //   fetchEvents();
-  // }, []);
 
 
 

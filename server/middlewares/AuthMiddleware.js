@@ -1,25 +1,24 @@
 const { verify } = require("jsonwebtoken");
 
 const validateToken = (req, res, next) => {
-  const accessToken = req.header("accessToken");
+  // Read token from cookies
+  const accessToken = req.cookies.token; // Access the cookie directly
 
   if (!accessToken) {
-    return res.json({ error: "User not logged in!" });
+    return res.status(401).json({ error: "User not logged in!" });
   }
 
   try {
     const validToken = verify(accessToken, "importantsecret");
-    req.user = validToken;  // Attach the decoded token to the request object
+    req.user = validToken; // Attach the decoded token to the request object
 
-    // If you want to check the role here as well
+    // If the token is valid, proceed to the next middleware
     if (validToken) {
-      return next();  // Proceed if the token is valid
+      return next();
     }
   } catch (err) {
-    return res.json({ error: err });
+    return res.status(403).json({ error: "Invalid token!" });
   }
 };
 
-
-
-module.exports = { validateToken};
+module.exports = { validateToken };

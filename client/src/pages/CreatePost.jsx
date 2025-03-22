@@ -27,13 +27,7 @@ const CreatePost = () => {
     try {
       const res = await axios.post(
         "http://localhost:4001/posts",
-        { text: data.text },
-        {
-          headers: {
-            "Content-Type": "application/json", // ✅ Send JSON (no file)
-            accessToken: sessionStorage.getItem("accessToken"),
-          },
-        }
+        { text: data.text },{ withCredentials: true },
       );
 
       if (res.data.success) {

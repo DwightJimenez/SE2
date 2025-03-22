@@ -3,7 +3,7 @@ const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddleware");
-const { sign } = require("jsonwebtoken");
+const { sign, verify } = require("jsonwebtoken");
 const checkRole = require("../middlewares/RoleMiddleware");
 
 
@@ -47,11 +47,39 @@ router.post("/login", async (req, res) => {
 
     const accessToken = sign(
       { username: user.username, id: user.id, role: user.role },  // Include role in the JWT payload
-      "importantsecret"
+      "importantsecret", {expiresIn: "7d"}
     );
-    res.json({ token: accessToken, username: username, id: user.id, role: user.role });
+    res.cookie("token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 3600000,
+    });
+    res.json({ username: username, id: user.id, role: user.role });
   });
 });
+router.get("/protected", (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+    const user = verify(token, "importantsecret");
+    res.json({ message: "Protected data", user });
+  } catch (error) {
+    res.status(403).json({ message: "Forbidden" });
+  }
+});
+
+// Logout Route (Clears Cookie)
+router.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Only use secure in production
+    sameSite: "Strict",
+  });
+  res.status(200).json({ message: "Logged out" });
+});
+
 
 
 router.get("/auth", validateToken, (req, res) => {

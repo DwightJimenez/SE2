@@ -24,10 +24,7 @@ const Documents = () => {
   const handleArchive = async (id) => {
     console.log("Archiving document with ID:", id); // Log ID
     try {
-      const response = await axios.post(`http://localhost:4001/archive/${id}`, {
-        headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
-        },});
+      const response = await axios.post(`http://localhost:4001/archive/${id}`, { withCredentials: true });
       console.log(response); // Log the response
       alert("Document archived successfully");
       queryClient.invalidateQueries(["documents"]);

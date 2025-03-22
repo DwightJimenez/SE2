@@ -15,6 +15,14 @@ const AuditLog = () => {
     fetchDocuments();
   }, []);
 
+  const legendItems = [
+    { color: "#93c5fd", label: "Created an event" },
+    { color: "#86efac", label: "Restore" },
+    { color: "#fde047", label: "Archive" },
+    { color: "#d8b4fe", label: "Upload" },
+    { color: "#fca5a5", label: "Delete" }
+  ];
+
   const getBgColor = (action) => {
     if (action === "Created an event") return "bg-blue-300";
     if (action === "Restore") return "bg-green-300";
@@ -26,8 +34,19 @@ const AuditLog = () => {
   return (
     <div>
       <PageLoc currentPage="Audit Log" />
-      <div className="flex justify-center mb-4 h-auto  bg-white rounded-lg shadow-lg dark:bg-gray-900 p-4">
-        <div className="overflow-x-auto">
+      <div className="flex flex-col justify-center mb-4 h-auto bg-white rounded-lg shadow-lg dark:bg-gray-900 p-4">
+        <div className="flex items-center justify-evenly space-x-4 p-4">
+          {legendItems.map((item, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <div
+                className="w-4 h-4 rounded-full"
+                style={{ backgroundColor: item.color }}
+              ></div>
+              <span className="text-sm text-gray-700">{item.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
           <table className="table table-lg">
             {/* head */}
             <thead>

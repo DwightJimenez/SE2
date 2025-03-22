@@ -20,9 +20,9 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import AuditLog from "./pages/AuditLog";
 import EventsList from "./pages/EventsList";
-import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
 import Evaluation from "./pages/Evaluation";
+import Cookies from "js-cookie";
 
 function App() {
   // Load authState from sessionStorage if available
@@ -37,12 +37,9 @@ function App() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) return { status: false }; // No token, not authenticated
-
       try {
         const response = await axios.get("http://localhost:4001/auth/auth", {
-          headers: { accessToken: token },
+          withCredentials: true,
         });
 
         if (!response.data.error) {
@@ -72,12 +69,19 @@ function App() {
     );
 
   // Logout function
-  const logout = () => {
-    sessionStorage.removeItem("accessToken");
-    sessionStorage.removeItem("authState");
-    setAuthState({ username: "", id: 0, status: false, role: "" });
-    navigate("/login");
+
+  const logout = async () => {
+    try {
+      await axios.post("http://localhost:4001/auth/logout", {}, { withCredentials: true });
+      setAuthState({ username: "", id: 0, status: false, role: "" });
+      sessionStorage.removeItem("authState");
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
+  
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -108,7 +112,6 @@ function App() {
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/evaluation" element={<Evaluation />} />
                 </Routes>
-                
               </div>
             </>
           ) : (

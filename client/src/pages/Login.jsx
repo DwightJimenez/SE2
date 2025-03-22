@@ -15,23 +15,28 @@ const Login = () => {
 
   const handleLogin = () => {
     const data = { username: email, password: password };
-    axios.post(`http://localhost:4001/auth/login`, data).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        sessionStorage.setItem("accessToken", response.data.token);
-        sessionStorage.setItem("authState", JSON.stringify(response.data));
+    axios
+      .post(`http://localhost:4001/auth/login`, data, { withCredentials: true })
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          sessionStorage.setItem("authState", JSON.stringify(response.data));
 
-        setAuthState({
-          username: response.data.username,
-          id: response.data.id,
-          status: true,
-          role: response.data.role,
-        });
-        console.log("Login Successfully");
-        navigate("/");
-      }
-    });
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+            role: response.data.role,
+          });
+          console.log("Login Successfully");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+        alert("Login failed!");
+      });
   };
 
   return (
