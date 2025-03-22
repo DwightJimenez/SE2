@@ -1,20 +1,27 @@
 import React from "react";
+import AddDocument from "../pages/AddDocument";
 
 const AddDoc = () => {
   return (
-    <div className="flex mb-4 p-4 bg-white max-w-200 dark:bg-black rounded-lg shadow-lg sticky">
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn btn-ghost btn-circle avatar"
-      ></div>
+    <div>
+      {/* change popover-1 and --anchor-1 names. Use unique names for each dropdown */}
+      {/* For TSX uncomment the commented types below */}
       <button
-        className="btn btn-accent  mx-4 rounded-full grow border text-left text-gray-400 flex justify-start items-center"
+        className="btn mb-4"
         popoverTarget="popover-1"
         style={{ anchorName: "--anchor-1" } /* as React.CSSProperties */}
       >
-        Add Document
+        Add
       </button>
+
+      <div
+        className="dropdown menu w-160 h-150 rounded-box bg-base-100 shadow-sm"
+        popover="auto"
+        id="popover-1"
+        style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */}
+      >
+        <AddDocument />
+      </div>
     </div>
   );
 };
