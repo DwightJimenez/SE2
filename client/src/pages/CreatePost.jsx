@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CreatePost = () => {
+  const queryClient = useQueryClient();
+
   const schema = yup.object({
     text: yup.string().required("Text is required"),
     file: yup
@@ -33,6 +36,7 @@ const CreatePost = () => {
       if (res.data.success) {
         alert("Post created successfully!");
         reset(); // ✅ Reset form after submission
+        queryClient.invalidateQueries(["posts"]);
       } else {
         throw new Error(res.data.error || "An error occurred");
       }

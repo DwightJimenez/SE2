@@ -38,4 +38,21 @@ router.post("/",validateToken, async (req, res) => {
   }
 });
 
+router.delete("/delete/:id", validateToken, async (req, res) => {
+  const commentId = parseInt(req.params.id);
+  try {
+    const comment = await Comments.findByPk(commentId);
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+    if (comment.username !== req.user.username) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    await comment.destroy();
+    res.json({ message: "Comment deleted" });
+  } catch (error) {
+    console.error("🔥 Error deleting comment:", error);
+    res.status(500).json({ error: "Failed to delete comment", details: error.message });
+  }
+});
 module.exports = router;

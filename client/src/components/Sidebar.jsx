@@ -15,13 +15,13 @@ const Sidebar = () => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="size-6"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
               />
             </svg>
@@ -52,74 +52,6 @@ const Sidebar = () => {
             <span className="mx-2 text-xl font-medium">Events</span>
           </Link>
           <Link
-            to="/archive"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
-            href="#"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-              />
-            </svg>
-
-            <span className="mx-2 text-xl font-medium">Archive</span>
-          </Link>
-
-          <Link
-            to="/documents"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
-            href="#"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-              />
-            </svg>
-
-            <span className="mx-2 text-xl font-medium">Documents</span>
-          </Link>
-
-          <Link
-            to="/audit-log"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
-            href="#"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-              />
-            </svg>
-
-            <span className="mx-2 text-xl font-medium">Audit Log</span>
-          </Link>
-          <Link
             to="/events/lists"
             className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="#"
@@ -142,6 +74,75 @@ const Sidebar = () => {
             <span className="mx-2 text-xl font-medium">Event Lists</span>
           </Link>
           <Link
+            to="/archive"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+              />
+            </svg>
+
+            <span className="mx-2 text-xl font-medium">Archive</span>
+          </Link>
+
+          <Link
+            to="/documents"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+              />
+            </svg>
+
+            <span className="mx-2 text-xl font-medium">Documents</span>
+          </Link>
+
+          <Link
+            to="/audit-log"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+              />
+            </svg>
+
+            <span className="mx-2 text-xl font-medium">Audit Log</span>
+          </Link>
+
+          <Link
             to="/evaluation"
             className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
           >
@@ -152,11 +153,11 @@ const Sidebar = () => {
               className="size-6"
               stroke="currentColor"
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
@@ -165,8 +166,8 @@ const Sidebar = () => {
                   fill="#0F0F0F"
                 ></path>{" "}
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M20.7991 8.20087C20.4993 7.90104 20.0132 7.90104 19.7133 8.20087L11.9166 15.9977C11.7692 16.145 11.6715 16.3348 11.6373 16.5404L11.4728 17.5272L12.4596 17.3627C12.6652 17.3285 12.855 17.2308 13.0023 17.0835L20.7991 9.28666C21.099 8.98682 21.099 8.5007 20.7991 8.20087ZM18.2991 6.78666C19.38 5.70578 21.1325 5.70577 22.2134 6.78665C23.2942 7.86754 23.2942 9.61999 22.2134 10.7009L14.4166 18.4977C13.9744 18.9398 13.4052 19.2327 12.7884 19.3355L11.8016 19.5C10.448 19.7256 9.2744 18.5521 9.50001 17.1984L9.66448 16.2116C9.76728 15.5948 10.0602 15.0256 10.5023 14.5834L18.2991 6.78666Z"
                   fill="#0F0F0F"
                 ></path>{" "}

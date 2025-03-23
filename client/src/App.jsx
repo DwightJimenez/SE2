@@ -22,7 +22,6 @@ import AuditLog from "./pages/AuditLog";
 import EventsList from "./pages/EventsList";
 import Settings from "./pages/Settings";
 import Evaluation from "./pages/Evaluation";
-import Cookies from "js-cookie";
 
 function App() {
   // Load authState from sessionStorage if available

@@ -17,12 +17,16 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "user",  // Default role is "user"
+      defaultValue: "user", // Default role is "user"
       validate: {
-        isIn: [["admin", "moderator", "user"]],  // Only allow these roles
+        isIn: [["admin", "moderator", "user"]], // Only allow these roles
       },
     },
   });
-
+  Users.associate = (models) => {
+    Users.hasMany(models.Likes, {
+      onDelete: "cascade",
+    });
+  };
   return Users;
 };

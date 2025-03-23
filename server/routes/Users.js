@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     if (!match) return res.json({ error: "Wrong Username And Password Combination" });
 
     const accessToken = sign(
-      { username: user.username, id: user.id, role: user.role },  // Include role in the JWT payload
+      { username: user.username, id: user.id, role: user.role }, 
       "importantsecret", {expiresIn: "7d"}
     );
     res.cookie("token", accessToken, {
@@ -58,6 +58,7 @@ router.post("/login", async (req, res) => {
     res.json({ username: username, id: user.id, role: user.role });
   });
 });
+
 router.get("/protected", (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: "Unauthorized" });

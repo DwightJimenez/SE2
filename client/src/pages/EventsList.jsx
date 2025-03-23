@@ -28,11 +28,7 @@ const EventsList = () => {
   const deleteEvent = async (id) => {
     try {
       // Send DELETE request to API to remove the event
-      await axios.delete(`http://localhost:4001/events/${id}`, {
-        headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
-        },
-      });
+      await axios.delete(`http://localhost:4001/events/${id}`, {withCredentials: true});
       console.log("Event Deleted Successfully:", id);
     } catch (error) {
       console.error("Error deleting event:", error);
