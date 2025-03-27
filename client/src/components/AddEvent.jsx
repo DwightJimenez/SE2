@@ -15,7 +15,7 @@ const AddEvent = () => {
       </button>
 
       <div
-        className="dropdown menu w-160 h-150 rounded-box bg-base-100 shadow-sm"
+        className="dropdown menu w-110 h-140 rounded-box bg-base-100 shadow-sm"
         popover="auto"
         id="popover-1"
         style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */}

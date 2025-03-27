@@ -35,7 +35,7 @@ const AddDocument = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-2 justify-center items-center p-4 h-full">
+    <div className="flex flex-col space-y-2 justify-evenly items-center p-4 h-full">
       <p className="text text-xl font-bold">Add Document</p>
       <input
         type="file"

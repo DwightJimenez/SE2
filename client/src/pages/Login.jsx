@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
-      <div className="w-full px-6 py-8 md:px-8 max-lg:w-1/2">
+      <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
         <p className="mt-6 text-xl text-center text-gray-600 dark:text-gray-200">
           Welcome back!
         </p>
@@ -91,7 +91,7 @@ const Login = () => {
 
         <div className="mt-6">
           <button
-            className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+            className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
             onClick={handleLogin}
           >
             Sign In
@@ -132,21 +132,23 @@ const Login = () => {
         </a>
       </div>
       <div
-        className="flex flex-col w-full  lg:block lg:w-1/2 items-center justify-center"
+        className="flex w-full  lg:block lg:w-1/2 hidden"
         style={{
           background:
             "linear-gradient(150deg, rgb(51.81, 15.18, 119.84) 0%, rgb(103, 29.24, 150.8) 59.73%, rgb(255, 71, 242.73) 100%)",
         }}
       >
-        <img src={buLogo} alt="" className="h-auto w-60" />
-        <div className="text-center ">
-          <p className="font-normal tracking-wide text-green-50 ">
-            WORKFLOW AUTOMATION
-            <br />
-            SYSTEM for ACScis ORGANIZATION
-            <br />
-            IN BICOL UNIVERSITY POLANGUI
-          </p>
+        <div className="flex flex-col justify-center items-center h-full">
+          <img src={buLogo} alt="" className="h-auto w-60 my-8" />
+          <div className="text-center ">
+            <p className="font-normal tracking-wide text-green-50 ">
+              WORKFLOW AUTOMATION
+              <br />
+              SYSTEM for ACScis ORGANIZATION
+              <br />
+              IN BICOL UNIVERSITY POLANGUI
+            </p>
+          </div>
         </div>
       </div>
     </div>

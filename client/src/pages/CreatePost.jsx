@@ -52,7 +52,7 @@ const CreatePost = () => {
         <textarea
           placeholder="Text"
           {...register("text")}
-          className="textarea textarea-primary w-100"
+          className="textarea textarea-primary w-100 h-50"
         />
         <p className="text-red-500">{errors.text?.message}</p>
 
@@ -60,7 +60,7 @@ const CreatePost = () => {
           type="file"
           accept="image/*"
           {...register("file")}
-          className="file-input file-input-primary my-4"
+          className="file-input file-input-primary my-4 w-100"
         />
 
         <p className="text-red-500">{errors.file?.message}</p>

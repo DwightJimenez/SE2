@@ -96,7 +96,7 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.put("/users/:id", validateToken, checkRole('admin'), async (req, res) => {
+router.put("/users/:id", validateToken, checkRole('moderator'), async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
 
@@ -116,5 +116,21 @@ router.put("/users/:id", validateToken, checkRole('admin'), async (req, res) => 
     res.status(500).json({ error: 'Failed to update role' });
   }
 });
+
+router.delete('/users/:id',validateToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await Users.destroy({ where: { id } }); // Adjust if you're not using Sequelize
+    if (result) {
+      res.status(200).send("User deleted");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).send("Server error");
+  }
+});
+
 
 module.exports = router;

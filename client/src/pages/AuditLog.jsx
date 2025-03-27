@@ -60,10 +60,10 @@ const AuditLog = () => {
             <tbody>
               {logs.map((log, index) => (
                 <tr key={log.id} className={getBgColor(log.action)}>
-                  <td>{log.action}</td>
-                  <td>{log.title}</td>
-                  <td>{log.user}</td>
-                  <td>{new Date(log.timestamp).toLocaleString()}</td>
+                  <td className="text-sm">{log.action}</td>
+                  <td className="text-sm">{log.title}</td>
+                  <td className="text-sm">{log.user}</td>
+                  <td className="text-sm">{new Date(log.timestamp).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

@@ -74,7 +74,7 @@ const Home = () => {
       <div className="relative">
         <PostButton />
         <div
-          className="dropdown menu w-160 h-100 rounded-box bg-base-100 shadow-sm "
+          className="flex dropdown menu w-110 h-100 rounded-box bg-base-100 shadow-sm "
           popover="auto"
           id="popover-1"
           style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */}
@@ -220,7 +220,7 @@ const Home = () => {
 
                       <p
                         className={`px-2 ${
-                          post.likedByUser ? "text-blue-500" : "text-gray-500"
+                          post.likedByUser ? "text-blue-700" : "text-gray-500"
                         }`}
                       >
                         Like

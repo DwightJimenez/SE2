@@ -1,7 +1,7 @@
 import React from "react";
-import AddDocument from "../pages/AddDocument";
+import CreateUser from "../pages/CreateUser";
 
-const AddDoc = () => {
+const AddUser = ({onUserAdded}) => {
   return (
     <div>
       {/* change popover-1 and --anchor-1 names. Use unique names for each dropdown */}
@@ -20,10 +20,10 @@ const AddDoc = () => {
         id="popover-1"
         style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */}
       >
-        <AddDocument />
+        <CreateUser onUserAdded={onUserAdded}/>
       </div>
     </div>
   );
 };
 
-export default AddDoc;
+export default AddUser;

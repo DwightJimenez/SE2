@@ -52,7 +52,7 @@ function CreateEvents() {
 
 
   return (
-    <div className="flex justify-center items-center flex-col">
+    <div className="flex flex-col justify-evenly items-center h-full">
       <p className="text text-xl font-bold">Create an Event</p>
       
       <Formik
@@ -61,7 +61,7 @@ function CreateEvents() {
         onSubmit={onSubmit}
       >
         {({ values, setFieldValue }) => (
-          <Form className="flex flex-col w-100">
+          <Form className="flex flex-col w-100 justify-evenly">
             <div className="my-4">
               <Field
                 name="title"

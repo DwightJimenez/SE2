@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css";
 import {
   BrowserRouter,
   Route,
@@ -22,6 +22,7 @@ import AuditLog from "./pages/AuditLog";
 import EventsList from "./pages/EventsList";
 import Settings from "./pages/Settings";
 import Evaluation from "./pages/Evaluation";
+import ManageUser from "./pages/ManageUser";
 
 function App() {
   // Load authState from sessionStorage if available
@@ -110,6 +111,7 @@ function App() {
                   <Route path="/events/lists" element={<EventsList />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/evaluation" element={<Evaluation />} />
+                  <Route path='/manage-user' element={<ManageUser/>}/>
                 </Routes>
               </div>
             </>

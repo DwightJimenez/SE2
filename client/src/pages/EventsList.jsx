@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import AddEvent from "../components/AddEvent";
 import PageLoc from "../components/PageLoc";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const fetchEvents = async () => {
   const response = await axios.get(`http://localhost:4001/events`);
@@ -16,6 +16,8 @@ const fetchEvents = async () => {
 };
 
 const EventsList = () => {
+  const queryClient = useQueryClient();
+
   const {
     data: events,
     isLoading,
@@ -28,7 +30,9 @@ const EventsList = () => {
   const deleteEvent = async (id) => {
     try {
       // Send DELETE request to API to remove the event
-      await axios.delete(`http://localhost:4001/events/${id}`, {withCredentials: true});
+      await axios.delete(`http://localhost:4001/events/${id}`, {
+        withCredentials: true,
+      });
       console.log("Event Deleted Successfully:", id);
     } catch (error) {
       console.error("Error deleting event:", error);
@@ -49,7 +53,6 @@ const EventsList = () => {
     <div>
       <PageLoc currentPage="Events List" />
       <AddEvent />
-      <ul></ul>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
         <table className="table">
           {/* head */}
@@ -69,7 +72,15 @@ const EventsList = () => {
                 <td>{event.end}</td>
                 <td>
                   <button
-                    onClick={() => mutation.mutate(event.id)}
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this event?"
+                        )
+                      ) {
+                        mutation.mutate(event.id);
+                      }
+                    }}
                     className="!bg-red-500 p-2 !rounded hover:!bg-red-700"
                   >
                     <svg
@@ -79,6 +90,7 @@ const EventsList = () => {
                       strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-5 h-5"
+                      color="white"
                     >
                       <path
                         strokeLinecap="round"
