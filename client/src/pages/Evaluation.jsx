@@ -3,7 +3,7 @@ import PageLoc from "../components/PageLoc";
 
 const Evaluation = () => {
   return (
-    <div>
+    <div className="dark:bg-gray-800 p-4">
       <PageLoc currentPage="Evaluation" />
       <div className="flex justify-center mb-4 h-auto max-w-200 bg-white rounded-lg shadow-lg dark:bg-gray-900 p-4">
         <iframe

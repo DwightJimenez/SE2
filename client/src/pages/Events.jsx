@@ -68,7 +68,7 @@ function CalendarApp() {
   }, [data, calendar, addedEventIds]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-4 dark:bg-gray-800">
       <PageLoc currentPage="Events" />
       <AddEvent />
 

@@ -72,7 +72,11 @@ function App() {
 
   const logout = async () => {
     try {
-      await axios.post("http://localhost:4001/auth/logout", {}, { withCredentials: true });
+      await axios.post(
+        "http://localhost:4001/auth/logout",
+        {},
+        { withCredentials: true }
+      );
       setAuthState({ username: "", id: 0, status: false, role: "" });
       sessionStorage.removeItem("authState");
 
@@ -81,12 +85,11 @@ function App() {
       console.error("Logout failed:", error);
     }
   };
-  
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
       <BrowserRouter>
-        <div className="flex h-screen w-screen">
+        <div className="flex h-screen w-screen ">
           {authState.status ? (
             <>
               <NavBar className="fixed" logout={logout} />
@@ -98,20 +101,23 @@ function App() {
               </div>
 
               {/* Main Content */}
-              <div className="flex-grow ml-0 mt-16 p-4 bg-gray-100 dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
+              <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/post/:id" element={<Home />} />
                   <Route path="/events" element={<CalendarApp />} />
-                  <Route path="/documents" element={<Documents />} />
-                  <Route path="/roles" element={<Home />} />
-                  <Route path="/archive" element={<Archive />} />
                   <Route path="/audit-log" element={<AuditLog />} />
-                  <Route path="/registration" element={<AuditLog />} />
-                  <Route path="/events/lists" element={<EventsList />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/evaluation" element={<Evaluation />} />
-                  <Route path='/manage-user' element={<ManageUser/>}/>
+
+                  {authState.role === "moderator" && (
+                    <>
+                      <Route path="/archive" element={<Archive />} />
+                      <Route path="/events/lists" element={<EventsList />} />
+                      <Route path="/documents" element={<Documents />} />
+                      <Route path="/manage-user" element={<ManageUser />} />
+                    </>
+                  )}
                 </Routes>
               </div>
             </>

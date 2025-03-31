@@ -18,6 +18,11 @@ const db = require("./models");
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.use(async (req, res, next) => {
+  await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay for 5 seconds
+  next(); // Continue to the next middleware or route
+});
+
 // Routers
 const postRouter = require("./routes/Posts");
 app.use("/posts", postRouter);

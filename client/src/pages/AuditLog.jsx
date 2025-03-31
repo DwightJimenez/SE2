@@ -20,7 +20,7 @@ const AuditLog = () => {
     { color: "#86efac", label: "Restore" },
     { color: "#fde047", label: "Archive" },
     { color: "#d8b4fe", label: "Upload" },
-    { color: "#fca5a5", label: "Delete" }
+    { color: "#fca5a5", label: "Delete" },
   ];
 
   const getBgColor = (action) => {
@@ -32,7 +32,7 @@ const AuditLog = () => {
   };
 
   return (
-    <div>
+    <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Audit Log" />
       <div className="flex flex-col justify-center mb-4 h-auto bg-white rounded-lg shadow-lg dark:bg-gray-900 p-4">
         <div className="flex items-center justify-evenly space-x-4 p-4">
@@ -59,11 +59,20 @@ const AuditLog = () => {
             </thead>
             <tbody>
               {logs.map((log, index) => (
-                <tr key={log.id} className={getBgColor(log.action)}>
-                  <td className="text-sm">{log.action}</td>
+                <tr key={log.id}>
+                  <td className="text-sm flex">
+                    <div
+                      className={`w-4 h-4 rounded-full mr-4 ${getBgColor(
+                        log.action
+                      )}`}
+                    ></div>
+                    {log.action}
+                  </td>
                   <td className="text-sm">{log.title}</td>
                   <td className="text-sm">{log.user}</td>
-                  <td className="text-sm">{new Date(log.timestamp).toLocaleString()}</td>
+                  <td className="text-sm">
+                    {new Date(log.timestamp).toLocaleString()}
+                  </td>
                 </tr>
               ))}
             </tbody>

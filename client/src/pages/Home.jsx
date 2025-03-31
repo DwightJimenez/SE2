@@ -8,6 +8,7 @@ import Chat from "./Chat";
 import CommentsSection from "./CommentsSection";
 
 const fetchPosts = async () => {
+
   const response = await axios.get("http://localhost:4001/posts", {
     withCredentials: true,
   });
@@ -66,11 +67,10 @@ const Home = () => {
     likePostMutation.mutate(postId);
   };
 
-  if (isLoading) return <p>Loading posts...</p>;
   if (isError) return <p className="text-red-500">Error loading posts.</p>;
 
   return (
-    <div className="flex flex-col space-y-4 p-4 bg-gray-100">
+    <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800">
       <div className="relative">
         <PostButton />
         <div
@@ -83,8 +83,26 @@ const Home = () => {
         </div>
       </div>
 
-      {posts.length === 0 ? (
-        <p>No posts available.</p>
+      {isLoading ? (
+        <div className="w-200">
+          <p className="flex justify-center">Loading posts ...</p>
+          <div className="flex w-200 flex-col gap-4 mt-4">
+            <div className="skeleton h-32 w-full"></div>
+            <div className="skeleton h-4 w-28"></div>
+            <div className="skeleton h-4 w-full"></div>
+            <div className="skeleton h-4 w-full"></div>
+          </div>
+          <div className="flex w-200 flex-col gap-4 mt-4">
+            <div className="skeleton h-32 w-full"></div>
+            <div className="skeleton h-4 w-28"></div>
+            <div className="skeleton h-4 w-full"></div>
+            <div className="skeleton h-4 w-full"></div>
+          </div>
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="w-200">
+          <p className="flex justify-center">No posts available.</p>
+        </div>
       ) : (
         <Linkify
           componentDecorator={(href, text, key) => (
@@ -101,7 +119,7 @@ const Home = () => {
         >
           <div className="space-y-4 max-w-200">
             {posts.map((post) => (
-              <div key={post.id} className="card bg-base-100 shadow-sm p-4">
+              <div key={post.id} className="card bg-base-100 shadow-2xl p-4">
                 <div>
                   <div className="flex items-center space-x-2">
                     <span className="font-semibold">@{post.username}</span>

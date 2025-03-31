@@ -50,7 +50,7 @@ const EventsList = () => {
   if (isError) return <p>Error loading events.</p>;
 
   return (
-    <div>
+    <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Events List" />
       <AddEvent />
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">

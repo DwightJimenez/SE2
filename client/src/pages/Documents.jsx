@@ -38,7 +38,7 @@ const Documents = () => {
   if (isError) return <div>Failed to load documents.</div>;
 
   return (
-    <div>
+    <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Documents" />
       <div className="relative">
         <AddDoc />

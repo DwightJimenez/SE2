@@ -56,7 +56,7 @@ const Archive = () => {
   }
 
   return (
-    <div>
+    <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Archive"/>
       <div className="flex">
         <table className="table">

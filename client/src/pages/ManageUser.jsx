@@ -71,7 +71,7 @@ function ManageUser() {
   }
 
   return (
-    <div>
+    <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Manage User" />
       <AddUser onUserAdded={handleUserAdded} />
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
