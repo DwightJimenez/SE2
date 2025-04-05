@@ -19,6 +19,7 @@ const upload = multer({ storage });
 router.post('/upload', upload.single('file'), async (req, res) => {
     try {
         const { originalname, filename } = req.file;
+        const user = req.user.username
 
         const existingDoc = await Document.findOne({ where: { name: originalname}, order: [['version', 'DESC']],});
         const document = await Document.create({
@@ -30,7 +31,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
         await AuditLog.create({
             action: 'Upload',
             title: originalname,
-            user: 'admin',
+            user: user,
         });
         res.json(document);
     } catch (err) {

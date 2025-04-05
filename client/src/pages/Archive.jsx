@@ -4,7 +4,7 @@ import axios from "axios";
 import PageLoc from "../components/PageLoc";
 
 const fetchArchivedDocuments = async () => {
-  const response = await axios.get(`http://localhost:4001/archive`);
+  const response = await axios.get(`http://localhost:4001/archive`, {withCredentials:true});
   return response.data;
 };
 
@@ -23,7 +23,7 @@ const Archive = () => {
 
   const restoreArchive = async (id) => {
     try {
-      await axios.post(`http://localhost:4001/archive/restore/${id}`);
+      await axios.post(`http://localhost:4001/archive/restore/${id}`, {withCredentials:true});
       alert("Document restored successfully");
       // Manually re-fetch the documents after restore
       queryClient.invalidateQueries(["archivedDocuments"]);
@@ -34,7 +34,7 @@ const Archive = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4001/archive/delete/${id}`);
+      await axios.delete(`http://localhost:4001/archive/delete/${id}`, {withCredentials:true});
       alert("Document deleted successfully");
       // Manually re-fetch the documents after delete
       queryClient.invalidateQueries(["archivedDocuments"]);

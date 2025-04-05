@@ -4,7 +4,7 @@ const { Document, ArchivedDocument, AuditLog } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", validateToken, async (req, res) => {
   try {
     const archiveDoc = await ArchivedDocument.findAll();
     res.json(archiveDoc);
@@ -13,8 +13,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/:id",  async (req, res) => {
+router.post("/:id", validateToken,  async (req, res) => {
   const { id } = req.params;
+  const user = req.user.username
   try {
     const document = await Document.findByPk(id);
     if (!document) {
@@ -42,7 +43,7 @@ router.post("/:id",  async (req, res) => {
     await AuditLog.create({
       action: "Archive",
       title: document.name,
-      user: "admin",
+      user: user,
     });
     console.log("Audit log created for archiving");
 
@@ -57,6 +58,7 @@ router.post("/:id",  async (req, res) => {
 router.post("/restore/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.user.username
     console.log(id)
     const archivedDocument = await ArchivedDocument.findByPk(id);
 
@@ -74,7 +76,7 @@ router.post("/restore/:id", async (req, res) => {
     await AuditLog.create({
       action: "Restore",
       title: archivedDocument.name,
-      user: "admin",
+      user: user,
     });
 
     // Delete the document from the archived table
@@ -90,6 +92,7 @@ router.post("/restore/:id", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.user.username
     const archivedDocument = await ArchivedDocument.findByPk(id);
 
     if (!archivedDocument) {
@@ -99,7 +102,7 @@ router.delete("/delete/:id", async (req, res) => {
     await AuditLog.create({
       action: "Delete",
       title: archivedDocument.name,
-      user: "admin",
+      user: user,
     });
     await archivedDocument.destroy();
     res.json({ message: "Archived document deleted successfully" });

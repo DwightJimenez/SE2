@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const db = require("./models");
 
 dotenv.config();
 const port = process.env.PORT;
@@ -14,14 +15,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({origin: ['http://localhost:5173', 'http://192.168.1.5:5173'], credentials: true}));
 
-const db = require("./models");
+
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(async (req, res, next) => {
-  await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay for 5 seconds
-  next(); // Continue to the next middleware or route
-});
+// app.use(async (req, res, next) => {
+//   await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay for 5 seconds
+//   next(); // Continue to the next middleware or route
+// });
 
 // Routers
 const postRouter = require("./routes/Posts");
@@ -38,6 +39,10 @@ const archiveDoc = require('./routes/ArchiveDoc')
 app.use('/archive', archiveDoc)
 const auditLog = require('./routes/AuditLog');
 app.use('/audit', auditLog);
+const evaluation = require("./routes/Evaluation")
+app.use('/evaluation', evaluation)
+const rating = require("./routes/Rating")
+app.use('/rating', rating)
 
 db.sequelize.sync().then(() => {
   app.listen(port, "0.0.0.0", () => {

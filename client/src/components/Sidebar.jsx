@@ -99,7 +99,7 @@ const Sidebar = () => {
 
             <span className="mx-2 text-xl font-medium">Evaluation</span>
           </Link>
-          {authState.role === "moderator" && (
+          {(authState.role === "moderator" || authState.role ==="admin") && (
             <>
               <Link
                 to="/events/lists"

@@ -11,7 +11,6 @@ const validateToken = (req, res, next) => {
   try {
     const validToken = verify(accessToken, "importantsecret");
     req.user = validToken; // Attach the decoded token to the request object
-
     // If the token is valid, proceed to the next middleware
     if (validToken) {
       return next();

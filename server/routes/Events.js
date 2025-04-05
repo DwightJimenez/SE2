@@ -28,6 +28,8 @@ router.get("/", async (req, res) => {
 // Create a new event
 router.post("/", validateToken, checkRole("moderator"), async (req, res) => {
   const { title, start, end } = req.body;
+  const user = req.user.username;
+
 
   try {
     // Convert the start and end time to UTC before saving to the database
@@ -42,7 +44,7 @@ router.post("/", validateToken, checkRole("moderator"), async (req, res) => {
     await AuditLog.create({
       action: "Created an event",
       title: title,
-      user: "admin",
+      user: user,
     });
     res.json(newEvent);
   } catch (error) {

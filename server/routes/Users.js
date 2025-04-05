@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const { sign, verify } = require("jsonwebtoken");
 const checkRole = require("../middlewares/RoleMiddleware");
+const { Op, where } = require("sequelize");
 
 
 router.post("/",async (req, res) => {
@@ -32,6 +33,37 @@ router.post("/",async (req, res) => {
   } catch (error) {
     console.error(error); // Log the error for debugging purposes
     res.status(500).json({ error: "Failed to create user" });
+  }
+});
+
+router.post("/multiple-user", async (req, res) => {
+  const users = req.body; // Expecting an array of users
+
+  if (!Array.isArray(users)) {
+    return res.status(400).json({ error: "Invalid input format. Expected an array of users." });
+  }
+
+  try {
+    const usersToCreate = [];
+
+    for (const { username, password } of users) {
+      const existingUser = await Users.findOne({ where: { username } });
+      if (existingUser) {
+        continue; // Skip if the username is already taken
+      }
+      
+      const hash = await bcrypt.hash(password, 10);
+      usersToCreate.push({ username, password: hash, role: "user" });
+    }
+
+    if (usersToCreate.length > 0) {
+      await Users.bulkCreate(usersToCreate); // Bulk insert users
+    }
+
+    res.json({ message: "Users created successfully", count: usersToCreate.length });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create users" });
   }
 });
 
@@ -87,16 +119,27 @@ router.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
 });
 
-router.get("/users", async (req, res) => {
+router.get("/users", validateToken, checkRole("admin"), async (req, res) => {
   try {
-    const users = await Users.findAll(); // Fetch all users from the database
-    res.json(users); // Send users as the response
+    const { q, role } = req.query;
+    
+    let whereClause = {};
+    if (q) {
+      whereClause.username = { [Op.like]: `%${q}%` };
+    }
+    if (role && role !== "") {
+      whereClause.role = role;
+    }
+
+    const users = await Users.findAll({ where: whereClause });
+    res.json(users);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch users" });
   }
 });
 
-router.put("/users/:id", validateToken, checkRole('moderator'), async (req, res) => {
+
+router.put("/users/:id", validateToken, checkRole('admin'), async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
 
