@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Evaluation, Question } = require("../models");
+const { Evaluation, Question, Rating } = require("../models");
 const { sequelize } = require("../models");
 
 router.get("/", async (req, res) => {
@@ -96,12 +96,27 @@ router.get("/byId/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const evaluation = await Evaluation.findByPk(id, {
-      include: [{ model: Question }],
+      include: [{ model: Question, include: [Rating] }],
     });
 
     if (!evaluation) {
       return res.status(404).json({ error: "Evaluation not found" });
     }
+
+    evaluation.Questions.forEach((question) => {
+      const ratings = question.Ratings;
+
+      if (ratings && ratings.length > 0) {
+        const totalScore = ratings.reduce((sum, rating) => sum + rating.score, 0);
+        const averageScore = totalScore / ratings.length;
+        question.averageScore = averageScore.toFixed(2);  // Round to 2 decimal places
+      } else {
+        question.averageScore = 0;  // No ratings, set average to 0
+      }
+
+      // Explicitly add `averageScore` to the question data to make sure it's included in the response
+      question.dataValues.averageScore = question.averageScore; 
+    });
 
     res.json(evaluation);
   } catch (error) {
@@ -109,6 +124,7 @@ router.get("/byId/:id", async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 });
+
 
 
 module.exports = router;

@@ -26,7 +26,7 @@ import ManageUser from "./pages/ManageUser";
 import AddForm from "./pages/AddForm"
 import EditForm from "./pages/EditForm";
 import UserRating from './pages/UserRating';
-import EvaluationList from "./pages/EvaluationList";
+import CreateForm from "./pages/CreateForm";
 
 function App() {
   // Load authState from sessionStorage if available
@@ -115,7 +115,6 @@ function App() {
                   <Route path="/evaluation" element={<Evaluation />} />
                   <Route path="/evaluation/add" element={<AddForm />} />
                   <Route path="/evaluation/:id" element={<EditForm />} />
-                  <Route path="/evaluation/evaluate" element={<EvaluationList />} />
                   <Route path="/evaluation/evaluate/:id" element={<UserRating />} />
 
                   {(authState.role === "moderator" || authState.role === "admin")  && (
@@ -124,6 +123,7 @@ function App() {
                       <Route path="/events/lists" element={<EventsList />} />
                       <Route path="/documents" element={<Documents />} />
                       <Route path="/manage-user" element={<ManageUser />} />
+                      <Route path="/create-form" element={<CreateForm />} />
                     </>
                   )}
                 </Routes>

@@ -1,34 +1,43 @@
-// BarChart.jsx
-import React from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
-  BarElement,
   CategoryScale,
   LinearScale,
+  BarElement,
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+  Colors,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 ChartJS.register(
-  BarElement,
   CategoryScale,
   LinearScale,
+  BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Colors
 );
 
-const BarChart = () => {
+const BarChart = ({
+  title = "Evaluation Results",
+  labels = [],
+  datasetLabel = "Score",
+  scores = [],
+  maxScore = 5,
+  color = "rgba(59, 130, 246)", // default: Tailwind blue-500
+  borderColor = "rgba(59, 130, 246, 1)",
+}) => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+    labels,
     datasets: [
       {
-        label: 'Votes',
-        data: [12, 19, 3, 5, 2],
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        label: datasetLabel,
+        data: scores,
+        backgroundColor: color,
+        borderColor: borderColor,
         borderWidth: 1,
       },
     ],
@@ -37,12 +46,19 @@ const BarChart = () => {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
-      },
       title: {
         display: true,
-        text: 'Sample Bar Chart',
+        text: title,
+        font: { size: 18 },
+      },
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: maxScore,
       },
     },
   };

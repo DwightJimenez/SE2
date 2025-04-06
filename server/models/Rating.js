@@ -9,7 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     });
-  
+    Rating.associate = (models) => {
+      Rating.belongsTo(models.Question, {
+        foreignKey: {
+          allowNull: false,
+        },
+        onDelete: "CASCADE",
+      });
+    };
   
     return Rating;
   };

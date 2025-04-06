@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import PageLoc from "../components/PageLoc";
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import BarChart from "../components/BarChart";
 
 const Question = ({ index, text, updateQuestion, removeQuestion }) => (
   <div className="flex flex-col mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
@@ -32,9 +33,17 @@ const fetchFormById = async (id) => {
   return response.data;
 };
 
+
+
 const EditForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [evaluationScores, setEvaluationScores] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [questions, setQuestions] = useState([]);
+
+
 
   const {
     data: form,
@@ -43,20 +52,26 @@ const EditForm = () => {
   } = useQuery({
     queryKey: ["form", id],
     queryFn: () => fetchFormById(id),
-    enabled: !!id, // Fetch only if ID exists
+    enabled: !!id,
   });
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [questions, setQuestions] = useState([]);
+
 
   useEffect(() => {
     if (form) {
       setTitle(form.title || "");
       setDescription(form.description || "");
       setQuestions(form.Questions || []);
+      const avgScores = form.Questions.map((question) => {
+        const totalScore = question.Ratings.reduce((sum, rating) => sum + rating.score, 0);
+        const avgScore = totalScore / question.Ratings.length || 0;
+        return avgScore;
+      });
+      setEvaluationScores(avgScores);
+      console.log(avgScores)
     }
   }, [form]);
+
 
   const updateFormMutation = useMutation({
     mutationFn: async () => {
@@ -176,7 +191,15 @@ const EditForm = () => {
           Responses
         </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
-          Tab content 2
+          <BarChart
+            title="Average Scores per Criterion"
+            labels={questions.map((q) => q.text)}
+            scores={evaluationScores}
+            datasetLabel="Average Rating"
+            maxScore={5}
+            color="rgba(16, 185, 129, 0.5)"
+            borderColor="rgba(16, 185, 129, 1)"
+          />
         </div>
 
         <label className="tab">
