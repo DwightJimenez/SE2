@@ -33,8 +33,6 @@ const fetchFormById = async (id) => {
   return response.data;
 };
 
-
-
 const EditForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,8 +40,6 @@ const EditForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([]);
-
-
 
   const {
     data: form,
@@ -55,23 +51,23 @@ const EditForm = () => {
     enabled: !!id,
   });
 
-
-
   useEffect(() => {
     if (form) {
       setTitle(form.title || "");
       setDescription(form.description || "");
       setQuestions(form.Questions || []);
       const avgScores = form.Questions.map((question) => {
-        const totalScore = question.Ratings.reduce((sum, rating) => sum + rating.score, 0);
+        const totalScore = question.Ratings.reduce(
+          (sum, rating) => sum + rating.score,
+          0
+        );
         const avgScore = totalScore / question.Ratings.length || 0;
         return avgScore;
       });
       setEvaluationScores(avgScores);
-      console.log(avgScores)
+      console.log(avgScores);
     }
   }, [form]);
-
 
   const updateFormMutation = useMutation({
     mutationFn: async () => {
@@ -104,6 +100,27 @@ const EditForm = () => {
     setQuestions((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const deleteFormMutation = useMutation({
+    mutationFn: async () => {
+      await axios.delete(`http://localhost:4001/evaluation/delete/${id}`, {
+        withCredentials: true,
+      });
+    },
+    onSuccess: () => {
+      alert("Form deleted successfully!");
+      navigate("/create-form"); // Redirect after deletion
+    },
+    onError: () => {
+      alert("Failed to delete form.");
+    },
+  });
+
+  const deleteForm = () => {
+    if (window.confirm("Are you sure you want to delete this form?")) {
+      deleteFormMutation.mutate();
+    }
+  };
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading form.</p>;
 
@@ -111,7 +128,8 @@ const EditForm = () => {
     <div className="dark:bg-gray-800 p-4">
       <PageLoc currentPage="Edit Form" />
       {/* name of each tab group should be unique */}
-      <div className="tabs tabs-lift">
+
+      <div className="tabs tabs-xl tabs-lift tabs-border">
         <label className="tab">
           <input type="radio" name="my_tabs_4" />
           <svg
@@ -131,7 +149,7 @@ const EditForm = () => {
           Questions
         </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
-          <div className="p-4 bg-gray-100 mb-4 dark:bg-gray-900 rounded-lg shadow">
+          <div className="p-4 bg-accent mb-4 dark:bg-gray-900 rounded-lg shadow">
             <input
               type="text"
               value={title}
@@ -226,7 +244,9 @@ const EditForm = () => {
           Settings
         </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
-          Tab content 3
+          <p className="text-red-600" onClick={deleteForm}>
+            Delete
+          </p>
         </div>
       </div>
     </div>

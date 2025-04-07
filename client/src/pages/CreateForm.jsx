@@ -4,7 +4,6 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const fetchForm = async () => {
   const response = await axios.get("http://localhost:4001/evaluation", {
     withCredentials: true,
@@ -25,6 +24,20 @@ const CreateForm = () => {
     queryFn: fetchForm,
     staleTime: 300000, // 5 minutes
   });
+
+  const formatDate = (date) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true, // 12-hour format with AM/PM
+    };
+    return new Date(date).toLocaleString("en-US", options);
+  };
+
   return (
     <div className="dark:bg-gray-800 p-4">
       <PageLoc currentPage="Create Form" />
@@ -51,6 +64,12 @@ const CreateForm = () => {
               >
                 <h3 className="font-bold">{evaluation.title}</h3>
                 <p>{evaluation.description}</p>
+                <div className="mt-4 text-xs text-gray-500">
+                  <p>Created: {formatDate(evaluation.createdAt)}</p>
+                  {evaluation.updatedAt && (
+                    <p>Updated: {formatDate(evaluation.updatedAt)}</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>

@@ -125,6 +125,21 @@ router.get("/byId/:id", async (req, res) => {
   }
 });
 
+router.delete("/delete/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const evaluation = await Evaluation.findByPk(id);
+    if (!evaluation) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+    
+    await evaluation.destroy();
+    res.json({ message: "Evaluation deleted" });
+  } catch (error) {
+    console.error("🔥 Error deleting evaluation:", error);
+    res.status(500).json({ error: "Failed to delete evaluation", details: error.message });
+  }
+});
 
 
 module.exports = router;
