@@ -147,7 +147,7 @@ const UserRating = () => {
 
   return (
     <div className="dark:bg-gray-800 p-4">
-      <PageLoc currentPage="Evaluate Question" />
+      <PageLoc currentPage="Evaluate Question"  showBack={true} backLink="/evaluation"/>
       
       <div className="p-4 my-4 max-w-200 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-2xl">
         <input

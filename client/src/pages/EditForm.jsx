@@ -5,7 +5,13 @@ import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BarChart from "../components/BarChart";
 
-const Question = ({ index, text, updateQuestion, removeQuestion }) => (
+const Question = ({
+  index,
+  text,
+  updateQuestion,
+  removeQuestion,
+  showRemove = false,
+}) => (
   <div className="flex flex-col mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
     <div className="flex justify-between">
       <input
@@ -16,12 +22,33 @@ const Question = ({ index, text, updateQuestion, removeQuestion }) => (
         className="p-2 rounded w-full"
       />
     </div>
-    <div className="divider"></div>
-    <button onClick={() => removeQuestion(index)} className="text-red-500 mt-2">
-      Remove
-    </button>
+
+    {showRemove && (
+      <>
+        <div className="divider"></div>
+        <button
+          onClick={() => removeQuestion(index)}
+          className="text-red-500 mt-2"
+        >
+          Remove
+        </button>
+      </>
+    )}
   </div>
 );
+
+const calculatePercentages = (scoreCount) => {
+  const totalResponses = Object.values(scoreCount).reduce((sum, count) => sum + count, 0); // Total responses
+
+  // Calculate percentages for each score (1 to 5)
+  const percentages = Object.keys(scoreCount).map((score) => {
+    const count = scoreCount[score];
+    return ((count / totalResponses) * 100).toFixed(2); // Percentage with 2 decimal places
+  });
+
+  return percentages;
+};
+
 
 const fetchFormById = async (id) => {
   const response = await axios.get(
@@ -40,6 +67,7 @@ const EditForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [average, setAverage] = useState([]);
 
   const {
     data: form,
@@ -56,16 +84,17 @@ const EditForm = () => {
       setTitle(form.title || "");
       setDescription(form.description || "");
       setQuestions(form.Questions || []);
-      const avgScores = form.Questions.map((question) => {
-        const totalScore = question.Ratings.reduce(
-          (sum, rating) => sum + rating.score,
-          0
-        );
-        const avgScore = totalScore / question.Ratings.length || 0;
-        return avgScore;
+
+      const scores = form.Questions.map((question) => {
+        return calculatePercentages(question.scoreCount);;
       });
-      setEvaluationScores(avgScores);
-      console.log(avgScores);
+      const avgScores = form.Questions.map((question) => {
+        const totalScore = question.Ratings.reduce((sum, rating) => sum + rating.score, 0);
+        const avgScore = totalScore / question.Ratings.length || 0;
+        return parseFloat(avgScore.toFixed(2));
+      });
+      setAverage(avgScores);
+      setEvaluationScores(scores);
     }
   }, [form]);
 
@@ -126,7 +155,11 @@ const EditForm = () => {
 
   return (
     <div className="dark:bg-gray-800 p-4">
-      <PageLoc currentPage="Edit Form" />
+      <PageLoc
+        currentPage="Edit Form"
+        showBack={true}
+        backLink="/create-form"
+      />
       {/* name of each tab group should be unique */}
 
       <div className="tabs tabs-xl tabs-lift tabs-border">
@@ -172,6 +205,7 @@ const EditForm = () => {
               text={q.text}
               updateQuestion={updateQuestion}
               removeQuestion={removeQuestion}
+              showRemove={true}
             />
           ))}
 
@@ -209,15 +243,20 @@ const EditForm = () => {
           Responses
         </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
-          <BarChart
-            title="Average Scores per Criterion"
-            labels={questions.map((q) => q.text)}
-            scores={evaluationScores}
-            datasetLabel="Average Rating"
-            maxScore={5}
-            color="rgba(16, 185, 129, 0.5)"
-            borderColor="rgba(16, 185, 129, 1)"
-          />
+          {questions.map((q, index) => (
+            <>
+              <Question key={index} index={index} text={q.text} />
+              <BarChart
+              title={`Average rating(${average[index]})`}
+                labels={["1", "2", "3", "4", "5"]}
+                scores={evaluationScores[index] || []}
+                datasetLabel="Average Rating"
+                maxScore={100}
+                color="rgba(16, 185, 129) "
+                borderColor="rgba(16, 185, 129, 1)"
+              />
+            </>
+          ))}
         </div>
 
         <label className="tab">

@@ -40,7 +40,7 @@ const CreateForm = () => {
 
   return (
     <div className="dark:bg-gray-800 p-4">
-      <PageLoc currentPage="Create Form" />
+      <PageLoc currentPage="Create Form"/>
       <div className="flex gap-4 mb-4">
         <Link to="/evaluation/add">
           <div className="h-80 w-60 p-4 bg-accent rounded-lg shadow">

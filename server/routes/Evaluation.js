@@ -103,8 +103,19 @@ router.get("/byId/:id", async (req, res) => {
       return res.status(404).json({ error: "Evaluation not found" });
     }
 
+    // Prepare data for the graph
     evaluation.Questions.forEach((question) => {
       const ratings = question.Ratings;
+
+      // Initialize a score count for 1, 2, 3, 4, 5
+      const scoreCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+      // Count the occurrences of each score
+      ratings.forEach((rating) => {
+        if (rating.score >= 1 && rating.score <= 5) {
+          scoreCount[rating.score]++;
+        }
+      });
 
       if (ratings && ratings.length > 0) {
         const totalScore = ratings.reduce((sum, rating) => sum + rating.score, 0);
@@ -116,7 +127,12 @@ router.get("/byId/:id", async (req, res) => {
 
       // Explicitly add `averageScore` to the question data to make sure it's included in the response
       question.dataValues.averageScore = question.averageScore; 
+
+      // Add the score count data to the question's dataValues
+      question.dataValues.scoreCount = scoreCount;
     });
+
+    
 
     res.json(evaluation);
   } catch (error) {
@@ -124,6 +140,7 @@ router.get("/byId/:id", async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 });
+
 
 router.delete("/delete/:id", async (req, res) => {
   const id = parseInt(req.params.id);

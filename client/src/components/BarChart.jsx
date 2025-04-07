@@ -22,7 +22,7 @@ ChartJS.register(
 );
 
 const BarChart = ({
-  title = "Evaluation Results",
+  title = "Evaluation Rating",
   labels = [],
   datasetLabel = "Score",
   scores = [],
@@ -63,7 +63,11 @@ const BarChart = ({
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return (
+    <div className="flex max-w-200">
+      <Bar data={data} options={options} />
+    </div>
+  );
 };
 
 export default BarChart;
