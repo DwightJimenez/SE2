@@ -73,6 +73,7 @@ const Sidebar = () => {
             </svg>
 
             <span className="mx-2 text-xl font-medium">Evaluation</span>
+            <div className="badge badge-sm badge-secondary">+99</div>
           </Link>
           {(authState.role === "moderator" || authState.role === "admin") && (
             <>

@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Upload a document
-router.post('/upload', upload.single('file'), async (req, res) => {
+router.post('/upload', upload.single('file'), validateToken, async (req, res) => {
     try {
         const { originalname, filename } = req.file;
         const user = req.user.username

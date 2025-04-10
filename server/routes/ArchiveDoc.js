@@ -16,6 +16,7 @@ router.get("/", validateToken, async (req, res) => {
 router.post("/:id", validateToken,  async (req, res) => {
   const { id } = req.params;
   const user = req.user.username
+  
   try {
     const document = await Document.findByPk(id);
     if (!document) {
@@ -55,7 +56,7 @@ router.post("/:id", validateToken,  async (req, res) => {
 });
 
 
-router.post("/restore/:id", async (req, res) => {
+router.post("/restore/:id", validateToken, async (req, res) => {
   try {
     const { id } = req.params;
     const user = req.user.username
@@ -89,7 +90,7 @@ router.post("/restore/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", validateToken, async (req, res) => {
   try {
     const { id } = req.params;
     const user = req.user.username

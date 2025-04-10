@@ -19,10 +19,7 @@ import AddEvent from "../components/AddEvent";
 function CalendarApp() {
   const [data, setData] = useState([]);
   const [addedEventIds, setAddedEventIds] = useState(new Set());
-  const plugins = [
-    createEventsServicePlugin(),
-    createEventModalPlugin(),
-  ];
+  const plugins = [createEventsServicePlugin(), createEventModalPlugin()];
 
   const calendar = useCalendarApp(
     {
@@ -71,8 +68,10 @@ function CalendarApp() {
     <div className="flex flex-col p-4 dark:bg-gray-800">
       <PageLoc currentPage="Events" />
       <AddEvent />
-
-      <ScheduleXCalendar calendarApp={calendar} />
+      <div className="max-w-200">
+        <ScheduleXCalendar calendarApp={calendar} />
+      </div>
+      <div></div>
     </div>
   );
 }

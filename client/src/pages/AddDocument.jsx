@@ -20,12 +20,7 @@ const AddDocument = () => {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:4001/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          accessToken: sessionStorage.getItem("accessToken"),
-        },
-      });
+      await axios.post("http://localhost:4001/api/upload", formData, {withCredentials:true});
       queryClient.invalidateQueries(["documents"]);
       alert("Upload successful!");
       setFile(null);

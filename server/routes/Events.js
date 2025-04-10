@@ -26,31 +26,35 @@ router.get("/", async (req, res) => {
 });
 
 // Create a new event
-router.post("/", validateToken, checkRole("moderator"), async (req, res) => {
-  const { title, start, end } = req.body;
-  const user = req.user.username;
+router.post(
+  "/",
+  validateToken,
+  checkRole(["moderator", "admin"]),
+  async (req, res) => {
+    const { title, start, end } = req.body;
+    const user = req.user.username;
 
+    try {
+      // Convert the start and end time to UTC before saving to the database
+      const startUTC = moment(start).utc().format("YYYY-MM-DD HH:mm:ss");
+      const endUTC = moment(end).utc().format("YYYY-MM-DD HH:mm:ss");
 
-  try {
-    // Convert the start and end time to UTC before saving to the database
-    const startUTC = moment(start).utc().format("YYYY-MM-DD HH:mm:ss");
-    const endUTC = moment(end).utc().format("YYYY-MM-DD HH:mm:ss");
-
-    const newEvent = await Events.create({
-      title,
-      start: startUTC,
-      end: endUTC,
-    });
-    await AuditLog.create({
-      action: "Created an event",
-      title: title,
-      user: user,
-    });
-    res.json(newEvent);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to create event" });
+      const newEvent = await Events.create({
+        title,
+        start: startUTC,
+        end: endUTC,
+      });
+      await AuditLog.create({
+        action: "Created an event",
+        title: title,
+        user: user,
+      });
+      res.json(newEvent);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create event" });
+    }
   }
-});
+);
 
 // Delete an event
 router.delete(

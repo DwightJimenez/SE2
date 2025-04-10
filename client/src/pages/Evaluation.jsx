@@ -43,16 +43,31 @@ const EvaluationList = ({ userId, questionId }) => {
           {forms.map((form) => (
             <div
               key={form.id}
-              className="h-80 w-60 p-4 bg-accent rounded-lg shadow"
+              className="h-80 w-60 p-4   rounded-lg shadow-2xl relative flex"
               onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
             >
               <h3 className="font-bold">{form.title}</h3>
               <p>{form.description}</p>
+              <div role="alert" className="alert alert-success absolute bottom-0 left-0 right-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 shrink-0 stroke-current"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>Evaluated!</span>
+              </div>
             </div>
           ))}
         </div>
       )}
-      
     </div>
   );
 };

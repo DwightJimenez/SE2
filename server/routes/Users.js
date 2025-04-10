@@ -119,7 +119,7 @@ router.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
 });
 
-router.get("/users", validateToken, checkRole("admin"), async (req, res) => {
+router.get("/users", validateToken, checkRole(["admin", "moderator"] ), async (req, res) => {
   try {
     const { q, role } = req.query;
     

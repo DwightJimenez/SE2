@@ -4,16 +4,28 @@ import PageLoc from "../components/PageLoc";
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-const Question = ({ index, text, setRating, rating }) => {
+const Question = ({
+  index,
+  text,
+  setRating,
+  rating,
+  userId,
+  currentRating,
+}) => {
+  const hasRated = rating?.some((r) => r.UserId === userId);
+  const userSavedRating = rating?.find((r) => r.UserId === userId)?.score || 0;
+
+  // Use saved rating if already rated, otherwise show what's selected
+  const effectiveRating = hasRated ? userSavedRating : currentRating;
+
   return (
     <div className="flex flex-col max-w-200 mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
       <div className="flex justify-between">
         <input
           type="text"
           value={text}
-          placeholder="Question"
           className="p-2 rounded w-full"
-          readOnly // Prevent editing if it's just for display
+          readOnly
         />
       </div>
       <div className="flex flex-col justify-center">
@@ -27,13 +39,14 @@ const Question = ({ index, text, setRating, rating }) => {
             <input
               key={value}
               type="radio"
-              name={`rating-${index}`} // Unique name per question
+              name={`rating-${index}`}
               className={`mask mask-star-2 ${
-                rating >= value ? "bg-orange-400" : "bg-gray-600"
+                effectiveRating >= value ? "bg-orange-400" : "bg-gray-600"
               }`}
               aria-label={`${value} star`}
-              checked={rating === value}
-              onChange={() => setRating(index, value)} // Ensure the correct question is updated
+              checked={effectiveRating === value}
+              onChange={() => setRating(index, value)}
+              disabled={hasRated}
             />
           ))}
         </div>
@@ -52,17 +65,19 @@ const fetchQuestion = async (id) => {
   return response.data;
 };
 
-const fetchUserRatings = async (formId) => {
+const fetchUserRatings = async (questionId) => {
   const response = await axios.get(
-    `http://localhost:4001/rating/user/${formId}`,
+    `http://localhost:4001/rating/user/${questionId}`,
     { withCredentials: true }
   );
+
   return response.data; // Expecting { ratings: [{ questionId, score }] }
 };
 
 const UserRating = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const auth = JSON.parse(sessionStorage.getItem("authState"));
 
   const {
     data: question,
@@ -87,40 +102,41 @@ const UserRating = () => {
 
   useEffect(() => {
     if (question) {
+      console.log(question.Ratings, "userRatings"); // Debugging line to check the userRatings
       setTitle(question.title || "");
+
       setDescription(question.description || "");
-  
+
       const fetchedQuestions = question.Questions || [];
       setQuestions(fetchedQuestions);
-  
+
       // Load ratings from localStorage
-      const storedRatings = localStorage.getItem(`ratings-${id}`);
+      const storedRatings = sessionStorage.getItem(`ratings-${id}`);
       let defaultRatings = storedRatings ? JSON.parse(storedRatings) : {};
-  
+
       // If userRatings exist, update defaultRatings with API values
       if (userRatings && userRatings.ratings) {
         userRatings.ratings.forEach(({ questionId, score }) => {
-          const questionIndex = fetchedQuestions.findIndex((q) => q.id === questionId);
+          const questionIndex = fetchedQuestions.findIndex(
+            (q) => q.id === questionId
+          );
           if (questionIndex !== -1) {
             defaultRatings[questionIndex] = score;
           }
         });
       }
-  
+
       setRatings(defaultRatings);
     }
-  }, [question, userRatings]); 
-  
-  
+  }, [question, userRatings]);
 
- const setRating = (index, value) => {
-  setRatings((prev) => {
-    const updatedRatings = { ...prev, [index]: value };
-    localStorage.setItem(`ratings-${id}`, JSON.stringify(updatedRatings));
-    return updatedRatings;
-  });
-};
-
+  const setRating = (index, value) => {
+    setRatings((prev) => {
+      const updatedRatings = { ...prev, [index]: value };
+      sessionStorage.setItem(`ratings-${id}`, JSON.stringify(updatedRatings));
+      return updatedRatings;
+    });
+  };
 
   const submitRatings = async () => {
     try {
@@ -147,9 +163,13 @@ const UserRating = () => {
 
   return (
     <div className="dark:bg-gray-800 p-4">
-      <PageLoc currentPage="Evaluate Question"  showBack={true} backLink="/evaluation"/>
-      
-      <div className="p-4 my-4 max-w-200 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-2xl">
+      <PageLoc
+        currentPage="Evaluate Question"
+        showBack={true}
+        backLink="/evaluation"
+      />
+
+      <div className="p-4 my-4 max-w-200 bg-accent dark:bg-gray-900 rounded-lg shadow-2xl">
         <input
           type="text"
           value={title}
@@ -171,15 +191,23 @@ const UserRating = () => {
           index={index}
           text={q.text}
           setRating={setRating}
-          rating={ratings[index]}
+          rating={q.Ratings} // from DB
+          currentRating={ratings[index] || 0} // from session or selected
+          userId={auth.id} // your current user ID (replace later)
         />
       ))}
-      <button
-        onClick={submitRatings}
-        className="bg-blue-500 text-white p-2 mt-4 rounded"
-      >
-        Submit Ratings
-      </button>
+
+      {questions.length > 0 &&
+        !questions.every((q) =>
+          q.Ratings?.some((r) => r.UserId === auth.id)
+        ) && (
+          <button
+            onClick={submitRatings}
+            className="bg-blue-500 text-white p-2 mt-4 rounded"
+          >
+            Submit Ratings
+          </button>
+        )}
     </div>
   );
 };

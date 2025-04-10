@@ -23,9 +23,9 @@ import EventsList from "./pages/EventsList";
 import Settings from "./pages/Settings";
 import Evaluation from "./pages/Evaluation";
 import ManageUser from "./pages/ManageUser";
-import AddForm from "./pages/AddForm"
+import AddForm from "./pages/AddForm";
 import EditForm from "./pages/EditForm";
-import UserRating from './pages/UserRating';
+import UserRating from "./pages/UserRating";
 import CreateForm from "./pages/CreateForm";
 
 function App() {
@@ -83,6 +83,7 @@ function App() {
       );
       setAuthState({ username: "", id: 0, status: false, role: "" });
       sessionStorage.removeItem("authState");
+      sessionStorage.clear();
 
       navigate("/login");
     } catch (error) {
@@ -115,9 +116,13 @@ function App() {
                   <Route path="/evaluation" element={<Evaluation />} />
                   <Route path="/evaluation/add" element={<AddForm />} />
                   <Route path="/evaluation/:id" element={<EditForm />} />
-                  <Route path="/evaluation/evaluate/:id" element={<UserRating />} />
+                  <Route
+                    path="/evaluation/evaluate/:id"
+                    element={<UserRating />}
+                  />
 
-                  {(authState.role === "moderator" || authState.role === "admin")  && (
+                  {(authState.role === "moderator" ||
+                    authState.role === "admin") && (
                     <>
                       <Route path="/archive" element={<Archive />} />
                       <Route path="/events/lists" element={<EventsList />} />

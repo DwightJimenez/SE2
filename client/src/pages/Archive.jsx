@@ -23,7 +23,7 @@ const Archive = () => {
 
   const restoreArchive = async (id) => {
     try {
-      await axios.post(`http://localhost:4001/archive/restore/${id}`, {withCredentials:true});
+      await axios.post(`http://localhost:4001/archive/restore/${id}`, {}, {withCredentials:true});
       alert("Document restored successfully");
       // Manually re-fetch the documents after restore
       queryClient.invalidateQueries(["archivedDocuments"]);

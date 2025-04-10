@@ -12,9 +12,7 @@ const validateToken = (req, res, next) => {
     const validToken = verify(accessToken, "importantsecret");
     req.user = validToken; // Attach the decoded token to the request object
     // If the token is valid, proceed to the next middleware
-    if (validToken) {
-      return next();
-    }
+    next();
   } catch (err) {
     return res.status(403).json({ error: "Invalid token!" });
   }

@@ -8,7 +8,6 @@ import Chat from "./Chat";
 import CommentsSection from "./CommentsSection";
 
 const fetchPosts = async () => {
-
   const response = await axios.get("http://localhost:4001/posts", {
     withCredentials: true,
   });
