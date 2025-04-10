@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NavBar = ({logout}) => {
+const NavBar = ({ logout }) => {
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
@@ -40,13 +40,14 @@ const NavBar = ({logout}) => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </a>
+                  <Link to="/profile">
+                    <a className="justify-between">
+                      Profile
+                    </a>
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/settings'>Settings</Link>
+                  <Link to="/settings">Settings</Link>
                 </li>
                 <li>
                   <a onClick={handleLogout}>Logout</a>

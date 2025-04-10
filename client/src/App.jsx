@@ -27,6 +27,8 @@ import AddForm from "./pages/AddForm";
 import EditForm from "./pages/EditForm";
 import UserRating from "./pages/UserRating";
 import CreateForm from "./pages/CreateForm";
+import Profile from "./pages/Profile";
+
 
 function App() {
   // Load authState from sessionStorage if available
@@ -36,7 +38,7 @@ function App() {
       ? JSON.parse(savedAuthState)
       : { username: "", id: 0, status: false, role: "" };
   });
-
+  
   // 🔹 Use React Query to fetch authentication status
   const { data, isLoading, isError } = useQuery({
     queryKey: ["auth"],
@@ -116,6 +118,7 @@ function App() {
                   <Route path="/evaluation" element={<Evaluation />} />
                   <Route path="/evaluation/add" element={<AddForm />} />
                   <Route path="/evaluation/:id" element={<EditForm />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route
                     path="/evaluation/evaluate/:id"
                     element={<UserRating />}
