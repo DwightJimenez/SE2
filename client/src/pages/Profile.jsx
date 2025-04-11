@@ -2,10 +2,13 @@ import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UpdatePasswordBtn from "../components/UpdatePasswordBtn";
+import defaultAvatar from "../assets/default-avatar.png"; // Import default avatar image
 
 // Function to fetch user data
 const fetchUser = async () => {
-  const response = await axios.get("http://localhost:4001/auth/auth", { withCredentials: true });
+  const response = await axios.get("http://localhost:4001/auth/auth", {
+    withCredentials: true,
+  });
   return response.data; // Return user data
 };
 
@@ -30,15 +33,18 @@ const Profile = () => {
   if (isError) return <div>Error fetching user data</div>;
 
   return (
-    <div className="flex flex-col items-center m-4">
+    <div className="flex flex-col items-center m-4 gap-4">
       <div className="avatar my-4">
         <div className="ring-primary ring-offset-base-100 w-50 rounded-full ring ring-offset-2">
-          <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="User Avatar" />
+          <img
+            src={defaultAvatar}
+            alt="User Avatar"
+          />
         </div>
       </div>
-      <p className="text-2xl">{user.username}</p> {/* Display user's name */}
+      <p className="text-2xl">{user.username}</p>
+      <p className="text-2xl">{user?.email}</p>
       <UpdatePasswordBtn />
-      
     </div>
   );
 };
