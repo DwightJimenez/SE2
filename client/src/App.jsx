@@ -30,7 +30,7 @@ import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
 
 function App() {
-  // Load authState from sessionStorage if available
+ 
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -58,7 +58,6 @@ function App() {
           return newAuthState;
         }
       } catch (error) {
-        sessionStorage.removeItem("authState");
         return { status: false }; // Authentication failed
       }
     },
