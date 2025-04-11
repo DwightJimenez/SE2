@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import UpdatePasswordBtn from "../components/UpdatePasswordBtn";
 
 // Function to fetch user data
 const fetchUser = async () => {
@@ -36,6 +37,7 @@ const Profile = () => {
         </div>
       </div>
       <p className="text-2xl">{user.username}</p> {/* Display user's name */}
+      <UpdatePasswordBtn />
       
     </div>
   );

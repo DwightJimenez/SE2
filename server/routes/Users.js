@@ -67,6 +67,27 @@ router.post("/multiple-user", async (req, res) => {
   }
 });
 
+// Update Password Route
+router.put("/update-password", validateToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  try {
+    const user = await Users.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const match = await bcrypt.compare(oldPassword, user.password);
+    if (!match) return res.status(400).json({ error: "Old password is incorrect" });
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await Users.update({ password: hashedNewPassword }, { where: { id: user.id } });
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
