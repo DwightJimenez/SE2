@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import PageLoc from "../components/PageLoc";
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../helpers/AuthContext";
+import { useContext } from "react";
 
 const Question = ({
   index,
@@ -77,7 +79,9 @@ const fetchUserRatings = async (questionId) => {
 const UserRating = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const auth = JSON.parse(sessionStorage.getItem("authState"));
+  const { authState } = useContext(AuthContext);
+
+ 
 
   const {
     data: question,
@@ -193,13 +197,13 @@ const UserRating = () => {
           setRating={setRating}
           rating={q.Ratings} // from DB
           currentRating={ratings[index] || 0} // from session or selected
-          userId={auth.id} // your current user ID (replace later)
+          userId={authState.id} // your current user ID (replace later)
         />
       ))}
 
       {questions.length > 0 &&
         !questions.every((q) =>
-          q.Ratings?.some((r) => r.UserId === auth.id)
+          q.Ratings?.some((r) => r.UserId === authState.id)
         ) && (
           <button
             onClick={submitRatings}

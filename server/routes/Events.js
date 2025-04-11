@@ -60,7 +60,7 @@ router.post(
 router.delete(
   "/:id",
   validateToken,
-  checkRole("moderator"),
+  checkRole(["moderator", "admin"]),
   async (req, res) => {
     const { id } = req.params;
     console.log("Received ID for deletion:", id); // Debugging

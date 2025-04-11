@@ -61,19 +61,19 @@ const AddForm = () => {
   return (
     <div className="dark:bg-gray-800 p-4">
       <PageLoc currentPage="Add Form"  showBack={true} backLink="/create-form"/>
-      <div className="p-4 bg-gray-100 dark:bg-gray-900 rounded-lg shadow">
+      <div className="p-4 bg-accent dark:bg-gray-900 rounded-lg shadow">
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="text-3xl w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+          className="text-3xl w-full p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         <input
           type="text"
           value={description}
           placeholder="Form Description"
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-2 w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+          className="mt-2 w-full p-2  rounded focus:ring-2 focus:ring-blue-400"
         />
       </div>
 

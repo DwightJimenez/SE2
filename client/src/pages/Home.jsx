@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CreatePost from "./CreatePost";
@@ -6,6 +6,7 @@ import PostButton from "../components/PostButton";
 import Linkify from "react-linkify";
 import Chat from "./Chat";
 import CommentsSection from "./CommentsSection";
+import { AuthContext } from "../helpers/AuthContext";
 
 const fetchPosts = async () => {
   const response = await axios.get("http://localhost:4001/posts", {
@@ -15,7 +16,7 @@ const fetchPosts = async () => {
 };
 
 const Home = () => {
-  const auth = JSON.parse(sessionStorage.getItem("authState"));
+  const { authState } = useContext(AuthContext);
 
   const {
     data: posts,
@@ -126,7 +127,7 @@ const Home = () => {
                       {new Date(post.createdAt).toLocaleString()}
                     </span>
 
-                    {auth.username === post.username && (
+                    {authState.username === post.username && (
                       <div className="dropdown dropdown-center absolute top-4 right-4 cursor-pointer">
                         <div tabIndex={0} className="m-1">
                           <svg

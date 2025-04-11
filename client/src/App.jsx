@@ -15,7 +15,7 @@ import Archive from "./pages/Archive";
 import Documents from "./pages/Documents";
 import Dock from "./components/Dock";
 import { AuthContext } from "./helpers/AuthContext";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import AuditLog from "./pages/AuditLog";
@@ -29,16 +29,15 @@ import UserRating from "./pages/UserRating";
 import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
 
-
 function App() {
   // Load authState from sessionStorage if available
-  const [authState, setAuthState] = useState(() => {
-    const savedAuthState = sessionStorage.getItem("authState");
-    return savedAuthState
-      ? JSON.parse(savedAuthState)
-      : { username: "", id: 0, status: false, role: "" };
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    status: false,
+    role: "",
   });
-  
+
   // 🔹 Use React Query to fetch authentication status
   const { data, isLoading, isError } = useQuery({
     queryKey: ["auth"],
@@ -56,7 +55,6 @@ function App() {
             role: response.data.role,
           };
           setAuthState(newAuthState);
-          sessionStorage.setItem("authState", JSON.stringify(newAuthState)); // 🔹 Save auth state
           return newAuthState;
         }
       } catch (error) {
@@ -84,8 +82,6 @@ function App() {
         { withCredentials: true }
       );
       setAuthState({ username: "", id: 0, status: false, role: "" });
-      sessionStorage.removeItem("authState");
-      sessionStorage.clear();
 
       navigate("/login");
     } catch (error) {
@@ -124,8 +120,7 @@ function App() {
                     element={<UserRating />}
                   />
 
-                  {(authState.role === "moderator" ||
-                    authState.role === "admin") && (
+                  {(data.role === "moderator" || data.role === "admin") && (
                     <>
                       <Route path="/archive" element={<Archive />} />
                       <Route path="/events/lists" element={<EventsList />} />

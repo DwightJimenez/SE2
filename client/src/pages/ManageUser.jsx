@@ -3,6 +3,8 @@ import axios from "axios";
 import PageLoc from "../components/PageLoc";
 import AddUser from "../components/AddUser";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { AuthContext } from "../helpers/AuthContext";
+import { useContext } from "react";
 
 const API_URL = "http://localhost:4001";
 
@@ -19,7 +21,7 @@ const fetchUsers = async (query = "", role = "") => {
 
 function ManageUser() {
   const queryClient = useQueryClient();
-  const authState = JSON.parse(sessionStorage.getItem("authState"));
+  const { authState, } = useContext(AuthContext);
   const userRole = authState?.role;
   const [selectedRole, setSelectedRole] = useState("");
 

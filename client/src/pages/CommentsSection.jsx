@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Linkify from "react-linkify"
 import { useState } from "react";
 import axios from "axios"
+import { AuthContext } from "../helpers/AuthContext";
+import { useContext } from "react";
 
 
 const fetchComments = async (PostId) => {
@@ -11,7 +13,7 @@ const fetchComments = async (PostId) => {
 };
 
 const CommentsSection = ({ PostId }) => {
-  const auth = JSON.parse(sessionStorage.getItem("authState"));
+  const { authState } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
   const deleteCommentMutation = useMutation({
@@ -99,7 +101,7 @@ const CommentsSection = ({ PostId }) => {
               <span className="text-xs text-gray-500">
                 {new Date(comment.createdAt).toLocaleString()}
               </span>
-              {auth.username === comment.username && (
+              {authState.username === comment.username && (
                 <span
                   className="absolute top-4 right-4 cursor-pointer"
                   onClick={() => handleDeleteComment(comment.id)}
