@@ -68,7 +68,7 @@ function CalendarApp() {
     <div className="flex flex-col p-4 dark:bg-gray-800">
       <PageLoc currentPage="Events" />
       <AddEvent />
-      <div className="max-w-200">
+      <div className="max-w-200 shadow-2xl">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>
       <div></div>

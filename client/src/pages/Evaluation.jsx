@@ -30,7 +30,7 @@ const EvaluationList = ({ userId, questionId }) => {
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center p-4">
       <PageLoc currentPage="Evaluate" />
       {isLoading ? (
         <p>Loading evaluations...</p>
@@ -43,7 +43,7 @@ const EvaluationList = ({ userId, questionId }) => {
           {forms.map((form) => (
             <div
               key={form.id}
-              className="h-80 w-60 p-4   rounded-lg shadow-2xl relative flex"
+              className="h-80 w-60 p-4   rounded-lg shadow-2xl relative flex  border border-gray-300"
               onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
             >
               <h3 className="font-bold">{form.title}</h3>

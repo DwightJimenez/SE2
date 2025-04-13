@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"; // optional depending on how you're rou
 
 const PageLoc = ({ currentPage, showBack = false, backLink = "/" }) => {
   const BackContent = (
-    <div className="flex items-center gap-1 text-sm hover:underline">
+    <div className="flex items-center gap-1 text-sm hover:underline ">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -23,7 +23,7 @@ const PageLoc = ({ currentPage, showBack = false, backLink = "/" }) => {
   );
 
   return (
-    <div className="flex justify-between items-center sticky top-14 z-40 mb-4 p-4 bg-white w-full dark:bg-black rounded-lg shadow-2xl">
+    <div className="flex justify-between items-center border border-gray-300 sticky top-14 z-40 mb-4 p-4 bg-white w-full dark:bg-black rounded-lg shadow-2xl">
       <span className="text-2xl">{currentPage}</span>
       {showBack && (
         typeof backLink === "string" ? (

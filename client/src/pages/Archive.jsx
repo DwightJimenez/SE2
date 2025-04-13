@@ -58,7 +58,7 @@ const Archive = () => {
   return (
     <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Archive"/>
-      <div className="flex">
+      <div className="flex  border border-gray-300 bg-white shadow-2xl rounded-box">
         <table className="table">
           <thead>
             <tr>

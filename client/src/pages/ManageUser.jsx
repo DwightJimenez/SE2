@@ -86,7 +86,7 @@ function ManageUser() {
     <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Manage User" />
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 ">
         <AddUser onUserAdded={handleUserAdded} />
         <select
           value={selectedRole}
@@ -113,7 +113,7 @@ function ManageUser() {
           <p className="flex justify-center">Loading users ...</p>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+        <div className="overflow-x-auto rounded-box  border border-gray-300 bg-white shodow-2xl">
           <table className="table">
             <thead>
               <tr>

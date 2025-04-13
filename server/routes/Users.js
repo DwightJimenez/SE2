@@ -7,8 +7,7 @@ const { sign, verify } = require("jsonwebtoken");
 const checkRole = require("../middlewares/RoleMiddleware");
 const { Op, where } = require("sequelize");
 
-
-router.post("/",async (req, res) => {
+router.post("/", async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -25,7 +24,7 @@ router.post("/",async (req, res) => {
     await Users.create({
       username: username,
       password: hash,
-      role: "user", 
+      role: "user",
     });
 
     // Respond with success message after user creation
@@ -40,7 +39,9 @@ router.post("/multiple-user", async (req, res) => {
   const users = req.body; // Expecting an array of users
 
   if (!Array.isArray(users)) {
-    return res.status(400).json({ error: "Invalid input format. Expected an array of users." });
+    return res
+      .status(400)
+      .json({ error: "Invalid input format. Expected an array of users." });
   }
 
   try {
@@ -51,7 +52,7 @@ router.post("/multiple-user", async (req, res) => {
       if (existingUser) {
         continue; // Skip if the username is already taken
       }
-      
+
       const hash = await bcrypt.hash(password, 10);
       usersToCreate.push({ username, password: hash, role: "user" });
     }
@@ -60,7 +61,10 @@ router.post("/multiple-user", async (req, res) => {
       await Users.bulkCreate(usersToCreate); // Bulk insert users
     }
 
-    res.json({ message: "Users created successfully", count: usersToCreate.length });
+    res.json({
+      message: "Users created successfully",
+      count: usersToCreate.length,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create users" });
@@ -76,10 +80,14 @@ router.put("/update-password", validateToken, async (req, res) => {
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const match = await bcrypt.compare(oldPassword, user.password);
-    if (!match) return res.status(400).json({ error: "Old password is incorrect" });
+    if (!match)
+      return res.status(400).json({ error: "Old password is incorrect" });
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-    await Users.update({ password: hashedNewPassword }, { where: { id: user.id } });
+    await Users.update(
+      { password: hashedNewPassword },
+      { where: { id: user.id } }
+    );
 
     res.status(200).json({ message: "Password updated successfully" });
   } catch (err) {
@@ -96,11 +104,13 @@ router.post("/login", async (req, res) => {
   if (!user) return res.json({ error: "User Doesn't Exist" });
 
   bcrypt.compare(password, user.password).then(async (match) => {
-    if (!match) return res.json({ error: "Wrong Username And Password Combination" });
+    if (!match)
+      return res.json({ error: "Wrong Username And Password Combination" });
 
     const accessToken = sign(
-      { username: user.username, id: user.id, role: user.role }, 
-      "importantsecret", {expiresIn: "7d"}
+      { username: user.username, id: user.id, role: user.role },
+      "importantsecret",
+      { expiresIn: "7d" }
     );
     res.cookie("token", accessToken, {
       httpOnly: true,
@@ -134,54 +144,67 @@ router.post("/logout", (req, res) => {
   res.status(200).json({ message: "Logged out" });
 });
 
-
-
 router.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
 });
 
-router.get("/users", validateToken, checkRole(["admin", "moderator"] ), async (req, res) => {
-  try {
-    const { q, role } = req.query;
-    
-    let whereClause = {};
-    if (q) {
-      whereClause.username = { [Op.like]: `%${q}%` };
-    }
-    if (role && role !== "") {
-      whereClause.role = role;
-    }
+router.get(
+  "/users",
+  validateToken,
+  checkRole(["admin", "moderator"]),
+  async (req, res) => {
+    try {
+      const { q, role } = req.query;
 
-    const users = await Users.findAll({ where: whereClause });
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch users" });
+      let whereClause = {};
+      if (q) {
+        whereClause.username = { [Op.like]: `%${q}%` };
+      }
+      if (role && role !== "") {
+        whereClause.role = role;
+      }
+
+      const users = await Users.findAll({
+        where: whereClause,
+        order: [
+          ["role", "ASC"],
+          ["username", "ASC"],
+        ],
+      });
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch users" });
+    }
   }
-});
+);
 
+router.put(
+  "/users/:id",
+  validateToken,
+  checkRole("admin"),
+  async (req, res) => {
+    const { id } = req.params;
+    const { role } = req.body;
 
-router.put("/users/:id", validateToken, checkRole('admin'), async (req, res) => {
-  const { id } = req.params;
-  const { role } = req.body;
+    try {
+      // Find user by ID and update their role
+      const user = await Users.findByPk(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
 
-  try {
-    // Find user by ID and update their role
-    const user = await Users.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      // Update the role of the user
+      user.role = role;
+      await user.save();
+
+      res.json({ message: "Role updated successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update role" });
     }
-
-    // Update the role of the user
-    user.role = role;
-    await user.save();
-
-    res.json({ message: 'Role updated successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to update role' });
   }
-});
+);
 
-router.delete('/users/:id',validateToken, async (req, res) => {
+router.delete("/users/:id", validateToken, async (req, res) => {
   const { id } = req.params;
   try {
     const result = await Users.destroy({ where: { id } }); // Adjust if you're not using Sequelize
@@ -195,6 +218,5 @@ router.delete('/users/:id',validateToken, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 
 module.exports = router;

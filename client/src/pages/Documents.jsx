@@ -51,7 +51,7 @@ const Documents = () => {
           <AddDocument />
         </div>
       </div>
-      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white shadow-lg">
+      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white shadow-lg  border border-gray-300">
         <table className="table">
           <thead>
             <tr>

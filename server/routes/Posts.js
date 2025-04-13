@@ -4,17 +4,33 @@ const { Posts, Likes, Comments } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.get("/", validateToken, async (req, res) => {
-  const userId = req.user.id;
-  const listOfPosts = await Posts.findAll({
-    order: [["createdAt", "DESC"]],
-    include: [{ model: Likes, attributes: ['UserId']}, { model: Comments, as: "Comments" } ],
-  });
-  const updatedPosts = listOfPosts.map((post) => ({
-    ...post.toJSON(),
-    likedByUser: post.Likes.some((like) => like.UserId === userId),
-  }));
+  try {
+    const userId = req.user.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 15;
+    const offset = (page - 1) * limit;
 
-  res.json(updatedPosts);
+    const { count, rows } = await Posts.findAndCountAll({
+      order: [["createdAt", "DESC"]],
+      limit,
+      offset,
+      include: [
+        { model: Likes, attributes: ['UserId'] },
+        { model: Comments, as: "Comments" }
+      ],
+    });
+    
+    const updatedPosts = rows.map((post) => ({
+      ...post.toJSON(),
+      likedByUser: post.Likes.some((like) => like.UserId === userId),
+    }));
+    
+    res.json({ posts: updatedPosts, total: count });
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
 });
 
 router.post("/", validateToken, async (req, res) => {
@@ -64,13 +80,14 @@ router.post("/like/:id", validateToken, async (req, res) => {
     const postId = parseInt(req.params.id);
     const userId = req.user.id;
 
-    const exist = await Likes.findOne({ where: { PostId: postId, UserId: userId } });
+    const exist = await Likes.findOne({
+      where: { PostId: postId, UserId: userId },
+    });
 
     if (!exist) {
       await Likes.create({ PostId: postId, UserId: userId });
-      
+
       return res.json("Liked"); // Stop execution after sending response
-  
     } else {
       await Likes.destroy({ where: { PostId: postId, UserId: userId } });
       return res.json("Unliked"); // Stop execution after sending response
@@ -80,6 +97,5 @@ router.post("/like/:id", validateToken, async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
-
 
 module.exports = router;

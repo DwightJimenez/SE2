@@ -34,7 +34,7 @@ const AuditLog = () => {
   return (
     <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Audit Log" />
-      <div className="flex flex-col justify-center mb-4 h-auto bg-white rounded-lg shadow-lg dark:bg-gray-900 p-4">
+      <div className="flex flex-col justify-center mb-4 h-auto bg-white rounded-lg shadow-2xl dark:bg-gray-900 p-4  border border-gray-300">
         <div className="flex items-center justify-evenly space-x-4 p-4">
           {legendItems.map((item, index) => (
             <div key={index} className="flex items-center space-x-2">
@@ -46,7 +46,7 @@ const AuditLog = () => {
             </div>
           ))}
         </div>
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+        <div className="overflow-x-auto rounded-box border border-gray-200 bg-base-100">
           <table className="table table-lg">
             {/* head */}
             <thead>
