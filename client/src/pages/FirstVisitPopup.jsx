@@ -1,20 +1,59 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
-
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const FirstVisitPopup = () => {
   const [step, setStep] = useState(0); // 0 = intro, 1 = google sign in, 2 = set password
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const navigate = useNavigate();
 
-  const handleGoogleSignIn = () => {
-    // Simulate successful Google sign-in
-    setStep(2);
+  const handleGoogleSignIn = async (credentialResponse) => {
+    try {
+      const { credential } = credentialResponse;
+      const response = await axios.post(
+        "http://localhost:4001/google/link-google",
+        {
+          token: credential,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data && response.data.user) {
+        setStep(2);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Google linking failed.");
+    }
   };
 
-  const handleSetPassword = () => {
-    // Validate and save password here
-    alert("Password set! Redirecting to dashboard...");
-    // Redirect logic here
+  const handleSetPassword = async () => {
+    if (!newPass || newPass.length < 6)
+      return alert("Password must be at least 6 characters.");
+    if (newPass !== confirmPass) return alert("Passwords do not match.");
+
+    try {
+      const res = await axios.post(
+        "http://localhost:4001/auth/set-password",
+        {
+          password: newPass,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      alert("Password updated!");
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update password.");
+    }
   };
 
   return (
@@ -31,7 +70,8 @@ const FirstVisitPopup = () => {
           <div className="hero-content text-center text-neutral-content">
             <div className="">
               <h1 className="mb-5 text-5xl font-bold">
-                🎉 Welcome to WORKFLOW AUTOMATION SYSTEM for ACScis ORGANIZATION IN BICOL UNIVERSITY POLANGUI!
+                🎉 Welcome to WORKFLOW AUTOMATION SYSTEM for ACScis ORGANIZATION
+                IN BICOL UNIVERSITY POLANGUI!
               </h1>
               <p className="mb-3">👋 First time here? Let’s get you set up.</p>
               <p className="mb-5">
@@ -54,23 +94,18 @@ const FirstVisitPopup = () => {
           <p className="mb-4 text-sm text-gray-600">
             Link your account for faster, more secure logins.
           </p>
-          <button
-            onClick={handleGoogleSignIn}
-            className="flex items-center justify-center px-6 py-3 w-full text-gray-700 transition-colors duration-300 transform border rounded-lg hover:bg-gray-100"
-          >
-            <svg className="w-6 h-6 mr-2" viewBox="0 0 40 40">
-              {/* [Google Icon Paths] */}
-            </svg>
-            <span>Sign in with Google</span>
-          </button>
+          <GoogleLogin
+            onSuccess={(credentialResponse) =>
+              handleGoogleSignIn(credentialResponse)
+            }
+            onError={() => alert("Google login failed")}
+          />
         </div>
       )}
 
       {step === 2 && (
         <div className="text-center p-8 bg-white shadow-xl rounded-xl max-w-md w-full">
-          <div className="text-2xl font-semibold mb-4">
-            Set a New Password
-          </div>
+          <div className="text-2xl font-semibold mb-4">Set a New Password</div>
           <p className="mb-4 text-sm text-gray-600 italic">
             Please change your default password to keep your account secure.
           </p>
@@ -79,13 +114,20 @@ const FirstVisitPopup = () => {
               type="password"
               placeholder="New Password"
               className="input input-bordered w-full"
+              value={newPass}
+              onChange={(e) => setNewPass(e.target.value)}
             />
             <input
               type="password"
               placeholder="Confirm Password"
               className="input input-bordered w-full"
+              value={confirmPass}
+              onChange={(e) => setConfirmPass(e.target.value)}
             />
-            <button className="btn btn-primary w-full" onClick={handleSetPassword}>
+            <button
+              className="btn btn-primary w-full"
+              onClick={handleSetPassword}
+            >
               Set Password
             </button>
           </div>

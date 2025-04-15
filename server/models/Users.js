@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [["admin", "moderator", "user"]], // Only allow these roles
       },
     },
+    profilePicture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
   Users.associate = (models) => {
     Users.hasMany(models.Likes, {

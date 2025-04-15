@@ -3,16 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UpdatePasswordBtn from "../components/UpdatePasswordBtn";
 import defaultAvatar from "../assets/default-avatar.png"; // Import default avatar image
+import { data } from "react-router-dom";
+
 
 // Function to fetch user data
 const fetchUser = async () => {
-  const response = await axios.get("http://localhost:4001/auth/auth", {
+  const response = await axios.get("http://localhost:4001/auth/profile", {
     withCredentials: true,
   });
   return response.data; // Return user data
 };
 
+
 const Profile = () => {
+
   const {
     data: user,
     isLoading,
@@ -24,6 +28,7 @@ const Profile = () => {
   });
 
   useEffect(() => {
+
     if (isError) {
       console.error("Error fetching user data");
     }
@@ -37,7 +42,7 @@ const Profile = () => {
       <div className="avatar my-4">
         <div className="ring-primary ring-offset-base-100 w-50 rounded-full ring ring-offset-2">
           <img
-            src={defaultAvatar}
+            src={user?.profilePicture||defaultAvatar}
             alt="User Avatar"
           />
         </div>

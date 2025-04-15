@@ -30,6 +30,7 @@ import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 
+
 function App() {
   const [authState, setAuthState] = useState({
     username: "",
@@ -37,6 +38,7 @@ function App() {
     status: false,
     role: "",
     email: "",
+    profilePicture: "",
   });
   
 
@@ -83,7 +85,7 @@ function App() {
         {},
         { withCredentials: true }
       );
-      setAuthState({ username: "", id: 0, status: false, role: "" });
+      setAuthState({ username: "", id: 0, status: false, role: "" , email: "",});
 
       navigate("/login");
     } catch (error) {

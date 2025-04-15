@@ -43,6 +43,8 @@ const evaluation = require("./routes/Evaluation")
 app.use('/evaluation', evaluation)
 const rating = require("./routes/Rating")
 app.use('/rating', rating)
+const googleAuth = require("./routes/GoogleAuth")
+app.use("/google", googleAuth);
 
 db.sequelize.sync().then(() => {
   app.listen(port, "0.0.0.0", () => {

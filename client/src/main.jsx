@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 const CLIENT_ID =
-  "206669337448-9pcd3sq2ul3e8am5liiph48e93cemq5j.apps.googleusercontent.com";
+  "206669337448-71l7fbedu34dego6495taaphm0qbsruq.apps.googleusercontent.com";
 
 const queryClient = new QueryClient();
 

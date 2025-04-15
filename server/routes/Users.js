@@ -96,6 +96,28 @@ router.put("/update-password", validateToken, async (req, res) => {
   }
 });
 
+router.post("/set-password", validateToken, async (req, res) => {
+  const { password } = req.body;
+  if (!password || password.length < 6) {
+    return res.status(400).json({ error: "Password too short" });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await Users.findByPk(req.user.id);
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ message: "Password updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update password" });
+  }
+});
+
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -108,7 +130,7 @@ router.post("/login", async (req, res) => {
       return res.json({ error: "Wrong Username And Password Combination" });
 
     const accessToken = sign(
-      { username: user.username, id: user.id, role: user.role, email: user.email || "" },
+      { username: user.username, id: user.id, role: user.role, email: user.email || "" , profilePicture: user.profilePicture || "" },
       "importantsecret",
       { expiresIn: "7d" }
     );
@@ -145,7 +167,21 @@ router.post("/logout", (req, res) => {
 });
 
 router.get("/auth", validateToken, (req, res) => {
+  console.log(req.user);
   res.json(req.user);
+});
+
+router.get("/profile", validateToken, async (req, res) => {
+  try {
+    const user = await Users.findByPk(req.user.id, {
+      attributes: ["id", "username", "email", "role", "profilePicture"]
+    });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 router.get(
