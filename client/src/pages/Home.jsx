@@ -151,6 +151,7 @@ const Home = () => {
                 <div key={post.id} className="card bg-white border border-gray-300 shadow-2xl p-4">
                   <div>
                     <div className="flex items-center space-x-2">
+                      
                       <span className="font-semibold">@{post.username}</span>
                       <span className="text-sm text-gray-500">
                         {new Date(post.createdAt).toLocaleString()}

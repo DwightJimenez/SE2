@@ -119,9 +119,14 @@ router.post("/set-password", validateToken, async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password,} = req.body;
 
-  const user = await Users.findOne({ where: { username: username } });
+  const user = await Users.findOne({
+    where: {
+      [Op.or]: [{ username: username }, { email: username }],
+    },
+  });
+
 
   if (!user) return res.json({ error: "User Doesn't Exist" });
 
@@ -177,7 +182,12 @@ router.get("/profile", validateToken, async (req, res) => {
       attributes: ["id", "username", "email", "role", "profilePicture"]
     });
     if (!user) return res.status(404).json({ error: "User not found" });
-    res.json(user);
+    res.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      profilePicture: user.profilePicture, // Make sure this exists
+    });
   } catch (err) {
     console.error("Error fetching profile:", err);
     res.status(500).json({ error: "Internal server error" });
