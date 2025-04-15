@@ -28,15 +28,17 @@ import EditForm from "./pages/EditForm";
 import UserRating from "./pages/UserRating";
 import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
+import FirstVisitPopup from "./pages/FirstVisitPopup";
 
 function App() {
- 
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
     status: false,
     role: "",
+    email: "",
   });
+  
 
   // 🔹 Use React Query to fetch authentication status
   const { data, isLoading, isError } = useQuery({
@@ -53,6 +55,7 @@ function App() {
             id: response.data.id,
             status: true,
             role: response.data.role,
+            email: response.data.email,
           };
           setAuthState(newAuthState);
           return newAuthState;
@@ -93,44 +96,51 @@ function App() {
       <BrowserRouter>
         <div className="flex h-screen w-screen ">
           {authState.status ? (
-            <>
-              <NavBar className="fixed" logout={logout} />
-              <div className="fixed top-16 left-0 h-full bg-base-100 shadow-sm z-40 max-sm:hidden">
-                <Sidebar />
-              </div>
-              <div className="sm:hidden">
-                <Dock />
-              </div>
+            authState.email === ""? (
+              <Routes>
+                <Route path="/first-visit" element={<FirstVisitPopup />} />
+                <Route path="*" element={<FirstVisitPopup />} />
+              </Routes>
+            ) : (
+              <>
+                <NavBar className="fixed" logout={logout} />
+                <div className="fixed top-16 left-0 h-full bg-base-100 shadow-sm z-40 max-sm:hidden">
+                  <Sidebar />
+                </div>
+                <div className="sm:hidden">
+                  <Dock />
+                </div>
 
-              {/* Main Content */}
-              <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/post/:id" element={<Home />} />
-                  <Route path="/events" element={<CalendarApp />} />
-                  <Route path="/audit-log" element={<AuditLog />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/evaluation" element={<Evaluation />} />
-                  <Route path="/evaluation/add" element={<AddForm />} />
-                  <Route path="/evaluation/:id" element={<EditForm />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route
-                    path="/evaluation/evaluate/:id"
-                    element={<UserRating />}
-                  />
+                {/* Main Content */}
+                <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/post/:id" element={<Home />} />
+                    <Route path="/events" element={<CalendarApp />} />
+                    <Route path="/audit-log" element={<AuditLog />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/evaluation" element={<Evaluation />} />
+                    <Route path="/evaluation/add" element={<AddForm />} />
+                    <Route path="/evaluation/:id" element={<EditForm />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route
+                      path="/evaluation/evaluate/:id"
+                      element={<UserRating />}
+                    />
 
-                  {(data.role === "moderator" || data.role === "admin") && (
-                    <>
-                      <Route path="/archive" element={<Archive />} />
-                      <Route path="/events/lists" element={<EventsList />} />
-                      <Route path="/documents" element={<Documents />} />
-                      <Route path="/manage-user" element={<ManageUser />} />
-                      <Route path="/create-form" element={<CreateForm />} />
-                    </>
-                  )}
-                </Routes>
-              </div>
-            </>
+                    {(data.role === "moderator" || data.role === "admin") && (
+                      <>
+                        <Route path="/archive" element={<Archive />} />
+                        <Route path="/events/lists" element={<EventsList />} />
+                        <Route path="/documents" element={<Documents />} />
+                        <Route path="/manage-user" element={<ManageUser />} />
+                        <Route path="/create-form" element={<CreateForm />} />
+                      </>
+                    )}
+                  </Routes>
+                </div>
+              </>
+            )
           ) : (
             <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
               <Routes>

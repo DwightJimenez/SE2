@@ -43,7 +43,7 @@ const Profile = () => {
         </div>
       </div>
       <p className="text-2xl">{user.username}</p>
-      <p className="text-2xl">{user?.email}</p>
+      <p className="text-2xl">{user.email}</p>
       <UpdatePasswordBtn />
     </div>
   );

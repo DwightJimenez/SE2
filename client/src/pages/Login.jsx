@@ -21,13 +21,13 @@ const Login = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          sessionStorage.setItem("authState", JSON.stringify(response.data));
 
           setAuthState({
             username: response.data.username,
             id: response.data.id,
             status: true,
             role: response.data.role,
+            email: response.data.email,
           });
           console.log("Login Successfully");
           navigate("/");
@@ -132,7 +132,7 @@ const Login = () => {
         </a>
       </div>
       <div
-        className="flex w-full  lg:block lg:w-1/2 hidden"
+        className="w-full  lg:block lg:w-1/2 hidden"
         style={{
           background:
             "linear-gradient(150deg, rgb(51.81, 15.18, 119.84) 0%, rgb(103, 29.24, 150.8) 59.73%, rgb(255, 71, 242.73) 100%)",
