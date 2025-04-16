@@ -1,5 +1,6 @@
 import React from "react";
 import CreateUser from "../pages/CreateUser";
+import Modal from "./Modal";
 
 const AddUser = ({onUserAdded}) => {
   return (

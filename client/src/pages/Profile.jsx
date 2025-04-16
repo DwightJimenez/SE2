@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UpdatePasswordBtn from "../components/UpdatePasswordBtn";
 import defaultAvatar from "../assets/default-avatar.png"; // Import default avatar image
+import userAvatar from "../assets/user.png";
 
 
 
@@ -42,12 +43,12 @@ const Profile = () => {
       <div className="avatar my-4">
         <div className="ring-primary ring-offset-base-100 w-50 rounded-full ring ring-offset-2">
           <img
-            src={user?.profilePicture|| defaultAvatar}
+            src={user?.profilePicture || userAvatar}
             alt="User Avatar"
             referrerPolicy="no-referrer"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = defaultAvatar;
+              e.target.src = userAvatar;
             }}
           />
         </div>

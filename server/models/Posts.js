@@ -1,14 +1,16 @@
-
-
 module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define("Posts", {
     text: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    username: {
-      type: DataTypes.STRING,
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "users",
+        key: "id",
+      },
     },
   });
 
@@ -19,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Posts.hasMany(models.Likes, {
       onDelete: "cascade",
+    });
+
+    Posts.belongsTo(models.Users, {
+      foreignKey: "userId",
     });
   };
 

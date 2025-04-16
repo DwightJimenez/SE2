@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import defaultAvatar from "../assets/default-avatar.png";
+import userAvatar from "../assets/user.png";
 
 const fetchUser = async () => {
   const response = await axios.get("http://localhost:4001/auth/profile", {
@@ -39,12 +39,12 @@ const PostButton = () => {
       >
         <div className="w-10 rounded-full">
           <img
-            src={user?.profilePicture || defaultAvatar}
+            src={user?.profilePicture || userAvatar}
             alt="User Avatar"
             referrerPolicy="no-referrer"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = defaultAvatar;
+              e.target.src = userAvatar;
             }}
           />
         </div>
@@ -56,6 +56,7 @@ const PostButton = () => {
       >
         What's on your mind?
       </button>
+      
     </div>
   );
 };

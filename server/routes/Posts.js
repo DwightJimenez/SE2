@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Posts, Likes, Comments } = require("../models");
+const { Posts, Likes, Comments, Users } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.get("/", validateToken, async (req, res) => {
@@ -15,18 +15,19 @@ router.get("/", validateToken, async (req, res) => {
       limit,
       offset,
       include: [
-        { model: Likes, attributes: ['UserId'] },
-        { model: Comments, as: "Comments" }
+        { model: Likes, attributes: ["UserId"] },
+        { model: Comments, as: "Comments" },
+        { model: Users, attributes: ["username"] },
       ],
     });
-    
+
     const updatedPosts = rows.map((post) => ({
       ...post.toJSON(),
       likedByUser: post.Likes.some((like) => like.UserId === userId),
+      username: post.User ? post.User.username : null,
     }));
-    
+
     res.json({ posts: updatedPosts, total: count });
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Something went wrong" });
@@ -43,9 +44,9 @@ router.post("/", validateToken, async (req, res) => {
       return res.status(400).json({ error: "Text field is required" });
     }
 
-    const username = req.user ? req.user.username : "Unknown";
+    const userId = req.user.id;
 
-    const newPost = await Posts.create({ text, username });
+    const newPost = await Posts.create({ text, userId });
     res.json({ success: true, post: newPost });
   } catch (error) {
     console.error("🔥 Error creating post:", error); //

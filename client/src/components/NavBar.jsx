@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import userAvatar from "../assets/user.png";
 
 const fetchProfile = async () => {
   const response = await axios.get("http://localhost:4001/auth/profile", {
@@ -11,7 +12,6 @@ const fetchProfile = async () => {
 };
 
 const NavBar = ({ logout }) => {
-
   const {
     data: user,
     isLoading,
@@ -28,8 +28,6 @@ const NavBar = ({ logout }) => {
       logout();
     }
   };
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching profile data</div>;
 
   return (
     <div>
@@ -65,13 +63,15 @@ const NavBar = ({ logout }) => {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle avatar"
+                className="btn btn-ghost btn-circle avatar mx-4"
               >
                 <div className="w-10 rounded-full ring-primary ring-offset-base-100 ring ring-offset-2">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src={user?.profilePicture||"https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                    src={user?.profilePicture || userAvatar}
                   />
+                  {isLoading && <div>Loading...</div>}
+                  {isError && <div>Error fetching profile data</div>}
                 </div>
               </div>
               <ul
