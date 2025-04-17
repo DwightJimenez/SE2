@@ -101,7 +101,7 @@ function App() {
             authState.email === ""? (
               <Routes>
                 <Route path="/first-visit" element={<FirstVisitPopup />} />
-                <Route path="*" element={<FirstVisitPopup />} />
+                <Route path="*" element={<Navigate to="/first-visit" replace />} />
               </Routes>
             ) : (
               <>

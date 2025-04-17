@@ -69,7 +69,7 @@ const AuditLog = () => {
                     {log.action}
                   </td>
                   <td className="text-sm">{log.title}</td>
-                  <td className="text-sm">{log.user}</td>
+                  <td className="text-sm">{log.User.username}</td>
                   <td className="text-sm">
                     {new Date(log.timestamp).toLocaleString()}
                   </td>
