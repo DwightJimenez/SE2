@@ -33,9 +33,6 @@ router.post("/:id", validateToken,  async (req, res) => {
       version: document.version,
     });
 
-    // Log after archiving
-    console.log("Document archived:", document.name);
-
     // Delete the document from the original table
     await document.destroy();
     console.log("Document destroyed:", document.id);
@@ -44,7 +41,7 @@ router.post("/:id", validateToken,  async (req, res) => {
     await AuditLog.create({
       action: "Archive",
       title: document.name,
-      user: user,
+      userId: req.user.id,
     });
     console.log("Audit log created for archiving");
 
@@ -77,7 +74,7 @@ router.post("/restore/:id", validateToken, async (req, res) => {
     await AuditLog.create({
       action: "Restore",
       title: archivedDocument.name,
-      user: user,
+      userId: req.user.id,
     });
 
     // Delete the document from the archived table
@@ -103,7 +100,7 @@ router.delete("/delete/:id", validateToken, async (req, res) => {
     await AuditLog.create({
       action: "Delete",
       title: archivedDocument.name,
-      user: user,
+      userId: req.user.id,
     });
     await archivedDocument.destroy();
     res.json({ message: "Archived document deleted successfully" });

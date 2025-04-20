@@ -1,35 +1,11 @@
 import React from "react";
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useContext } from "react";
 import userAvatar from "../assets/user.png";
+import { AuthContext } from "../helpers/AuthContext";
 
-const fetchUser = async () => {
-  const response = await axios.get("http://localhost:4001/auth/profile", {
-    withCredentials: true,
-  });
-  return response.data; // Return user data
-};
 
 const PostButton = () => {
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
-    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
-  });
-
-  useEffect(() => {
-    if (isError) {
-      console.error("Error fetching user data");
-    }
-  }, [isError]);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching user data</div>;
+  const { authState } = useContext(AuthContext);
   return (
     <div className="flex mb-4 p-4 bg-white max-w-200 dark:bg-black rounded-2xl shadow-lg sticky  border border-gray-300">
       <div
@@ -39,7 +15,7 @@ const PostButton = () => {
       >
         <div className="w-10 rounded-full">
           <img
-            src={user?.profilePicture || userAvatar}
+            src={authState.profilePicture || userAvatar}
             alt="User Avatar"
             referrerPolicy="no-referrer"
             onError={(e) => {

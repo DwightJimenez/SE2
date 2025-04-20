@@ -15,7 +15,7 @@ import Archive from "./pages/Archive";
 import Documents from "./pages/Documents";
 import Dock from "./components/Dock";
 import { AuthContext } from "./helpers/AuthContext";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import AuditLog from "./pages/AuditLog";
@@ -30,8 +30,8 @@ import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 
-
 function App() {
+  
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -40,33 +40,33 @@ function App() {
     email: "",
     profilePicture: "",
   });
-  
 
-  // 🔹 Use React Query to fetch authentication status
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
-      try {
-        const response = await axios.get("http://localhost:4001/auth/auth", {
+      const [authRes, profileRes] = await Promise.all([
+        axios.get("http://localhost:4001/auth/auth", { withCredentials: true }),
+        axios.get("http://localhost:4001/auth/profile", {
           withCredentials: true,
-        });
+        }),
+      ]);
 
-        if (!response.data.error) {
-          const newAuthState = {
-            username: response.data.username,
-            id: response.data.id,
-            status: true,
-            role: response.data.role,
-            email: response.data.email,
-          };
-          setAuthState(newAuthState);
-          return newAuthState;
-        }
-      } catch (error) {
-        return { status: false }; // Authentication failed
+      if (!authRes.data.error) {
+        return {
+          ...authRes.data,
+          profilePicture: profileRes.data.profilePicture,
+          status: true,
+        };
       }
+
+      return { status: false };
     },
+    staleTime: 1000 * 60 * 5,
   });
+
+  useEffect(() => {
+    if (data?.status) setAuthState(data);
+  }, [data]);
 
   // Show loading screen while fetching auth state
   if (isLoading)
@@ -85,7 +85,7 @@ function App() {
         {},
         { withCredentials: true }
       );
-      setAuthState({ username: "", id: 0, status: false, role: "" , email: "",});
+      setAuthState({ username: "", id: 0, status: false, role: "", email: "" });
 
       navigate("/login");
     } catch (error) {
@@ -98,10 +98,13 @@ function App() {
       <BrowserRouter>
         <div className="flex h-screen w-screen ">
           {authState.status ? (
-            authState.email === ""? (
+            authState.email === "" ? (
               <Routes>
                 <Route path="/first-visit" element={<FirstVisitPopup />} />
-                <Route path="*" element={<Navigate to="/first-visit" replace />} />
+                <Route
+                  path="*"
+                  element={<Navigate to="/first-visit" replace />}
+                />
               </Routes>
             ) : (
               <>

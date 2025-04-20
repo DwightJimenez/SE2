@@ -51,7 +51,7 @@ const Documents = () => {
           <AddDocument />
         </div>
       </div>
-      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white shadow-lg  border border-gray-300">
+      <div className="overflow-x-auto rounded-box  bg-white shadow-lg  border border-gray-300">
         <table className="table">
           <thead>
             <tr>
@@ -82,7 +82,7 @@ const Documents = () => {
                     </a>
                   </td>
                   <td>
-                    <button onClick={() => handleArchive(doc.id)}>
+                    <button className="btn bg-accent" onClick={() => handleArchive(doc.id)}>
                       Archive
                     </button>
                   </td>

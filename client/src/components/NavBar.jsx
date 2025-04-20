@@ -1,26 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { AuthContext } from "../helpers/AuthContext";
 import userAvatar from "../assets/user.png";
 
-const fetchProfile = async () => {
-  const response = await axios.get("http://localhost:4001/auth/profile", {
-    withCredentials: true,
-  });
-  return response.data;
-};
-
 const NavBar = ({ logout }) => {
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["profile"],
-    queryFn: fetchProfile,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { authState } = useContext(AuthContext);
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
@@ -68,10 +52,8 @@ const NavBar = ({ logout }) => {
                 <div className="w-10 rounded-full ring-primary ring-offset-base-100 ring ring-offset-2">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src={user?.profilePicture || userAvatar}
+                    src={authState.profilePicture || userAvatar}
                   />
-                  {isLoading && <div>Loading...</div>}
-                  {isError && <div>Error fetching profile data</div>}
                 </div>
               </div>
               <ul

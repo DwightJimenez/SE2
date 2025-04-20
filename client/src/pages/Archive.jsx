@@ -4,7 +4,9 @@ import axios from "axios";
 import PageLoc from "../components/PageLoc";
 
 const fetchArchivedDocuments = async () => {
-  const response = await axios.get(`http://localhost:4001/archive`, {withCredentials:true});
+  const response = await axios.get(`http://localhost:4001/archive`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -23,7 +25,11 @@ const Archive = () => {
 
   const restoreArchive = async (id) => {
     try {
-      await axios.post(`http://localhost:4001/archive/restore/${id}`, {}, {withCredentials:true});
+      await axios.post(
+        `http://localhost:4001/archive/restore/${id}`,
+        {},
+        { withCredentials: true }
+      );
       alert("Document restored successfully");
       // Manually re-fetch the documents after restore
       queryClient.invalidateQueries(["archivedDocuments"]);
@@ -34,7 +40,9 @@ const Archive = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4001/archive/delete/${id}`, {withCredentials:true});
+      await axios.delete(`http://localhost:4001/archive/delete/${id}`, {
+        withCredentials: true,
+      });
       alert("Document deleted successfully");
       // Manually re-fetch the documents after delete
       queryClient.invalidateQueries(["archivedDocuments"]);
@@ -57,7 +65,7 @@ const Archive = () => {
 
   return (
     <div className="p-4 dark:bg-gray-800">
-      <PageLoc currentPage="Archive"/>
+      <PageLoc currentPage="Archive" />
       <div className="flex  border border-gray-300 bg-white shadow-2xl rounded-box">
         <table className="table">
           <thead>
@@ -82,10 +90,13 @@ const Archive = () => {
                   </a>
                 </td>
                 <td>
-                  <button onClick={() => restoreArchive(doc.id)}>
+                  <button
+                    className="btn bg-accent"
+                    onClick={() => restoreArchive(doc.id)}
+                  >
                     Restore
                   </button>
-                  <button
+                  <button className="btn"
                     onClick={() => handleDelete(doc.id)}
                     style={{ background: "red", color: "white" }}
                   >
