@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import { diffWords } from "diff"; // 👈 Add this import at the top with your other imports
-
+import { diffWords } from "diff";
+import { saveAs } from "file-saver";
 import DOMPurify from 'dompurify';
+import { pdfExporter } from 'quill-to-pdf';
 
 function generateDiffHTML(oldHTML, newHTML) {
   const diffs = diffWords(oldHTML, newHTML);
@@ -32,7 +33,7 @@ function Editor() {
   const [diffContent, setDiffContent] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
-  
+  const quillRef = useRef(null); // Ref for accessing Quill instance
 
   // Load version history and editor content from localStorage or server
   useEffect(() => {
@@ -115,9 +116,30 @@ function Editor() {
     },
   };
 
+  async function exportPdf() {
+    // Retrieve the Quill instance using the ref
+    const quillInstance = quillRef.current.getEditor();
+  
+    // Get the delta object directly from the Quill editor
+    const delta = quillInstance.getContents();
+    console.log(delta)
+    try {
+      // Generate the PDF from the delta object
+      const blob = await pdfExporter.generatePdf(delta);
+  
+      // Download the PDF
+      saveAs(blob, "pdf-export.pdf");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  }
+  
+
   return (
     <div className="p-4 flex gap-4">
+      <button onClick={exportPdf}>PDF</button>
       <ReactQuill
+        ref={quillRef} // Attach the ref here
         theme="snow"
         value={editorContent}
         onChange={setEditorContent}
