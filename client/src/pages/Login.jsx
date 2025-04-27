@@ -87,7 +87,6 @@ const Login = () => {
               setEmail(event.target.value);
             }}
           />
-          
         </div>
 
         <div className="mt-4 relative">

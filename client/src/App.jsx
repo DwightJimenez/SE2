@@ -31,7 +31,6 @@ import Profile from "./pages/Profile";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 
 function App() {
-  
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -69,7 +68,7 @@ function App() {
   }, [data]);
 
   // Show loading screen while fetching auth state
-  if (isLoading|| (data && !authState.status))
+  if (isLoading || (data && !authState.status))
     return (
       <div className="w-screen h-screen flex justify-center items-center">
         <span className="loading loading-dots loading-xl"></span>
@@ -85,7 +84,14 @@ function App() {
         {},
         { withCredentials: true }
       );
-      setAuthState({ username: "", id: 0, status: false, role: "", email: "", profilePicture: "" });
+      setAuthState({
+        username: "",
+        id: 0,
+        status: false,
+        role: "",
+        email: "",
+        profilePicture: "",
+      });
 
       navigate("/login");
     } catch (error) {
@@ -133,7 +139,8 @@ function App() {
                       element={<UserRating />}
                     />
 
-                    {(authState.role === "moderator" || authState.role === "admin") && (
+                    {(authState.role === "moderator" ||
+                      authState.role === "admin") && (
                       <>
                         <Route path="/archive" element={<Archive />} />
                         <Route path="/events/lists" element={<EventsList />} />

@@ -49,7 +49,7 @@ const FirstVisitPopup = () => {
       );
 
       alert("Password updated!");
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Failed to update password.");
