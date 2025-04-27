@@ -4,8 +4,8 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { diffWords } from "diff";
 import { saveAs } from "file-saver";
-import DOMPurify from 'dompurify';
-import { pdfExporter } from 'quill-to-pdf';
+import DOMPurify from "dompurify";
+import * as quillToWord from "quill-to-word";
 
 function generateDiffHTML(oldHTML, newHTML) {
   const diffs = diffWords(oldHTML, newHTML);
@@ -116,28 +116,25 @@ function Editor() {
     },
   };
 
-  async function exportPdf() {
-    // Retrieve the Quill instance using the ref
-    const quillInstance = quillRef.current.getEditor();
-  
-    // Get the delta object directly from the Quill editor
-    const delta = quillInstance.getContents();
-    console.log(delta)
-    try {
-      // Generate the PDF from the delta object
-      const blob = await pdfExporter.generatePdf(delta);
-  
-      // Download the PDF
-      saveAs(blob, "pdf-export.pdf");
-    } catch (error) {
-      console.error("Error generating PDF:", error);
+  const exportToWord = async () => {
+    const editor = quillRef.current;
+    if (!editor) {
+      console.error("Quill editor is not ready yet.");
+      return;
     }
-  }
+    
+    const delta = editor.getEditor().getContents(); // get delta contents
+    console.log(delta);
+    
+    const config = { exportAs: "blob" };
+    const blob = await quillToWord.generateWord(delta, config);
+    saveAs(blob, "my-document.docx");
+  };
   
 
   return (
     <div className="p-4 flex gap-4">
-      <button onClick={exportPdf}>PDF</button>
+      <button onClick={exportToWord}>Export To Word</button>
       <ReactQuill
         ref={quillRef} // Attach the ref here
         theme="snow"
@@ -162,7 +159,7 @@ function Editor() {
 
           <ReactQuill
             readOnly={true}
-            value={diffContent} 
+            value={diffContent}
             modules={{ toolbar: false }}
           />
 
