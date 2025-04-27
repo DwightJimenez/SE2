@@ -45,6 +45,8 @@ const rating = require("./routes/Rating")
 app.use('/rating', rating)
 const googleAuth = require("./routes/GoogleAuth")
 app.use("/google", googleAuth);
+const editor = require("./routes/Editor")
+app.use("/editor", editor);
 
 db.sequelize.sync().then(() => {
   app.listen(port, "0.0.0.0", () => {

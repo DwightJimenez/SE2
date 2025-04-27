@@ -29,6 +29,7 @@ import UserRating from "./pages/UserRating";
 import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
+import Editor from "./pages/Editor";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -147,6 +148,7 @@ function App() {
                         <Route path="/documents" element={<Documents />} />
                         <Route path="/manage-user" element={<ManageUser />} />
                         <Route path="/create-form" element={<CreateForm />} />
+                        <Route path="/editor" element={<Editor/>} />
                       </>
                     )}
                   </Routes>
