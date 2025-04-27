@@ -124,8 +124,6 @@ function Editor() {
     }
     
     const delta = editor.getEditor().getContents(); // get delta contents
-    console.log(delta);
-    
     const config = { exportAs: "blob" };
     const blob = await quillToWord.generateWord(delta, config);
     saveAs(blob, "my-document.docx");
