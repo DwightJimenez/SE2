@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { diffWords } from "diff"; // 👈 Add this import at the top with your other imports
+import { set } from "react-hook-form";
 
 function generateDiffHTML(oldHTML, newHTML) {
   const diffs = diffWords(oldHTML, newHTML);
@@ -121,7 +122,7 @@ function Editor() {
           <div className="flex justify-between items-center">
             <h3 className="font-bold mb-2">Changes Compared to Current</h3>
             <button
-              onClick={() => setShowPreview(false)}
+              onClick={() => {setShowPreview(false); setSelectedVersion(null)}}
               className="text-red-500 hover:text-red-700"
             >
               Close
