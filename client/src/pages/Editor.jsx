@@ -3,11 +3,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { diffWords } from "diff"; // 👈 Add this import at the top with your other imports
-import { set } from "react-hook-form";
+
+import DOMPurify from 'dompurify';
 
 function generateDiffHTML(oldHTML, newHTML) {
   const diffs = diffWords(oldHTML, newHTML);
-  return diffs
+  const diffHTML = diffs
     .map((part) => {
       if (part.added) {
         return `<span style="background-color: #bbf7d0;">${part.value}</span>`;
@@ -18,6 +19,9 @@ function generateDiffHTML(oldHTML, newHTML) {
       return part.value;
     })
     .join("");
+
+  // Sanitize the generated diff HTML
+  return DOMPurify.sanitize(diffHTML);
 }
 
 function Editor() {
@@ -27,6 +31,8 @@ function Editor() {
   const [selectedVersion, setSelectedVersion] = useState(null);
   const [diffContent, setDiffContent] = useState("");
   const [showPreview, setShowPreview] = useState(false);
+
+  
 
   // Load version history and editor content from localStorage or server
   useEffect(() => {
@@ -118,20 +124,24 @@ function Editor() {
         modules={modules}
       />
       {showPreview && selectedVersion && (
-        <div className="mt-6 p-4 border rounded bg-white shadow">
+        <div className="p-4 border rounded bg-white shadow">
           <div className="flex justify-between items-center">
             <h3 className="font-bold mb-2">Changes Compared to Current</h3>
             <button
-              onClick={() => {setShowPreview(false); setSelectedVersion(null)}}
+              onClick={() => {
+                setShowPreview(false);
+                setSelectedVersion(null);
+              }}
               className="text-red-500 hover:text-red-700"
             >
               Close
             </button>
           </div>
 
-          <div
-            className="ql-editor text-sm leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: diffContent }}
+          <ReactQuill
+            readOnly={true}
+            value={diffContent} 
+            modules={{ toolbar: false }}
           />
 
           <button
