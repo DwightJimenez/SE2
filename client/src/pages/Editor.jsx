@@ -139,9 +139,10 @@ function Editor() {
         value={editorContent}
         onChange={setEditorContent}
         modules={modules}
+        className={showPreview && selectedVersion ? "w-1/2": "w-full"}
       />
       {showPreview && selectedVersion && (
-        <div className="p-4 border rounded bg-white shadow">
+        <div className="p-4 border rounded bg-white shadow w-1/2">
           <div className="flex justify-between items-center">
             <h3 className="font-bold mb-2">Changes Compared to Current</h3>
             <button
