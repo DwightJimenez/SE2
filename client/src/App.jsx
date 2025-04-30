@@ -30,6 +30,7 @@ import CreateForm from "./pages/CreateForm";
 import Profile from "./pages/Profile";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 import Editor from "./pages/Editor";
+import CreateDoc from "./pages/CreateDoc";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -149,6 +150,8 @@ function App() {
                         <Route path="/manage-user" element={<ManageUser />} />
                         <Route path="/create-form" element={<CreateForm />} />
                         <Route path="/editor" element={<Editor/>} />
+                        <Route path="/editor/:id" element={<Editor/>} />
+                        <Route path="/create-document" element={<CreateDoc/>} />
                       </>
                     )}
                   </Routes>

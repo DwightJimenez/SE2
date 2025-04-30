@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    fileId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     timestamp: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -17,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
   Version.associate = (models) => {
     Version.belongsTo(models.Users, {
       foreignKey: "userId",
+      onDelete: "CASCADE",
+    });
+    Version.belongsTo(models.File, {
+      foreignKey: "fileId",
       onDelete: "CASCADE",
     });
   };
