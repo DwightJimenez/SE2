@@ -30,7 +30,6 @@ router.get("/versions/:id", async (req, res) => {
   }
 });
 
-
 router.get("/file", async (req, res) => {
   try {
     const files = await File.findAll({
@@ -48,7 +47,9 @@ router.get("/file/:id", async (req, res) => {
   try {
     const file = await File.findOne({
       where: { id },
-      include: [{ model: Version }],
+      include: [
+        { model: Version, separate: true, order: [["timestamp", "DESC"]] },
+      ],
     });
     if (!file) {
       return res.status(404).json({ message: "File not found" });
@@ -66,10 +67,9 @@ router.post("/save", validateToken, async (req, res) => {
   try {
     const { content, commitMessage, name } = req.body;
     const user = req.user.id;
-    
 
     const file = await File.create({ name }, { transaction });
-    
+
     const newVersion = await Version.create(
       {
         content,
