@@ -72,7 +72,7 @@ function App() {
   if (isLoading || (data && !authState.status))
     return (
       <div className="w-screen h-screen flex justify-center items-center">
-        <span className="loading loading-dots loading-xl"></span>
+        <span className="loading loading-dots loading-xl text-accent"></span>
       </div>
     );
 

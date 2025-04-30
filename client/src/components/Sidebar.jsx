@@ -6,7 +6,7 @@ const Sidebar = () => {
   const { authState } = useContext(AuthContext);
   return (
     <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-primary border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
-      <div className="flex flex-col justify-between flex-1 mt-6">
+      <div className="flex flex-col justify-between flex-1">
         <nav className="flex-1 -mx-3 space-y-3 ">
           <Link
             to="/"
@@ -75,8 +75,32 @@ const Sidebar = () => {
             <span className="mx-2 text-xl font-medium">Evaluation</span>
             <div className="badge badge-sm badge-secondary">+99</div>
           </Link>
+          <Link
+            to="/documents"
+            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+              />
+            </svg>
+
+            <span className="mx-2 text-xl font-medium">Documents</span>
+          </Link>
+
           {(authState.role === "moderator" || authState.role === "admin") && (
             <>
+              <div className="divider divider-accent text-white">Moderator</div>
               <Link
                 to="/create-form"
                 className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
@@ -143,28 +167,7 @@ const Sidebar = () => {
 
                 <span className="mx-2 text-xl font-medium">Archive</span>
               </Link>
-              <Link
-                to="/documents"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
-                href="#"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                  />
-                </svg>
 
-                <span className="mx-2 text-xl font-medium">Documents</span>
-              </Link>
               <Link
                 to="/audit-log"
                 className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
