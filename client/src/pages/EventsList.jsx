@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import AddEvent from "../components/AddEvent";
 import PageLoc from "../components/PageLoc";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { AuthContext } from "../helpers/AuthContext";
+import { useContext } from "react";
+import { set } from "react-hook-form";
 
 const fetchEvents = async () => {
   const response = await axios.get(`http://localhost:4001/events`);
@@ -17,6 +20,7 @@ const fetchEvents = async () => {
 
 const EventsList = () => {
   const queryClient = useQueryClient();
+  const { setEventState } = useContext(AuthContext);
 
   const {
     data: events,
@@ -45,6 +49,13 @@ const EventsList = () => {
       queryClient.invalidateQueries(["events"]);
     },
   });
+  useEffect(() => {
+    setEventState((prevState) => ({
+      ...prevState,
+      events: events,
+    }));
+    console.log(events)
+  }, [events]);
 
   if (isLoading) return <p>Loading events...</p>;
   if (isError) return <p>Error loading events.</p>;

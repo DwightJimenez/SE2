@@ -38,7 +38,10 @@ const Question = ({
 );
 
 const calculatePercentages = (scoreCount) => {
-  const totalResponses = Object.values(scoreCount).reduce((sum, count) => sum + count, 0); // Total responses
+  const totalResponses = Object.values(scoreCount).reduce(
+    (sum, count) => sum + count,
+    0
+  ); // Total responses
 
   // Calculate percentages for each score (1 to 5)
   const percentages = Object.keys(scoreCount).map((score) => {
@@ -48,7 +51,6 @@ const calculatePercentages = (scoreCount) => {
 
   return percentages;
 };
-
 
 const fetchFormById = async (id) => {
   const response = await axios.get(
@@ -86,10 +88,13 @@ const EditForm = () => {
       setQuestions(form.Questions || []);
 
       const scores = form.Questions.map((question) => {
-        return calculatePercentages(question.scoreCount);;
+        return calculatePercentages(question.scoreCount);
       });
       const avgScores = form.Questions.map((question) => {
-        const totalScore = question.Ratings.reduce((sum, rating) => sum + rating.score, 0);
+        const totalScore = question.Ratings.reduce(
+          (sum, rating) => sum + rating.score,
+          0
+        );
         const avgScore = totalScore / question.Ratings.length || 0;
         return parseFloat(avgScore.toFixed(2));
       });
@@ -247,7 +252,7 @@ const EditForm = () => {
             <>
               <Question key={index} index={index} text={q.text} />
               <BarChart
-              title={`Average rating(${average[index]})`}
+                title={`Average rating(${average[index]})`}
                 labels={["1", "2", "3", "4", "5"]}
                 scores={evaluationScores[index] || []}
                 datasetLabel="Average Rating"

@@ -33,6 +33,9 @@ import Editor from "./pages/Editor";
 import CreateDoc from "./pages/CreateDoc";
 
 function App() {
+  const [eventState, setEventState] = useState({
+    events: [],
+  });
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -102,7 +105,7 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
+    <AuthContext.Provider value={{ authState, setAuthState, eventState, setEventState }}>
       <BrowserRouter>
         <div className="flex h-screen w-screen ">
           {authState.status ? (
@@ -149,9 +152,12 @@ function App() {
                         <Route path="/documents" element={<Documents />} />
                         <Route path="/manage-user" element={<ManageUser />} />
                         <Route path="/create-form" element={<CreateForm />} />
-                        <Route path="/editor" element={<Editor/>} />
-                        <Route path="/editor/:id" element={<Editor/>} />
-                        <Route path="/create-document" element={<CreateDoc/>} />
+                        <Route path="/editor" element={<Editor />} />
+                        <Route path="/editor/:id" element={<Editor />} />
+                        <Route
+                          path="/create-document"
+                          element={<CreateDoc />}
+                        />
                       </>
                     )}
                   </Routes>

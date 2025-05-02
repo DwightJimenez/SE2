@@ -139,7 +139,9 @@ function Editor() {
   return (
     <div className="p-4 flex flex-col gap-4">
       <PageLoc currentPage={docName} />
-      <button className="btn w-fit" onClick={exportToWord}>Export To Word</button>
+      <button className="btn w-fit" onClick={exportToWord}>
+        Export To Word
+      </button>
       <div className="flex gap-4">
         <ReactQuill
           ref={quillRef} // Attach the ref here

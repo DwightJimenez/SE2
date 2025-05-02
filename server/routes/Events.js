@@ -9,7 +9,7 @@ const { where } = require("sequelize");
 // Get all events
 router.get("/", async (req, res) => {
   try {
-    const events = await Events.findAll();
+    const events = await Events.findAll({order: [['start', 'DESC']]});
 
     // Convert stored event times to local time zone
     const formattedEvents = events.map((event) => {
