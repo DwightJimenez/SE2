@@ -30,7 +30,8 @@ const CreatePost = () => {
     try {
       const res = await axios.post(
         "http://localhost:4001/posts",
-        { text: data.text },{ withCredentials: true },
+        { text: data.text },
+        { withCredentials: true }
       );
 
       if (res.data.success) {
@@ -47,12 +48,11 @@ const CreatePost = () => {
 
   return (
     <div className="flex flex-col justify-between items-center w-full h-full">
-      <p className="text-xl font-bold m-4">Create Post</p>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
         <textarea
           placeholder="Text"
           {...register("text")}
-          className="textarea textarea-primary w-100 h-50"
+          className="textarea textarea-primary w-100 h-50 resize-none"
         />
         <p className="text-red-500">{errors.text?.message}</p>
 
@@ -74,4 +74,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-

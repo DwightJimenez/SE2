@@ -60,10 +60,11 @@ router.delete("/delete/:id", validateToken, async (req, res) => {
   const postId = parseInt(req.params.id);
   try {
     const post = await Posts.findByPk(postId);
+    
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
-    if (post.username !== req.user.username) {
+    if (post.userId !== req.user.id) {
       return res.status(403).json({ error: "Unauthorized" });
     }
     await post.destroy();

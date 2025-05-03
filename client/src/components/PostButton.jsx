@@ -2,7 +2,17 @@ import React from "react";
 import { useContext } from "react";
 import userAvatar from "../assets/user.png";
 import { AuthContext } from "../helpers/AuthContext";
-
+import CreatePost from "../pages/CreatePost";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const PostButton = () => {
   const { authState } = useContext(AuthContext);
@@ -25,14 +35,18 @@ const PostButton = () => {
           />
         </div>
       </div>
-      <button
-        className="btn btn-primary  mx-4 rounded-full grow border text-left text-white flex justify-start items-center"
-        popoverTarget="popover-1"
-        style={{ anchorName: "--anchor-1" } /* as React.CSSProperties */}
-      >
-        What's on your mind?
-      </button>
-      
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button className="btn btn-primary  mx-4 rounded-full grow border text-left text-white flex justify-start items-center">
+            What's on your mind?
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="w-auto">
+          <DialogHeader>Create Post</DialogHeader>
+          <CreatePost />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
