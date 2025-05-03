@@ -39,7 +39,9 @@ function CreateEvents() {
     };
     try {
       // Send POST request to API to create the event
-      await axios.post(`http://localhost:4001/events`, formattedData, { withCredentials: true });
+      await axios.post(`http://localhost:4001/events`, formattedData, {
+        withCredentials: true,
+      });
       console.log("Event Created Successfully:", formattedData);
       navigate("/events"); // Redirect to the events page
     } catch (error) {
@@ -47,14 +49,8 @@ function CreateEvents() {
     }
   };
 
-
-
-
-
   return (
     <div className="flex flex-col justify-evenly items-center h-full">
-      <p className="text text-xl font-bold">Create an Event</p>
-      
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -114,12 +110,12 @@ function CreateEvents() {
               />
             </fieldset>
 
-            <button className="btn btn-primary my-4" type="submit">Create Event</button>
+            <button className="btn btn-primary my-4" type="submit">
+              Create Event
+            </button>
           </Form>
         )}
       </Formik>
-
-      
     </div>
   );
 }

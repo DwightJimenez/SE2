@@ -164,7 +164,7 @@ const Home = () => {
                         </span>
                       </div>
                       {authState.username === post.username && (
-                        <div className="dropdown dropdown-center absolute top-4 right-4 cursor-pointer">
+                        <div className="dropdown dropdown-end absolute top-4 right-4 cursor-pointer">
                           <div tabIndex={0} className="m-1 flex">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -183,12 +183,12 @@ const Home = () => {
                           </div>
                           <ul
                             tabIndex={0}
-                            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm  border border-gray-300"
                           >
                             <li>
                               <AlertDialog>
                                 <AlertDialogTrigger>
-                                  <span className="flex justify-evenly">
+                                  <span className="flex justify-evenly gap-4">
                                     <p>Delete</p>
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -214,8 +214,8 @@ const Home = () => {
                                     </AlertDialogTitle>
                                     <AlertDialogDescription>
                                       This action cannot be undone. This will
-                                      permanently delete your account and remove
-                                      your data from our servers.
+                                      permanently delete your post and remove
+                                      the data from our servers.
                                     </AlertDialogDescription>
                                   </AlertDialogHeader>
                                   <AlertDialogFooter>
@@ -230,28 +230,6 @@ const Home = () => {
                                   </AlertDialogFooter>
                                 </AlertDialogContent>
                               </AlertDialog>
-                            </li>
-                            <li>
-                              <span
-                                onClick={() => handleDeletePost(post.id)}
-                                className="flex justify-evenly"
-                              >
-                                <p>Edit</p>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth={1.5}
-                                  stroke="currentColor"
-                                  className="size-6"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                                  />
-                                </svg>
-                              </span>
                             </li>
                           </ul>
                         </div>
@@ -367,16 +345,26 @@ const Home = () => {
           });
 
           return (
-            <div className="card bg-base-100 border border-primary w-full shadow-sm mb-2">
-              <div className="flex flex-row card-body text-primary gap-4">
-                <div className="flex flex-col p-2 bg-primary h-24 w-24 items-center justify-center rounded-box text-neutral-content">
-                  <span className="font-mono text-5xl leading-none">{day}</span>
+            <div className="flex card bg-base-100 border border-primary w-full mb-2 p-0">
+              <div className="flex flex-row card-body text-primary gap-4 p-3">
+                <div className="flex flex-col p-2 bg-primary h-20 w-20 items-center justify-center rounded-box text-neutral-content">
+                  <span className="font-mono text-4xl leading-none">{day}</span>
                   <span className="text-sm font-bold">{month}</span>
                 </div>
-                <div className="flex flex-col justify-center gap-2">
+                <div className="flex flex-col justify-center gap-1">
                   <h2 className="card-title">{event.title.toUpperCase()}</h2>
-                  <p className="text-lg">Start: {startTime}</p>
-                  <p className="text-lg">End: {endTime}</p>
+                  <p className="text-md flex gap-1">
+                    <div className="badge badge-secondary p-2 text-white">
+                      Start:{" "}
+                    </div>
+                    {startTime}
+                  </p>
+                  <p className="text-md flex gap-1">
+                    <div className="badge badge-secondary p-2 text-white">
+                      End:{" "}
+                    </div>
+                    {endTime}
+                  </p>
                 </div>
               </div>
             </div>

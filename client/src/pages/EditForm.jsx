@@ -167,7 +167,7 @@ const EditForm = () => {
       />
       {/* name of each tab group should be unique */}
 
-      <div className="tabs tabs-xl tabs-lift tabs-border">
+      <div className="tabs tabs-box tabs-md tabs-lift tabs-border gap-2">
         <label className="tab">
           <input type="radio" name="my_tabs_4" />
           <svg

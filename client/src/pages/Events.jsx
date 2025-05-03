@@ -71,7 +71,6 @@ function CalendarApp() {
       <div className="max-w-200 shadow-2xl">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>
-      <div></div>
     </div>
   );
 }

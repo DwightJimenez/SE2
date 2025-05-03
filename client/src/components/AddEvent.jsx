@@ -1,27 +1,30 @@
 import React from "react";
 import CreateEvents from "../pages/CreateEvents";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const AddEvent = () => {
   return (
     <div>
-      {/* change popover-1 and --anchor-1 names. Use unique names for each dropdown */}
-      {/* For TSX uncomment the commented types below */}
-      <button
-        className="btn mb-4"
-        popoverTarget="popover-1"
-        style={{ anchorName: "--anchor-1" } /* as React.CSSProperties */}
-      >
-        Add
-      </button>
-
-      <div
-        className="dropdown menu w-110 h-140 rounded-box bg-base-100 shadow-sm"
-        popover="auto"
-        id="popover-1"
-        style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */}
-      >
-        <CreateEvents />
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button className="btn btn-primary mb-4">
+            Add Event
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="w-auto">
+          <DialogHeader>Create Post</DialogHeader>
+          <CreateEvents />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
