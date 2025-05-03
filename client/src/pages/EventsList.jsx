@@ -6,7 +6,6 @@ import PageLoc from "../components/PageLoc";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
-import { set } from "react-hook-form";
 
 const fetchEvents = async () => {
   const response = await axios.get(`http://localhost:4001/events`);
@@ -54,7 +53,7 @@ const EventsList = () => {
       ...prevState,
       events: events,
     }));
-    console.log(events)
+    console.log(events);
   }, [events]);
 
   if (isLoading) return <p>Loading events...</p>;
@@ -78,7 +77,7 @@ const EventsList = () => {
           <tbody>
             {events?.map((event) => (
               <tr key={event.id}>
-                <td>{event.title}</td>
+                <td>{event.title.toUpperCase()}</td>
                 <td>{event.start}</td>
                 <td>{event.end}</td>
                 <td>

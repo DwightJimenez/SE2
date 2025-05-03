@@ -51,8 +51,13 @@ const NavBar = ({ logout }) => {
               >
                 <div className="w-10 rounded-full ring-primary ring-offset-base-100 ring ring-offset-2">
                   <img
-                    alt="Tailwind CSS Navbar component"
                     src={authState.profilePicture || userAvatar}
+                    alt="User Avatar"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = userAvatar;
+                    }}
                   />
                 </div>
               </div>
