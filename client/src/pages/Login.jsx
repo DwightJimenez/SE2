@@ -28,7 +28,8 @@ const Login = () => {
             id: response.data.id,
             status: true,
             role: response.data.role,
-            email: response.data.email,
+            email: response.data.email || "",
+            profilePicture: response.data.profilePicture || "",
           });
           console.log("Login Successfully");
           navigate("/");
@@ -56,6 +57,7 @@ const Login = () => {
           status: true,
           role: response.data.user.role,
           email: response.data.user.email,
+          profilePicture: response.data.picture
         });
         console.log("Google Login Successful");
         navigate("/");

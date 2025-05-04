@@ -1,11 +1,5 @@
 import "./index.css";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -33,6 +27,7 @@ import Editor from "./pages/Editor";
 import CreateDoc from "./pages/CreateDoc";
 
 function App() {
+  const navigate = useNavigate()
   const [eventState, setEventState] = useState({
     events: [],
   });
@@ -72,6 +67,12 @@ function App() {
     if (data?.status) setAuthState(data);
   }, [data]);
 
+  useEffect(() => {
+    if (authState.status && authState.email === "") {
+      navigate("/first-visit");
+    }
+  }, [authState, navigate]);
+
   // Show loading screen while fetching auth state
   if (isLoading || (data && !authState.status))
     return (
@@ -105,75 +106,72 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider value={{ authState, setAuthState, eventState, setEventState }}>
-      <BrowserRouter>
-        <div className="flex h-screen w-screen ">
-          {authState.status ? (
-            authState.email === "" ? (
-              <Routes>
-                <Route path="/first-visit" element={<FirstVisitPopup />} />
-                <Route
-                  path="*"
-                  element={<Navigate to="/first-visit" replace />}
-                />
-              </Routes>
-            ) : (
-              <>
-                <NavBar className="fixed" logout={logout} />
-                <div className="fixed top-16 left-0 h-full bg-base-100 shadow-sm z-40 max-sm:hidden">
-                  <Sidebar />
-                </div>
-                <div className="sm:hidden">
-                  <Dock />
-                </div>
-
-                {/* Main Content */}
-                <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/post/:id" element={<Home />} />
-                    <Route path="/events" element={<CalendarApp />} />
-                    <Route path="/audit-log" element={<AuditLog />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/evaluation" element={<Evaluation />} />
-                    <Route path="/evaluation/add" element={<AddForm />} />
-                    <Route path="/evaluation/:id" element={<EditForm />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route
-                      path="/evaluation/evaluate/:id"
-                      element={<UserRating />}
-                    />
-
-                    {(authState.role === "moderator" ||
-                      authState.role === "admin") && (
-                      <>
-                        <Route path="/archive" element={<Archive />} />
-                        <Route path="/events/lists" element={<EventsList />} />
-                        <Route path="/documents" element={<Documents />} />
-                        <Route path="/manage-user" element={<ManageUser />} />
-                        <Route path="/create-form" element={<CreateForm />} />
-                        <Route path="/editor" element={<Editor />} />
-                        <Route path="/editor/:id" element={<Editor />} />
-                        <Route
-                          path="/create-document"
-                          element={<CreateDoc />}
-                        />
-                      </>
-                    )}
-                  </Routes>
-                </div>
-              </>
-            )
+    <AuthContext.Provider
+      value={{ authState, setAuthState, eventState, setEventState }}
+    >
+      <div className="flex h-screen w-screen ">
+        {authState.status ? (
+          authState.email === "" ? (
+            <Routes>
+              <Route path="/first-visit" element={<FirstVisitPopup />} />
+              <Route
+                path="*"
+                element={<Navigate to="/first-visit" replace />}
+              />
+            </Routes>
           ) : (
-            <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="*" element={<Navigate to="/login" />} />
-              </Routes>
-            </div>
-          )}
-        </div>
-      </BrowserRouter>
+            <>
+              <NavBar className="fixed" logout={logout} />
+              <div className="fixed top-16 left-0 h-full bg-base-100 shadow-sm z-40 max-sm:hidden">
+                <Sidebar />
+              </div>
+              <div className="sm:hidden">
+                <Dock />
+              </div>
+
+              {/* Main Content */}
+              <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/post/:id" element={<Home />} />
+                  <Route path="/events" element={<CalendarApp />} />
+                  <Route path="/audit-log" element={<AuditLog />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/evaluation" element={<Evaluation />} />
+                  <Route path="/evaluation/add" element={<AddForm />} />
+                  <Route path="/evaluation/:id" element={<EditForm />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route
+                    path="/evaluation/evaluate/:id"
+                    element={<UserRating />}
+                  />
+
+                  {(authState.role === "moderator" ||
+                    authState.role === "admin") && (
+                    <>
+                      <Route path="/archive" element={<Archive />} />
+                      <Route path="/events/lists" element={<EventsList />} />
+                      <Route path="/documents" element={<Documents />} />
+                      <Route path="/manage-user" element={<ManageUser />} />
+                      <Route path="/create-form" element={<CreateForm />} />
+                      <Route path="/editor" element={<Editor />} />
+                      <Route path="/editor/:id" element={<Editor />} />
+                      <Route path="/create-document" element={<CreateDoc />} />
+                    </>
+                  )}
+                </Routes>
+              </div>
+            </>
+          )
+        ) : (
+          <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+          </div>
+        )}
+      </div>
     </AuthContext.Provider>
   );
 }

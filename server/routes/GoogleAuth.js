@@ -105,7 +105,8 @@ router.post("/google-login", async (req, res) => {
     });
 
     // Send the response with user info and the token
-    res.json({ message: "Google login successful", user });
+    console.log(user)
+    res.json({ message: "Google login successful", user, picture});
   } catch (error) {
     console.error("Error verifying Google token:", error);
     res.status(400).json({ error: "Google login failed" });

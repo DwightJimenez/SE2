@@ -9,6 +9,7 @@ const FirstVisitPopup = () => {
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const navigate = useNavigate();
+  const { setAuthState } = useContext(AuthContext);
 
   const handleGoogleSignIn = async (credentialResponse) => {
     try {
@@ -49,6 +50,7 @@ const FirstVisitPopup = () => {
       );
 
       alert("Password updated!");
+      setAuthState((prev) => ({ ...prev, email: res.data.email }));
       navigate("/");
     } catch (err) {
       console.error(err);

@@ -98,6 +98,7 @@ router.put("/update-password", validateToken, async (req, res) => {
 
 router.post("/set-password", validateToken, async (req, res) => {
   const { password } = req.body;
+  const email = req.user.email
   if (!password || password.length < 6) {
     return res.status(400).json({ error: "Password too short" });
   }
@@ -111,7 +112,7 @@ router.post("/set-password", validateToken, async (req, res) => {
     user.password = hashedPassword;
     await user.save();
 
-    res.json({ message: "Password updated successfully" });
+    res.json({ message: "Password updated successfully" , email});
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update password" });
@@ -145,7 +146,8 @@ router.post("/login", async (req, res) => {
       sameSite: "Strict",
       maxAge: 3600000,
     });
-    res.json({ username: username, id: user.id, role: user.role });
+
+    res.json({ username: username, id: user.id, role: user.role, email: user.email, profilePicture: user.profilePicture });
   });
 });
 
