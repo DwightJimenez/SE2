@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const FirstVisitPopup = () => {
   const [step, setStep] = useState(0); // 0 = intro, 1 = google sign in, 2 = set password
@@ -59,18 +60,23 @@ const FirstVisitPopup = () => {
   };
 
   return (
-    <div className="flex w-screen items-center justify-center bg-base-200">
+    <div
+      className="flex w-screen items-center justify-center bg-base-200"
+      style={{
+        background:
+          "linear-gradient(150deg, rgb(51.81, 15.18, 119.84) 0%, rgb(103, 29.24, 150.8) 59.73%, rgb(255, 71, 242.73) 100%)",
+      }}
+    >
       {step === 0 && (
-        <div
-          className="hero min-h-screen"
-          style={{
-            backgroundImage:
-              "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
-          }}
-        >
+        <div className="hero min-h-screen">
           <div className="hero-overlay bg-opacity-60"></div>
           <div className="hero-content text-center text-neutral-content">
-            <div className="">
+            <motion.div
+              className=""
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               <h1 className="mb-5 text-5xl font-bold">
                 🎉 Welcome to WORKFLOW AUTOMATION SYSTEM for ACScis ORGANIZATION
                 IN BICOL UNIVERSITY POLANGUI!
@@ -83,7 +89,7 @@ const FirstVisitPopup = () => {
               <button className="btn btn-primary" onClick={() => setStep(1)}>
                 Get Started
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       )}

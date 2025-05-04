@@ -2,15 +2,23 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import userAvatar from "../assets/user.png";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const NavBar = ({ logout }) => {
   const { authState } = useContext(AuthContext);
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      logout();
-    }
+    logout();
   };
 
   return (
@@ -74,7 +82,26 @@ const NavBar = ({ logout }) => {
                   <Link to="/settings">Settings</Link>
                 </li>
                 <li>
-                  <a onClick={handleLogout}>Logout</a>
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <span className="flex justify-evenly gap-4">
+                        <a>Logout</a>
+                      </span>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to logout?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleLogout}>
+                          Logout
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </li>
               </ul>
             </div>
