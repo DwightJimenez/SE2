@@ -21,13 +21,12 @@ import AddForm from "./pages/AddForm";
 import EditForm from "./pages/EditForm";
 import UserRating from "./pages/UserRating";
 import CreateForm from "./pages/CreateForm";
-import Profile from "./pages/Profile";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 import Editor from "./pages/Editor";
 import CreateDoc from "./pages/CreateDoc";
 
 function App() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [eventState, setEventState] = useState({
     events: [],
   });
@@ -140,7 +139,6 @@ function App() {
                   <Route path="/evaluation" element={<Evaluation />} />
                   <Route path="/evaluation/add" element={<AddForm />} />
                   <Route path="/evaluation/:id" element={<EditForm />} />
-                  <Route path="/profile" element={<Profile />} />
                   <Route
                     path="/evaluation/evaluate/:id"
                     element={<UserRating />}

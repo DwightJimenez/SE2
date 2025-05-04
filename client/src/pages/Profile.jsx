@@ -9,7 +9,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-center m-4 gap-4">
       <div className="avatar my-4">
-        <div className="ring-primary ring-offset-base-100 w-50 rounded-full ring ring-offset-2">
+        <div className="ring-primary ring-offset-base-100 w-30 rounded-full ring ring-offset-2">
           <img
             src={authState.profilePicture || userAvatar}
             alt="User Avatar"
@@ -21,8 +21,8 @@ const Profile = () => {
           />
         </div>
       </div>
-      <p className="text-2xl">{authState.username}</p>
-      <p className="text-2xl">{authState.email}</p>
+      <p className="text-sm">{authState.username}</p>
+      <p className="text-sm">{authState.email}</p>
       <UpdatePasswordBtn />
     </div>
   );

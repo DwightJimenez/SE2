@@ -2,17 +2,24 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import userAvatar from "../assets/user.png";
+import Profile from "../pages/Profile";
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const NavBar = ({ logout }) => {
   const { authState } = useContext(AuthContext);
@@ -74,9 +81,17 @@ const NavBar = ({ logout }) => {
                 className="menu menu-lg dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <Link to="/profile">
-                    <a className="justify-between">Profile</a>
-                  </Link>
+                  <Sheet>
+                    <SheetTrigger>
+                      <a className="justify-between">Profile</a>
+                    </SheetTrigger>
+                    <SheetContent>
+                      <SheetHeader>
+                        <SheetTitle>Profile</SheetTitle>
+                        <Profile />
+                      </SheetHeader>
+                    </SheetContent>
+                  </Sheet>
                 </li>
                 <li>
                   <Link to="/settings">Settings</Link>
