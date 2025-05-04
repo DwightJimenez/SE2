@@ -5,6 +5,7 @@ import AddUser from "../components/AddUser";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
+import { Switch } from "@/components/ui/switch";
 
 const API_URL = "http://localhost:4001";
 
@@ -21,7 +22,7 @@ const fetchUsers = async (query = "", role = "") => {
 
 function ManageUser() {
   const queryClient = useQueryClient();
-  const { authState, } = useContext(AuthContext);
+  const { authState } = useContext(AuthContext);
   const userRole = authState?.role;
   const [selectedRole, setSelectedRole] = useState("");
 
@@ -131,13 +132,12 @@ function ManageUser() {
                     <td>
                       {user.id !== 1 && userRole === "admin" && (
                         <div className="flex w-full gap-10">
-                          <input
-                            type="checkbox"
+                          <Switch
                             checked={user.role === "moderator"}
-                            onChange={() =>
+                            onCheckedChange={() =>
                               handleToggleRole(user.id, user.role)
                             }
-                            className="toggle border-indigo-600 bg-indigo-500 checked:bg-orange-400 checked:text-orange-800 checked:border-orange-500"
+                             className="cursor-pointer data-[state=checked]:bg-orange-400 data-[state=checked]:border-orange-500"
                           />
                           <div
                             onClick={() => handleDeleteUser(user.id)}
