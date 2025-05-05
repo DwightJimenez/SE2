@@ -43,24 +43,30 @@ function App() {
   const { data, isLoading } = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
-      const [authRes, profileRes] = await Promise.all([
-        axios.get(`${API_URL}/auth/auth`, { withCredentials: true }),
-        axios.get(`${API_URL}/auth/profile`, {
-          withCredentials: true,
-        }),
-      ]);
+      try {
+        const [authRes, profileRes] = await Promise.all([
+          axios.get(`${API_URL}/auth/auth`, { withCredentials: true }),
+          axios.get(`${API_URL}/auth/profile`, {
+            withCredentials: true,
+          }),
+        ]);
 
-      if (!authRes.data.error) {
-        return {
-          ...authRes.data,
-          profilePicture: profileRes.data.profilePicture,
-          status: true,
-        };
+        if (!authRes.data.error) {
+          return {
+            ...authRes.data,
+            profilePicture: profileRes.data.profilePicture,
+            status: true,
+          };
+        }
+      } catch (err) {
+        if (err.response?.status === 401) {
+          return { status: false }; // User not logged in
+        }
+        throw err;
       }
-
-      return { status: false };
     },
     staleTime: 1000 * 60 * 5,
+    retry: false,
   });
 
   useEffect(() => {
@@ -74,7 +80,7 @@ function App() {
   }, [authState, navigate]);
 
   // Show loading screen while fetching auth state
-  if (isLoading || (data && !authState.status))
+  if (isLoading )
     return (
       <div className="w-screen h-screen flex justify-center items-center">
         <span className="loading loading-dots loading-xl text-accent"></span>
@@ -85,11 +91,7 @@ function App() {
 
   const logout = async () => {
     try {
-      await axios.post(
-        `${API_URL}/auth/logout`,
-        {},
-        { withCredentials: true }
-      );
+      await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
       setAuthState({
         username: "",
         id: 0,

@@ -16,37 +16,46 @@ const Login = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
-  const handleLogin = () => {
-    const data = { username: email, password: password };
-    axios
-      .post(`${API_URL}/auth/login`, data, { withCredentials: true })
-      .then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setAuthState({
-            username: response.data.username,
-            id: response.data.id,
-            status: true,
-            role: response.data.role,
-            email: response.data.email || "",
-            profilePicture: response.data.profilePicture || "",
-          });
-          console.log("Login Successfully");
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        console.error("Login failed:", error);
-        alert("Login failed!");
+  const handleLogin = async () => {
+    try {
+      const data = { username: email, password };
+      const response = await axios.post(`${API_URL}/auth/login`, data, {
+        withCredentials: true,
       });
+
+      if (response.data.error) {
+        alert(response.data.error);
+        return;
+      }
+
+      // Fetch user profile after login
+      const profileRes = await axios.get(`${API_URL}/auth/profile`, {
+        withCredentials: true,
+      });
+
+      setAuthState({
+        username: response.data.username,
+        id: response.data.id,
+        status: true,
+        role: response.data.role,
+        email: response.data.email || "",
+        profilePicture: profileRes.data.profilePicture || "",
+      });
+
+      console.log("Login Successfully");
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed!");
+    }
   };
+
   const handleGoogleLogin = async (credentialResponse) => {
     try {
       const { credential } = credentialResponse;
 
       const response = await axios.post(
-        `${API_URL}/google/google-login`, // Replace with your backend API
+        `${API_URL}/google/google-login`,
         { token: credential },
         { withCredentials: true }
       );
@@ -58,7 +67,7 @@ const Login = () => {
           status: true,
           role: response.data.user.role,
           email: response.data.user.email,
-          profilePicture: response.data.picture
+          profilePicture: response.data.picture,
         });
         console.log("Google Login Successful");
         navigate("/");
@@ -68,6 +77,7 @@ const Login = () => {
       alert("Google login failed!");
     }
   };
+
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
       <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
