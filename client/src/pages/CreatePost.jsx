@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CreatePost = () => {
   const queryClient = useQueryClient();
@@ -29,7 +30,7 @@ const CreatePost = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:4001/posts",
+        `${API_URL}/posts`,
         { text: data.text },
         { withCredentials: true }
       );

@@ -4,6 +4,7 @@ import PageLoc from "../components/PageLoc";
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BarChart from "../components/BarChart";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Question = ({
   index,
@@ -54,7 +55,7 @@ const calculatePercentages = (scoreCount) => {
 
 const fetchFormById = async (id) => {
   const response = await axios.get(
-    `http://localhost:4001/evaluation/byId/${id}`,
+    `${API_URL}/evaluation/byId/${id}`,
     {
       withCredentials: true,
     }
@@ -106,7 +107,7 @@ const EditForm = () => {
   const updateFormMutation = useMutation({
     mutationFn: async () => {
       return axios.put(
-        `http://localhost:4001/evaluation/update/${id}`,
+        `${API_URL}/evaluation/update/${id}`,
         { title, description, questions },
         { withCredentials: true }
       );
@@ -136,7 +137,7 @@ const EditForm = () => {
 
   const deleteFormMutation = useMutation({
     mutationFn: async () => {
-      await axios.delete(`http://localhost:4001/evaluation/delete/${id}`, {
+      await axios.delete(`${API_URL}/evaluation/delete/${id}`, {
         withCredentials: true,
       });
     },

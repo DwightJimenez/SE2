@@ -3,6 +3,7 @@ import PageLoc from "../components/PageLoc";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Question = ({ index, updateQuestion, removeQuestion }) => (
   <div className="flex flex-col mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
@@ -27,7 +28,7 @@ const AddForm = () => {
   const saveFormMutation = useMutation({
     mutationFn: async () => {
       return axios.post(
-        "http://localhost:4001/evaluation/save-form",
+        `${API_URL}/evaluation/save-form`,
         {
           title,
           description,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const UpdatePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -17,7 +18,7 @@ const UpdatePassword = () => {
     setLoading(true);
     try {
       const response = await axios.put(
-        "http://localhost:4001/auth/update-password",
+        `${API_URL}/auth/update-password`,
         { oldPassword, newPassword },
         { withCredentials: true }
       );

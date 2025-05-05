@@ -11,9 +11,10 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchDoc = async () => {
-  const response = await axios.get("http://localhost:4001/editor/file", {
+  const response = await axios.get(`${API_URL}/editor/file`, {
     withCredentials: true,
   });
   return response.data;

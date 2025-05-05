@@ -4,9 +4,10 @@ import AddDoc from "../components/AddDoc";
 import AddDocument from "./AddDocument";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchDocuments = async () => {
-  const response = await axios.get("http://localhost:4001/api");
+  const response = await axios.get(`${API_URL}/api`);
   return response.data.filter((doc) => !doc.isArchive);
 };
 
@@ -24,7 +25,7 @@ const Documents = () => {
   const handleArchive = async (id) => {
     console.log("Archiving document with ID:", id); // Log ID
     try {
-      const response = await axios.post(`http://localhost:4001/archive/${id}`, {}, { withCredentials: true });
+      const response = await axios.post(`${API_URL}/archive/${id}`, {}, { withCredentials: true });
       console.log(response); // Log the response
       alert("Document archived successfully");
       queryClient.invalidateQueries(["documents"]);
@@ -73,7 +74,7 @@ const Documents = () => {
                   <td>{doc.version}</td>
                   <td>
                     <a
-                      href={`http://localhost:4001/${doc.path}`}
+                      href={`${API_URL}/${doc.path}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ color: "black" }}

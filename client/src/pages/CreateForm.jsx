@@ -3,9 +3,10 @@ import PageLoc from "../components/PageLoc";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchForm = async () => {
-  const response = await axios.get("http://localhost:4001/evaluation", {
+  const response = await axios.get(`${API_URL}/evaluation`, {
     withCredentials: true,
   });
   return response.data;

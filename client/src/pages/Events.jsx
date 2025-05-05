@@ -15,6 +15,7 @@ import { createResizePlugin } from "@schedule-x/resize";
 import PageLoc from "../components/PageLoc";
 import AddEvent from "../components/AddEvent";
 // const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function CalendarApp() {
   const [data, setData] = useState([]);
@@ -38,7 +39,7 @@ function CalendarApp() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`http://localhost:4001/events`);
+        const response = await axios.get(`${API_URL}/events`);
         const formattedEvents = response.data.map((event) => ({
           id: event.id,
           title: event.title,

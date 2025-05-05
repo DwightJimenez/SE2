@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { useState } from "react";
 // const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function CreateEvents() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function CreateEvents() {
     };
     try {
       // Send POST request to API to create the event
-      await axios.post(`http://localhost:4001/events`, formattedData, {
+      await axios.post(`${API_URL}/events`, formattedData, {
         withCredentials: true,
       });
       console.log("Event Created Successfully:", formattedData);

@@ -24,6 +24,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const LoadingSkeleton = () => {
   return (
@@ -47,7 +48,7 @@ const LoadingSkeleton = () => {
 
 const fetchPosts = async ({ pageParam = 1 }) => {
   const res = await axios.get(
-    `http://localhost:4001/posts/?page=${pageParam}&limit=5`,
+    `${API_URL}/posts/?page=${pageParam}&limit=5`,
     {
       withCredentials: true,
     }
@@ -83,7 +84,7 @@ const Home = () => {
 
   const deletePostMutation = useMutation({
     mutationFn: async (postId) => {
-      await axios.delete(`http://localhost:4001/posts/delete/${postId}`, {
+      await axios.delete(`${API_URL}/posts/delete/${postId}`, {
         withCredentials: true,
       });
     },
@@ -98,7 +99,7 @@ const Home = () => {
   const likePostMutation = useMutation({
     mutationFn: async (postId) => {
       await axios.post(
-        `http://localhost:4001/posts/like/${postId}`,
+        `${API_URL}/posts/like/${postId}`,
         {},
         {
           withCredentials: true,
@@ -117,7 +118,7 @@ const Home = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`http://localhost:4001/events`);
+        const response = await axios.get(`${API_URL}/events`);
         const now = moment(); // current local time
         const formattedEvents = response.data
           .filter((event) =>

@@ -4,6 +4,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { motion } from "framer-motion";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const FirstVisitPopup = () => {
   const [step, setStep] = useState(0); // 0 = intro, 1 = google sign in, 2 = set password
@@ -16,7 +17,7 @@ const FirstVisitPopup = () => {
     try {
       const { credential } = credentialResponse;
       const response = await axios.post(
-        "http://localhost:4001/google/link-google",
+        `${API_URL}/google/link-google`,
         {
           token: credential,
         },
@@ -41,7 +42,7 @@ const FirstVisitPopup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4001/auth/set-password",
+        `${API_URL}/auth/set-password`,
         {
           password: newPass,
         },

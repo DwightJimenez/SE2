@@ -24,6 +24,7 @@ import CreateForm from "./pages/CreateForm";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 import Editor from "./pages/Editor";
 import CreateDoc from "./pages/CreateDoc";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ function App() {
     queryKey: ["auth"],
     queryFn: async () => {
       const [authRes, profileRes] = await Promise.all([
-        axios.get("http://localhost:4001/auth/auth", { withCredentials: true }),
-        axios.get("http://localhost:4001/auth/profile", {
+        axios.get(`${API_URL}/auth/auth`, { withCredentials: true }),
+        axios.get(`${API_URL}/auth/profile`, {
           withCredentials: true,
         }),
       ]);
@@ -85,7 +86,7 @@ function App() {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:4001/auth/logout",
+        "${API_URL}/auth/logout",
         {},
         { withCredentials: true }
       );

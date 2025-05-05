@@ -2,9 +2,10 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import PageLoc from "../components/PageLoc";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchArchivedDocuments = async () => {
-  const response = await axios.get(`http://localhost:4001/archive`, {
+  const response = await axios.get(`${API_URL}/archive`, {
     withCredentials: true,
   });
   return response.data;
@@ -26,7 +27,7 @@ const Archive = () => {
   const restoreArchive = async (id) => {
     try {
       await axios.post(
-        `http://localhost:4001/archive/restore/${id}`,
+        `${API_URL}/archive/restore/${id}`,
         {},
         { withCredentials: true }
       );
@@ -40,7 +41,7 @@ const Archive = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4001/archive/delete/${id}`, {
+      await axios.delete(`${API_URL}/archive/delete/${id}`, {
         withCredentials: true,
       });
       alert("Document deleted successfully");
@@ -81,7 +82,7 @@ const Archive = () => {
                 <td>{doc.version}</td>
                 <td>
                   <a
-                    href={`http://localhost:4001/${doc.path}`}
+                    href={`${API_URL}/${doc.path}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: "black" }}

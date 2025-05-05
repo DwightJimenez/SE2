@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CreateUser = ({ onUserAdded }) => {
   const [username, setUsername] = useState("");
@@ -10,7 +11,7 @@ const CreateUser = ({ onUserAdded }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4001/auth",
+        `${API_URL}/auth`,
         {
           username,
           password,

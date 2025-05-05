@@ -7,7 +7,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
 import { Switch } from "@/components/ui/switch";
 
-const API_URL = "http://localhost:4001";
+const API_URL = "${API_URL}";
 
 const fetchUsers = async (query = "", role = "") => {
   console.log("Fetching users with:", { query, role });

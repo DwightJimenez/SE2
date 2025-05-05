@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AddDocument = () => {
   const [file, setFile] = useState(null);
@@ -20,7 +21,7 @@ const AddDocument = () => {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:4001/api/upload", formData, {withCredentials:true});
+      await axios.post(`${API_URL}/api/upload`, formData, {withCredentials:true});
       queryClient.invalidateQueries(["documents"]);
       alert("Upload successful!");
       setFile(null);

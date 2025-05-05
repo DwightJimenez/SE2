@@ -8,6 +8,7 @@ import DOMPurify from "dompurify";
 import * as quillToWord from "quill-to-word";
 import { useParams } from "react-router-dom";
 import PageLoc from "../components/PageLoc";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function generateDiffHTML(oldHTML, newHTML) {
   const diffs = diffWords(oldHTML, newHTML);
@@ -57,7 +58,7 @@ function Editor() {
   }, [editorContent]);
 
   async function fetchVersions(id) {
-    const res = await axios.get(`http://localhost:4001/editor/file/${id}`, {
+    const res = await axios.get(`${API_URL}/editor/file/${id}`, {
       withCredentials: true,
     });
 
@@ -78,7 +79,7 @@ function Editor() {
       return;
     }
     await axios.post(
-      "http://localhost:4001/editor/save",
+      `${API_URL}/editor/save`,
       {
         content: editorContent,
         commitMessage,

@@ -5,10 +5,11 @@ import { useState } from "react";
 import axios from "axios"
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 const fetchComments = async (PostId) => {
-  const response = await axios.get(`http://localhost:4001/comments/${PostId}`);
+  const response = await axios.get(`${API_URL}/comments/${PostId}`);
   return response.data;
 };
 
@@ -18,7 +19,7 @@ const CommentsSection = ({ PostId }) => {
 
   const deleteCommentMutation = useMutation({
     mutationFn: async ({ commentId }) => {
-      await axios.delete(`http://localhost:4001/comments/delete/${commentId}`, {withCredentials: true});
+      await axios.delete(`${API_URL}/comments/delete/${commentId}`, {withCredentials: true});
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(["comments", variables.PostId]);
@@ -43,7 +44,7 @@ const CommentsSection = ({ PostId }) => {
   const addCommentMutation = useMutation({
     mutationFn: async (newComment) => {
       const response = await axios.post(
-        "http://localhost:4001/comments",
+        `${API_URL}/comments`,
         newComment,
         { withCredentials: true }
       );

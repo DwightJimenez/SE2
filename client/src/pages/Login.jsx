@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 // const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const { setAuthState } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const Login = () => {
   const handleLogin = () => {
     const data = { username: email, password: password };
     axios
-      .post(`http://localhost:4001/auth/login`, data, { withCredentials: true })
+      .post(`${API_URL}/auth/login`, data, { withCredentials: true })
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
@@ -45,7 +46,7 @@ const Login = () => {
       const { credential } = credentialResponse;
 
       const response = await axios.post(
-        "http://localhost:4001/google/google-login", // Replace with your backend API
+        `${API_URL}/google/google-login`, // Replace with your backend API
         { token: credential },
         { withCredentials: true }
       );

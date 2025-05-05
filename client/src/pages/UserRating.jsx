@@ -5,6 +5,7 @@ import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Question = ({
   index,
@@ -59,7 +60,7 @@ const Question = ({
 
 const fetchQuestion = async (id) => {
   const response = await axios.get(
-    `http://localhost:4001/evaluation/byId/${id}`,
+    `${API_URL}/evaluation/byId/${id}`,
     {
       withCredentials: true,
     }
@@ -69,7 +70,7 @@ const fetchQuestion = async (id) => {
 
 const fetchUserRatings = async (questionId) => {
   const response = await axios.get(
-    `http://localhost:4001/rating/user/${questionId}`,
+    `${API_URL}/rating/user/${questionId}`,
     { withCredentials: true }
   );
 
@@ -145,7 +146,7 @@ const UserRating = () => {
   const submitRatings = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4001/rating/submit",
+        "${API_URL}/rating/submit",
         {
           formId: id,
           ratings: Object.entries(ratings).map(([index, score]) => ({

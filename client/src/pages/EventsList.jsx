@@ -6,9 +6,10 @@ import PageLoc from "../components/PageLoc";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchEvents = async () => {
-  const response = await axios.get(`http://localhost:4001/events`);
+  const response = await axios.get(`${API_URL}/events`);
   return response.data.map((event) => ({
     id: event.id,
     title: event.title,
@@ -33,7 +34,7 @@ const EventsList = () => {
   const deleteEvent = async (id) => {
     try {
       // Send DELETE request to API to remove the event
-      await axios.delete(`http://localhost:4001/events/${id}`, {
+      await axios.delete(`${API_URL}/events/${id}`, {
         withCredentials: true,
       });
       console.log("Event Deleted Successfully:", id);
