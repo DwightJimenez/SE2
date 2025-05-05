@@ -6,6 +6,18 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 // const API_URL = process.env.REACT_APP_API_URL;
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,6 +27,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [googleError, setGoogleError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -24,7 +38,7 @@ const Login = () => {
       });
 
       if (response.data.error) {
-        alert(response.data.error);
+        setLoginError(response.data.error);
         return;
       }
 
@@ -74,12 +88,51 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Google login failed:", error);
-      alert("Google login failed!");
+      setGoogleError("Google login failed. Please try again later.");
+      if (error.response && error.response.data.error) {
+        setGoogleError(error.response.data.error); // Display error from backend
+      } else {
+        setGoogleError("Google login failed. Please try again later.");
+      }
     }
   };
 
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
+      {loginError && (
+        <AlertDialog open={!!loginError}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Login Error</AlertDialogTitle>
+              <AlertDialogDescription>
+                {loginError.toUpperCase()}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => setLoginError("")}>
+                OK
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+
+      {googleError && (
+        <AlertDialog open={!!googleError}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Google Login Error</AlertDialogTitle>
+              <AlertDialogDescription>{googleError}</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => setGoogleError("")}>
+                OK
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+
       <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
         <p className="mt-6 text-xl text-center text-gray-600 dark:text-gray-200">
           Welcome back!
@@ -186,7 +239,9 @@ const Login = () => {
 
         <GoogleLogin
           onSuccess={handleGoogleLogin}
-          onError={() => console.log("Login Failed")}
+          onError={() =>
+            setGoogleError("Google login failed. Please try again.")
+          }
         />
       </div>
       <div

@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({origin: ['http://localhost:5173', 'http://192.168.1.6:5173'], credentials: true}));
+app.use(cors({origin: ['http://localhost:5173', 'http://192.168.1.6:5173', ], credentials: true}));
 
 
 
@@ -49,7 +49,7 @@ const editor = require("./routes/Editor")
 app.use("/editor", editor);
 
 db.sequelize.sync().then(() => {
-  app.listen(port, "0.0.0.0", () => {
+  app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on port ${port}`);
   });
 });

@@ -24,7 +24,9 @@ router.post("/link-google", validateToken, async (req, res) => {
 
     const schoolDomain = "@bicol-u.edu.ph";
     if (!email.endsWith(schoolDomain)) {
-      return res.status(400).json({ error: "Only school Gmail accounts are allowed" });
+      return res
+        .status(400)
+        .json({ error: "Only school Gmail accounts are allowed" });
     }
 
     const user = await Users.findByPk(req.user.id);
@@ -77,6 +79,13 @@ router.post("/google-login", async (req, res) => {
     const payload = ticket.getPayload();
     const { email, name, picture } = payload;
 
+    const schoolDomain = "@bicol-u.edu.ph";
+    if (!email.endsWith(schoolDomain)) {
+      return res
+        .status(400)
+        .json({ error: "Only school Gmail accounts are allowed" });
+    }
+
     // Check if the user exists in your database
     const user = await Users.findOne({ where: { email } });
 
@@ -105,8 +114,8 @@ router.post("/google-login", async (req, res) => {
     });
 
     // Send the response with user info and the token
-    console.log(user)
-    res.json({ message: "Google login successful", user, picture});
+    console.log(user);
+    res.json({ message: "Google login successful", user, picture });
   } catch (error) {
     console.error("Error verifying Google token:", error);
     res.status(400).json({ error: "Google login failed" });

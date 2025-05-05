@@ -4,6 +4,17 @@ import { AuthContext } from "../helpers/AuthContext";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { motion } from "framer-motion";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const FirstVisitPopup = () => {
@@ -12,6 +23,7 @@ const FirstVisitPopup = () => {
   const [confirmPass, setConfirmPass] = useState("");
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
+  const [googleError, setGoogleError] = useState("");
 
   const handleGoogleSignIn = async (credentialResponse) => {
     try {
@@ -29,9 +41,14 @@ const FirstVisitPopup = () => {
       if (response.data && response.data.user) {
         setStep(2);
       }
-    } catch (err) {
-      console.error(err);
-      alert("Google linking failed.");
+    } catch (error) {
+      console.error(error);
+
+      if (error.response && error.response.data.error) {
+        setGoogleError(error.response.data.error); // Display error from backend
+      } else {
+        setGoogleError("Google login failed. Please try again later.");
+      }
     }
   };
 
@@ -97,6 +114,21 @@ const FirstVisitPopup = () => {
 
       {step === 1 && (
         <div className="text-center p-8 bg-white shadow-xl rounded-xl max-w-md w-full">
+          {googleError && (
+            <AlertDialog open={!!googleError}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Google Login Error</AlertDialogTitle>
+                  <AlertDialogDescription>{googleError}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogAction onClick={() => setGoogleError("")}>
+                    Okay
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
           <div className="text-xl font-semibold mb-4">
             Sign in with your Gmail
           </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -47,12 +47,9 @@ const LoadingSkeleton = () => {
 };
 
 const fetchPosts = async ({ pageParam = 1 }) => {
-  const res = await axios.get(
-    `${API_URL}/posts/?page=${pageParam}&limit=5`,
-    {
-      withCredentials: true,
-    }
-  );
+  const res = await axios.get(`${API_URL}/posts/?page=${pageParam}&limit=5`, {
+    withCredentials: true,
+  });
   return {
     ...res.data,
     nextPage: res.data.posts.length === 5 ? pageParam + 1 : undefined,
@@ -62,6 +59,7 @@ const fetchPosts = async ({ pageParam = 1 }) => {
 const Home = () => {
   const { authState, eventState } = useContext(AuthContext);
   const [showChat, setShowChat] = useState(false);
+  const bottomRef = useRef(null);
 
   const {
     data,
@@ -138,6 +136,24 @@ const Home = () => {
 
     fetchEvents();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY); // Capture scroll position
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [eventData]);
 
   if (isError) return <p className="text-red-500">Error loading posts.</p>;
 
@@ -409,54 +425,65 @@ const Home = () => {
           )}
         </AnimatePresence>
       </div>
-      <div className="fixed top-16 right-4 w-100 h-svh p-4 overflow-auto">
-        <h2 className="text-2xl text-gray-500 font-bold mb-4">
+      <div className="fixed top-16 right-4 w-full sm:w-[350px] md:w-[400px] h-[70vh] p-4 bg-white">
+        <h2 className="text-2xl text-gray-700 font-bold mb-4 sticky top-0 bg-white z-10 p-4">
           Upcoming Events
         </h2>
-        {eventData.map((event) => {
-          const date = new Date(event.start);
-          const day = date.getDate();
-          const month = date
-            .toLocaleString("default", { month: "short" })
-            .toUpperCase(); // e.g., "Apr" -> "APR"
+        <div className="flex flex-col space-y-4 overflow-y-auto h-[calc(100%-64px)]">
+          {eventData.map((event, index) => {
+            const date = new Date(event.start);
+            const day = date.getDate();
+            const month = date
+              .toLocaleString("default", { month: "short" })
+              .toUpperCase();
+            const startTime = new Date(event.start).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            });
+            const endTime = new Date(event.end).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            });
 
-          const startTime = new Date(event.start).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          });
-          const endTime = new Date(event.end).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          });
-
-          return (
-            <div className="flex card bg-base-100 border border-primary w-full mb-2 p-0">
-              <div className="flex flex-row card-body text-primary gap-4 p-3">
-                <div className="flex flex-col p-2 bg-primary h-20 w-20 items-center justify-center rounded-box text-neutral-content">
-                  <span className="font-mono text-4xl leading-none">{day}</span>
-                  <span className="text-sm font-bold">{month}</span>
+            return (
+              <motion.div
+                key={index}
+                className="flex card bg-base-100 border border-primary w-full mb-2 p-0"
+                initial={{ opacity: 0, y: 20 }} // Start offscreen with opacity 0
+                whileInView={{ opacity: 1, y: 0 }} // Animate to visible when in view
+                transition={{ duration: 0.5, delay: index * 0.1 }} // Stagger the animation with a delay
+                viewport={{ once: false, amount: 0.5 }} // Trigger animation when 50% of the element is in the viewport
+              >
+                <div className="flex flex-row card-body text-primary gap-4 p-3">
+                  <div className="flex flex-col p-2 bg-primary h-20 w-20 items-center justify-center rounded-box text-neutral-content">
+                    <span className="font-mono text-4xl leading-none">
+                      {day}
+                    </span>
+                    <span className="text-sm font-bold">{month}</span>
+                  </div>
+                  <div className="flex flex-col justify-center gap-1">
+                    <h2 className="card-title">{event.title.toUpperCase()}</h2>
+                    <p className="text-md flex gap-1">
+                      <div className="badge badge-secondary p-2 text-white">
+                        Start:{" "}
+                      </div>
+                      {startTime}
+                    </p>
+                    <p className="text-md flex gap-1">
+                      <div className="badge badge-secondary p-2 text-white">
+                        End:{" "}
+                      </div>
+                      {endTime}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex flex-col justify-center gap-1">
-                  <h2 className="card-title">{event.title.toUpperCase()}</h2>
-                  <p className="text-md flex gap-1">
-                    <div className="badge badge-secondary p-2 text-white">
-                      Start:{" "}
-                    </div>
-                    {startTime}
-                  </p>
-                  <p className="text-md flex gap-1">
-                    <div className="badge badge-secondary p-2 text-white">
-                      End:{" "}
-                    </div>
-                    {endTime}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+              </motion.div>
+            );
+          })}
+          <div ref={bottomRef} />
+        </div>
       </div>
     </div>
   );
