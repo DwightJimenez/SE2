@@ -92,7 +92,7 @@ function ManageUser() {
         <select
           value={selectedRole}
           onChange={handleRoleChange}
-          className="select select-bordered w-50 max-w-xs"
+          className="select select-bordered w-50 max-w-xs border"
         >
           <option value="">All</option>
           <option value="moderator">Moderators</option>

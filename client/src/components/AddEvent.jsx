@@ -21,7 +21,7 @@ const AddEvent = () => {
           </Button>
         </DialogTrigger>
         <DialogContent className="w-auto">
-          <DialogHeader>Create Post</DialogHeader>
+          <DialogHeader>Create Event</DialogHeader>
           <CreateEvents />
         </DialogContent>
       </Dialog>

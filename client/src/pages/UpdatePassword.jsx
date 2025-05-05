@@ -46,7 +46,7 @@ const UpdatePassword = () => {
           <legend className="fieldset-legend">Old Password</legend>
           <input
             type={showOld ? "text" : "password"}
-            className="input w-full pr-10"
+            className="input w-full pr-10 border"
             placeholder="Type here"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
@@ -103,7 +103,7 @@ const UpdatePassword = () => {
           <legend className="fieldset-legend">New Password</legend>
           <input
             type={showNew ? "text" : "password"}
-            className="input w-full pr-10"
+            className="input w-full pr-10 border"
             placeholder="Type here"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}

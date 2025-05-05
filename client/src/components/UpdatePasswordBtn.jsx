@@ -16,7 +16,7 @@ const UpdatePasswordBtn = () => {
           <Button className="btn btn-primary">Update Password</Button>
         </DialogTrigger>
         <DialogContent className="w-auto">
-          <DialogHeader>Create Post</DialogHeader>
+          <DialogHeader>Update Password</DialogHeader>
           <UpdatePassword />
         </DialogContent>
       </Dialog>

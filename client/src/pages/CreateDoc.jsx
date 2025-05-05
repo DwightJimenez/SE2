@@ -1,8 +1,16 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import PageLoc from "../components/PageLoc";
+import SaveDoc from "./SaveDoc"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const fetchDoc = async () => {
   const response = await axios.get("http://localhost:4001/editor/file", {
@@ -24,7 +32,6 @@ const CreateDoc = () => {
     staleTime: 300000, // 5 minutes
   });
 
-
   const formatDate = (date) => {
     const options = {
       year: "numeric",
@@ -41,11 +48,17 @@ const CreateDoc = () => {
     <div className="dark:bg-gray-800 p-4">
       <PageLoc currentPage="Create Document" />
       <div className="flex gap-4 mb-4">
-        <Link to="/editor">
-          <div className="h-80 w-60 p-4 bg-accent rounded-lg shadow">
-            <h1>+</h1>
-          </div>
-        </Link>
+        <Dialog>
+          <DialogTrigger asChild>
+            <div className="h-80 w-60 p-4 bg-accent rounded-lg shadow">
+              <h1 className="text-primary">+</h1>
+            </div>
+          </DialogTrigger>
+          <DialogContent className="w-auto">
+            <DialogHeader>Create Document</DialogHeader>
+            <SaveDoc />
+          </DialogContent>
+        </Dialog>
 
         {isLoading ? (
           <p>Loading documents...</p>

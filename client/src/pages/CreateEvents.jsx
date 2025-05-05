@@ -63,7 +63,7 @@ function CreateEvents() {
                 name="title"
                 placeholder="Title"
                 as="textarea"
-                className="textarea textarea-primary w-100"
+                className="textarea textarea-primary w-100 border"
               />
               <ErrorMessage
                 name="title"
@@ -81,7 +81,7 @@ function CreateEvents() {
                 showTimeSelect
                 dateFormat="Pp" // e.g., 11/22/2024 2:30 PM
                 placeholderText="Select Start Date and Time"
-                className="input input-primary w-100"
+                className="input input-primary w-100 border"
               />
               <ErrorMessage
                 name="start"
@@ -100,7 +100,7 @@ function CreateEvents() {
                 showTimeSelect
                 dateFormat="Pp"
                 placeholderText="Select End Date and Time"
-                className="input input-primary w-100"
+                className="input input-primary w-100 border"
               />
               <ErrorMessage
                 name="end"

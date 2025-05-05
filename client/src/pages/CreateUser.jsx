@@ -9,10 +9,14 @@ const CreateUser = ({ onUserAdded }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4001/auth", {
-        username,
-        password
-      }, { withCredentials: true });
+      const response = await axios.post(
+        "http://localhost:4001/auth",
+        {
+          username,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       if (response.status === 200) {
         alert("User added successfully");
@@ -29,12 +33,12 @@ const CreateUser = ({ onUserAdded }) => {
 
   return (
     <div className="flex flex-col h-full justify-center w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg dark:bg-gray-800">
-      <div className="flex justify-center">
-        <p className="text-2xl">Add User</p>
-      </div>
       <form className="mt-6" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username" className="block text-sm text-gray-800 dark:text-gray-200">
+          <label
+            htmlFor="username"
+            className="block text-sm text-gray-800 dark:text-gray-200"
+          >
             Username
           </label>
           <input
@@ -47,7 +51,10 @@ const CreateUser = ({ onUserAdded }) => {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="password" className="block text-sm text-gray-800 dark:text-gray-200">
+          <label
+            htmlFor="password"
+            className="block text-sm text-gray-800 dark:text-gray-200"
+          >
             Password
           </label>
           <input
