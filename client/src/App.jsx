@@ -86,7 +86,7 @@ function App() {
   const logout = async () => {
     try {
       await axios.post(
-        "${API_URL}/auth/logout",
+        `${API_URL}/auth/logout`,
         {},
         { withCredentials: true }
       );
