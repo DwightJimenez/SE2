@@ -32,7 +32,7 @@ router.post(
   checkRole(["moderator", "admin"]),
   async (req, res) => {
     const { title, start, end } = req.body;
-    const user = req.user.username;
+    const user = req.user.id;
 
     try {
       // Convert the start and end time to UTC before saving to the database
@@ -47,7 +47,7 @@ router.post(
       await AuditLog.create({
         action: "Created an event",
         title: title,
-        user: user,
+        userId: user,
       });
       res.json(newEvent);
     } catch (error) {
@@ -63,6 +63,7 @@ router.delete(
   checkRole(["moderator", "admin"]),
   async (req, res) => {
     const { id } = req.params;
+    const user = req.user.id;
     console.log("Received ID for deletion:", id); // Debugging
 
     try {
@@ -74,7 +75,7 @@ router.delete(
       await AuditLog.create({
         action: "Deleted an event",
         title: event.title,
-        user: "admin",
+        userId: user,
       });
       await event.destroy();
 

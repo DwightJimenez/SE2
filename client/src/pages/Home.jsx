@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import {
   useInfiniteQuery,
@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import PostButton from "../components/PostButton";
 import Linkify from "react-linkify";
+import moment from "moment";
 import Chat from "./Chat";
 import CommentsSection from "./CommentsSection";
 import { AuthContext } from "../helpers/AuthContext";
@@ -76,6 +77,7 @@ const Home = () => {
   const [expandedPost, setExpandedPost] = useState(null);
   const allPosts = data?.pages.flatMap((page) => page.posts) || [];
   const queryClient = useQueryClient();
+  const [eventData, setEventData] = useState([])
 
   const deletePostMutation = useMutation({
     mutationFn: async (postId) => {
@@ -109,6 +111,30 @@ const Home = () => {
   const handleLikePost = (postId) => {
     likePostMutation.mutate(postId);
   };
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4001/events`);
+        const now = moment(); // current local time
+        const formattedEvents = response.data
+          .filter((event) => moment.utc(event.start).local().isSameOrAfter(now, 'day')) // keep today and future
+          .map((event) => ({
+            id: event.id,
+            title: event.title,
+            start: moment.utc(event.start).local().format("YYYY-MM-DD HH:mm"),
+            end: moment.utc(event.end).local().format("YYYY-MM-DD HH:mm"),
+          }));
+        setEventData(formattedEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+  
+    fetchEvents();
+  }, []);
+  
+
 
   if (isError) return <p className="text-red-500">Error loading posts.</p>;
 
@@ -326,7 +352,7 @@ const Home = () => {
         <h2 className="text-2xl text-gray-500 font-bold mb-4">
           Upcoming Events
         </h2>
-        {eventState.events.map((event) => {
+        {eventData.map((event) => {
           const date = new Date(event.start);
           const day = date.getDate();
           const month = date

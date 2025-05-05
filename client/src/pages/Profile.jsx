@@ -21,7 +21,15 @@ const Profile = () => {
           />
         </div>
       </div>
+      <div className="divider divider-accent"></div>
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">Page title</legend>
+        <input type="text" className="input" placeholder="My Fucking page" />
+        <p className="label">You can edit page title later on from settings</p>
+      </fieldset>
+      <label className="label">Title</label>
       <p className="text-sm">{authState.username}</p>
+      <label className="label">Title</label>
       <p className="text-sm">{authState.email}</p>
       <UpdatePasswordBtn />
     </div>
