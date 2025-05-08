@@ -21,7 +21,7 @@ const Profile = () => {
           />
         </div>
       </div>
-      <div className="divider divider-primary"></div>
+      <div className="divider"></div>
       <div>
         <fieldset className="fieldset">
           <legend className="fieldset-legend">Name</legend>
@@ -33,7 +33,7 @@ const Profile = () => {
         </fieldset>
       </div>
 
-      <div className="divider divider-primary"></div>
+      <div className="divider"></div>
       <UpdatePasswordBtn />
     </div>
   );
