@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { motion } from "framer-motion";
+import Typewriter from "typewriter-effect";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,23 +36,6 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [googleError, setGoogleError] = useState("");
-
-  const [displayedText, setDisplayedText] = useState("");
-
-  useEffect(() => {
-    let index = 0;
-    setDisplayedText(""); // Clear previous text to avoid stacking
-    const interval = setInterval(() => {
-      if (index < fullText.length -1) {
-        setDisplayedText((prev) => prev + fullText[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 30);
-
-    return () => clearInterval(interval); // Cleanup
-  }, []);
 
   const handleLogin = async () => {
     try {
@@ -276,15 +260,18 @@ const Login = () => {
       >
         <div className="flex flex-col justify-center items-center h-full">
           <img src={buLogo} alt="" className="h-auto w-60 my-8" />
-          <div className="text-center ">
-            <motion.p
-              className="whitespace-pre-line font-normal tracking-wide text-green-50 text-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              {displayedText}
-            </motion.p>
+          <div className="text-center text-white text-xl">
+          <Typewriter
+    options={{
+      strings: [
+        "WORKFLOW AUTOMATION<br/>SYSTEM for ACScis ORGANIZATION<br/>IN BICOL UNIVERSITY POLANGUI",
+      ],
+      autoStart: true,
+      loop: true,
+      delay: 30,
+      pauseFor: 3000,
+    }}
+  />
           </div>
         </div>
       </div>
