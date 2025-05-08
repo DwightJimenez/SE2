@@ -146,55 +146,65 @@ function Editor() {
   };
 
   return (
-    <div className="p-4 flex flex-col gap-4">
+    <div className="p-4 flex flex-col">
       <PageLoc
         currentPage={docName}
         backLink="/create-document"
         showBack={true}
       />
-      <button className="btn w-fit" onClick={exportToWord}>
-        Export To Word
-      </button>
-      <div className="flex gap-4">
-        <ReactQuill
-          ref={quillRef} // Attach the ref here
-          theme="snow"
-          value={editorContent}
-          onChange={setEditorContent}
-          modules={modules}
-          className={showPreview && selectedVersion ? "w-1/2" : "w-full"}
-        />
-        {showPreview && selectedVersion && (
-          <div className="p-4 border rounded bg-white shadow w-1/2">
-            <div className="flex justify-between items-center">
-              <h3 className="font-bold mb-2">Changes Compared to Current</h3>
-              <button
-                onClick={() => {
-                  setShowPreview(false);
-                  setSelectedVersion(null);
-                }}
-                className="text-red-500 hover:text-red-700"
-              >
-                Close
-              </button>
-            </div>
-
-            <ReactQuill
-              readOnly={true}
-              value={diffContent}
-              modules={{ toolbar: false }}
-            />
-
-            <button
-              onClick={() => rollbackVersion(selectedVersion.content)}
-              className="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-            >
-              Rollback to This Version
-            </button>
-          </div>
-        )}
+      <div className="flex">
+        {/* left */}
         <div className="flex flex-col">
-          <div className="flex flex-col gap-2 items-center">
+          <button className="btn w-fit" onClick={exportToWord}>
+            Export To Word
+          </button>
+          <div className="flex gap-4">
+            <ReactQuill
+              ref={quillRef} // Attach the ref here
+              theme="snow"
+              value={editorContent}
+              onChange={setEditorContent}
+              modules={modules}
+              className={showPreview && selectedVersion ? "w-1/2" : "w-full"}
+            />
+            {showPreview && selectedVersion && (
+              <div className="p-4 border rounded bg-white shadow w-1/2">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-bold mb-2">
+                    Changes Compared to Current
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setShowPreview(false);
+                      setSelectedVersion(null);
+                    }}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    Close
+                  </button>
+                </div>
+
+                <ReactQuill
+                  readOnly={true}
+                  value={diffContent}
+                  modules={{ toolbar: false }}
+                />
+
+                <button
+                  onClick={() => rollbackVersion(selectedVersion.content)}
+                  className="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
+                >
+                  Rollback to This Version
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+
+        {/* right */}
+        <div className="flex flex-col p-4 border-accent w-90 h-130">
+          <div className="flex flex-col gap-2 justify-end p-4">
             <input
               type="text"
               placeholder="Commit message"
@@ -209,56 +219,57 @@ function Editor() {
               Save Version
             </div>
           </div>
+          <h2 className="text-xl font-semibold">Version History</h2>
+          <div className="flex flex-col items-end w-60 p-4 overflow-y-scroll">
+            
+            <div className="w-full h-full flex flex-col items-end">
+              <ul className="timeline timeline-vertical timeline-compact w-full">
+                {versions.map((ver, idx) => (
+                  <li key={idx}>
+                    {idx !== 0 && <hr />}
+                    <div className="timeline-middle">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="h-5 w-5 text-tertiary"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
 
-          <div className="mt-6 relative w-60">
-            <h2 className="text-xl font-semibold mb-2">Version History</h2>
-
-            <ul className="timeline timeline-vertical absolute left-50">
-              {versions.map((ver, idx) => (
-                <li key={idx}>
-                  {idx !== 0 && <hr />}
-                  <div className="timeline-middle">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5 text-tertiary"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div
-                          className={`timeline-start timeline-box h-25 w-50 cursor-pointer flex flex-col justify-evenly ${
-                            selectedVersion === ver ? "bg-blue-100" : ""
-                          }`}
-                          onClick={() => handleVersionClick(ver)}
-                        >
-                          <div className="font-semibold">
-                            {ver.commitMessage}
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div
+                            className={`timeline-start timeline-box h-25 w-50 cursor-pointer border border-tertiary flex flex-col justify-evenly ${
+                              selectedVersion === ver ? "bg-blue-100" : ""
+                            }`}
+                            onClick={() => handleVersionClick(ver)}
+                          >
+                            <div className="font-semibold">
+                              {ver.commitMessage}
+                            </div>
+                            <div className="text-gray-500 text-xs">
+                              {new Date(ver.timestamp).toLocaleString()}
+                            </div>
                           </div>
-                          <div className="text-gray-500 text-xm">
-                            {new Date(ver.timestamp).toLocaleString()}
-                          </div>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="left" className="w-50 p-4">
-                        <p>Committed by: {ver.User.username}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                        </TooltipTrigger>
+                        <TooltipContent side="left" className="w-50 p-4">
+                          <p>Committed by: {ver.User.username}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
 
-                  {idx !== versions.length - 1 && <hr />}
-                </li>
-              ))}
-            </ul>
+                    {idx !== versions.length - 1 && <hr />}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
