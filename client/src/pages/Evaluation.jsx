@@ -44,7 +44,7 @@ const EvaluationList = ({ userId, questionId }) => {
           {forms.map((form) => (
             <div
               key={form.id}
-              className="h-80 w-60 p-4   rounded-lg shadow-2xl relative flex  border border-gray-300"
+              className="h-70 w-50 p-4   rounded-lg shadow-2xl relative flex  border border-gray-300"
               onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
             >
               <h3 className="font-bold">{form.title}</h3>

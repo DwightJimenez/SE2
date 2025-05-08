@@ -8,6 +8,13 @@ import DOMPurify from "dompurify";
 import * as quillToWord from "quill-to-word";
 import { useParams } from "react-router-dom";
 import PageLoc from "../components/PageLoc";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 function generateDiffHTML(oldHTML, newHTML) {
@@ -73,17 +80,18 @@ function Editor() {
     }
   }
 
-  async function saveVersion() {
+  async function saveVersion(id) {
     if (!commitMessage.trim()) {
       alert("Please enter a commit message!");
       return;
     }
+    console.log("id wtf", id);
     await axios.post(
       `${API_URL}/editor/save`,
       {
         content: editorContent,
         commitMessage,
-        name: "Document1", // You can replace this with a dynamic name if needed
+        fileId: id,
       },
       { withCredentials: true }
     );
@@ -139,7 +147,11 @@ function Editor() {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <PageLoc currentPage={docName} />
+      <PageLoc
+        currentPage={docName}
+        backLink="/create-document"
+        showBack={true}
+      />
       <button className="btn w-fit" onClick={exportToWord}>
         Export To Word
       </button>
@@ -191,7 +203,7 @@ function Editor() {
               className="border rounded p-2 w-full"
             />
             <div
-              onClick={saveVersion}
+              onClick={() => saveVersion(id)}
               className="btn btn-accent text-white px-4 py-2 rounded"
             >
               Save Version
@@ -210,7 +222,7 @@ function Editor() {
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
-                      className="h-5 w-5"
+                      className="h-5 w-5 text-tertiary"
                     >
                       <path
                         fillRule="evenodd"
@@ -219,17 +231,30 @@ function Editor() {
                       />
                     </svg>
                   </div>
-                  <div
-                    className={`timeline-start timeline-box h-25 w-50 ${
-                      selectedVersion === ver ? "bg-blue-100" : ""
-                    }`}
-                    onClick={() => handleVersionClick(ver)}
-                  >
-                    <div className="font-semibold">{ver.commitMessage}</div>
-                    <div className="text-gray-500 text-xm">
-                      {new Date(ver.timestamp).toLocaleString()}
-                    </div>
-                  </div>
+
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div
+                          className={`timeline-start timeline-box h-25 w-50 cursor-pointer flex flex-col justify-evenly ${
+                            selectedVersion === ver ? "bg-blue-100" : ""
+                          }`}
+                          onClick={() => handleVersionClick(ver)}
+                        >
+                          <div className="font-semibold">
+                            {ver.commitMessage}
+                          </div>
+                          <div className="text-gray-500 text-xm">
+                            {new Date(ver.timestamp).toLocaleString()}
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="left" className="w-50 p-4">
+                        <p>Committed by: {ver.User.username}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+
                   {idx !== versions.length - 1 && <hr />}
                 </li>
               ))}

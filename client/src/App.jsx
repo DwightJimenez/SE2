@@ -24,6 +24,7 @@ import CreateForm from "./pages/CreateForm";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 import Editor from "./pages/Editor";
 import CreateDoc from "./pages/CreateDoc";
+import { Toaster } from "@/components/ui/sonner";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
@@ -112,6 +113,7 @@ function App() {
       value={{ authState, setAuthState, eventState, setEventState }}
     >
       <div className="flex h-screen w-screen ">
+      <Toaster />
         {authState.status ? (
           authState.email === "" ? (
             <Routes>

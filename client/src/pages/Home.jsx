@@ -159,6 +159,7 @@ const Home = () => {
 
   return (
     <div className="flex">
+      
       <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800">
         <div className="relative">
           <PostButton />
@@ -228,7 +229,7 @@ const Home = () => {
                           </div>
                           <ul
                             tabIndex={0}
-                            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm  border border-gray-300"
+                            className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300"
                           >
                             <li>
                               <AlertDialog>
@@ -269,6 +270,7 @@ const Home = () => {
                                     </AlertDialogCancel>
                                     <AlertDialogAction
                                       onClick={() => handleDeletePost(post.id)}
+                                      className="bg-red-400 hover:bg-red-600 text-white"
                                     >
                                       Continue
                                     </AlertDialogAction>

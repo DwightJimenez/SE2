@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { useState } from "react";
-// const API_URL = process.env.REACT_APP_API_URL;
+import { toast } from "sonner";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function CreateEvents() {
@@ -43,10 +43,11 @@ function CreateEvents() {
       await axios.post(`${API_URL}/events`, formattedData, {
         withCredentials: true,
       });
-      console.log("Event Created Successfully:", formattedData);
+      toast.success("Event created successfully!"); // Show success message
       navigate("/events"); // Redirect to the events page
     } catch (error) {
       console.error("Error creating event:", error);
+      toast.error("Error creating event!"); // Show error message
     }
   };
 

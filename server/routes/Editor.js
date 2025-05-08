@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Version, File } = require("../models");
+const { Version, File, Users } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const { sequelize } = require("../models");
 
@@ -21,7 +21,11 @@ router.get("/versions/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const versions = await Version.findAll({
-      where: { fileId: id }, // assuming your Version model has a 'fileId' field
+      where: { fileId: id },
+      include: {
+        model: Users,
+        attributes: ["id", "username"],
+      },
       order: [["timestamp", "DESC"]],
     });
     res.json(versions);
@@ -48,7 +52,15 @@ router.get("/file/:id", async (req, res) => {
     const file = await File.findOne({
       where: { id },
       include: [
-        { model: Version, separate: true, order: [["timestamp", "DESC"]] },
+        {
+          model: Version,
+          separate: true,
+          order: [["timestamp", "DESC"]],
+          include: {
+            model: Users,
+            attributes: ["id", "username"],
+          },
+        },
       ],
     });
     if (!file) {
@@ -60,29 +72,36 @@ router.get("/file/:id", async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 });
-
-router.post("/save", validateToken, async (req, res) => {
-  const transaction = await sequelize.transaction();
-
+router.post("/file/create", async (req, res) => {
+  let { name } = req.body;
   try {
-    const { content, commitMessage, name } = req.body;
+    let count = 1;
+    let baseName = name;
+    while (await File.findOne({ where: { name } })) {
+      name = `${baseName} ${count++}`;
+    }
+
+    const file = await File.create({ name });
+    res.status(201).json(file);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+router.post("/save", validateToken, async (req, res) => {
+  try {
+    const { content, commitMessage, fileId } = req.body;
     const user = req.user.id;
 
-    const file = await File.create({ name }, { transaction });
+    const newVersion = await Version.create({
+      content,
+      commitMessage,
+      fileId: fileId,
+      userId: user,
+    });
 
-    const newVersion = await Version.create(
-      {
-        content,
-        commitMessage,
-        fileId: file.id,
-        userId: user,
-      },
-      { transaction }
-    );
-    await transaction.commit();
     res.json({ message: "Version saved!", version: newVersion });
   } catch (err) {
-    await transaction.rollback();
     res.status(500).json({ message: err.message });
   }
 });

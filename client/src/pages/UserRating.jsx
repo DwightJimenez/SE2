@@ -146,7 +146,7 @@ const UserRating = () => {
   const submitRatings = async () => {
     try {
       const response = await axios.post(
-        "${API_URL}/rating/submit",
+        `${API_URL}/rating/submit`,
         {
           formId: id,
           ratings: Object.entries(ratings).map(([index, score]) => ({

@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const CreatePost = () => {
@@ -36,7 +38,8 @@ const CreatePost = () => {
       );
 
       if (res.data.success) {
-        alert("Post created successfully!");
+        toast("Post created successfully!");
+
         reset(); // ✅ Reset form after submission
         queryClient.invalidateQueries(["posts"]);
       } else {

@@ -12,7 +12,7 @@ const Question = ({ index, updateQuestion, removeQuestion }) => (
         type="text"
         placeholder="Question"
         onChange={(e) => updateQuestion(index, e.target.value)}
-        className="border p-2 rounded w-full"
+        className="border border-accent p-2 rounded w-full"
       />
     </div>
     <button onClick={() => removeQuestion(index)} className="text-red-500 mt-2">
@@ -88,13 +88,13 @@ const AddForm = () => {
       ))}
       <button
         onClick={addQuestion}
-        className="bg-green-500 text-white p-2 mt-4 rounded"
+        className="bg-[#f43098] text-white p-2 mt-4 rounded"
       >
         Add Question
       </button>
       <button
         onClick={() => saveFormMutation.mutate()}
-        className="bg-blue-500 text-white p-2 mt-4 rounded ml-2"
+        className="bg-primary text-white p-2 mt-4 rounded ml-2"
       >
         Save Form
       </button>
