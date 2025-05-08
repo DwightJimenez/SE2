@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import { motion } from "framer-motion";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +22,11 @@ import {
 // const API_URL = process.env.REACT_APP_API_URL;
 const API_URL = import.meta.env.VITE_API_URL;
 
+import { useEffect } from "react";
+
+const fullText =
+  "  WORKFLOW AUTOMATION\nSYSTEM for ACScis ORGANIZATION\nIN BICOL UNIVERSITY POLANGUI";
+
 const Login = () => {
   const { setAuthState } = useContext(AuthContext);
   const [email, setEmail] = useState("");
@@ -29,6 +35,23 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [googleError, setGoogleError] = useState("");
+
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let index = 0;
+    setDisplayedText(""); // Clear previous text to avoid stacking
+    const interval = setInterval(() => {
+      if (index < fullText.length -1) {
+        setDisplayedText((prev) => prev + fullText[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 30);
+
+    return () => clearInterval(interval); // Cleanup
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -254,13 +277,14 @@ const Login = () => {
         <div className="flex flex-col justify-center items-center h-full">
           <img src={buLogo} alt="" className="h-auto w-60 my-8" />
           <div className="text-center ">
-            <p className="font-normal tracking-wide text-green-50 ">
-              WORKFLOW AUTOMATION
-              <br />
-              SYSTEM for ACScis ORGANIZATION
-              <br />
-              IN BICOL UNIVERSITY POLANGUI
-            </p>
+            <motion.p
+              className="whitespace-pre-line font-normal tracking-wide text-green-50 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              {displayedText}
+            </motion.p>
           </div>
         </div>
       </div>
