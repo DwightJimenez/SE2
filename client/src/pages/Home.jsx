@@ -467,13 +467,13 @@ const Home = () => {
                   </div>
                   <div className="flex flex-col justify-center gap-1">
                     <h2 className="card-title">{event.title.toUpperCase()}</h2>
-                    <p className="text-md flex gap-1">
+                    <p className="text-md flex gap-2">
                       <div className="badge badge-secondary p-2 text-white">
                         Start:{" "}
                       </div>
                       {startTime}
                     </p>
-                    <p className="text-md flex gap-1">
+                    <p className="text-md flex gap-4">
                       <div className="badge badge-secondary p-2 text-white">
                         End:{" "}
                       </div>

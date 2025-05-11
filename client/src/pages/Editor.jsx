@@ -149,7 +149,7 @@ function Editor() {
     <div className="p-4 flex flex-col">
       <PageLoc
         currentPage={docName}
-        backLink="/create-document"
+        backLink="/create-document" 
         showBack={true}
       />
       <div className="flex">
@@ -226,13 +226,13 @@ function Editor() {
               <ul className="timeline timeline-vertical timeline-compact w-full">
                 {versions.map((ver, idx) => (
                   <li key={idx}>
-                    {idx !== 0 && <hr />}
+                    {idx !== 0 && <hr className="bg-accent"/>}
                     <div className="timeline-middle">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        className="h-5 w-5 text-tertiary"
+                        className="h-5 w-5 text-accent"
                       >
                         <path
                           fillRule="evenodd"
@@ -265,7 +265,7 @@ function Editor() {
                       </Tooltip>
                     </TooltipProvider>
 
-                    {idx !== versions.length - 1 && <hr />}
+                    {idx !== versions.length - 1 && <hr className="bg-accent"/>}
                   </li>
                 ))}
               </ul>

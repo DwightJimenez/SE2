@@ -13,5 +13,8 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 5173,
+    allowedHosts: [
+      "1fb5-136-158-100-217.ngrok-free.app", // 👈 your ngrok URL (no https)
+    ],
   },
 });

@@ -24,6 +24,7 @@ import CreateForm from "./pages/CreateForm";
 import FirstVisitPopup from "./pages/FirstVisitPopup";
 import Editor from "./pages/Editor";
 import CreateDoc from "./pages/CreateDoc";
+import ViewEditor from "./pages/ViewEditor";
 import { Toaster } from "@/components/ui/sonner";
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -144,6 +145,7 @@ function App() {
                   <Route path="/evaluation" element={<Evaluation />} />
                   <Route path="/evaluation/add" element={<AddForm />} />
                   <Route path="/evaluation/:id" element={<EditForm />} />
+                  <Route path="/view-editor/:id" element={<ViewEditor />} />
                   <Route
                     path="/evaluation/evaluate/:id"
                     element={<UserRating />}
@@ -157,7 +159,6 @@ function App() {
                       <Route path="/documents" element={<Documents />} />
                       <Route path="/manage-user" element={<ManageUser />} />
                       <Route path="/create-form" element={<CreateForm />} />
-                      <Route path="/editor" element={<Editor />} />
                       <Route path="/editor/:id" element={<Editor />} />
                       <Route path="/create-document" element={<CreateDoc />} />
                     </>

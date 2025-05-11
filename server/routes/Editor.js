@@ -4,35 +4,7 @@ const { Version, File, Users } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const { sequelize } = require("../models");
 
-// Get all versions
-router.get("/versions/", async (req, res) => {
-  try {
-    const versions = await Version.findAll({
-      order: [["timestamp", "DESC"]], // Sort by timestamp (latest version first)
-    });
-    res.json(versions);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
-// Backend route to get versions for a specific file
-router.get("/versions/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const versions = await Version.findAll({
-      where: { fileId: id },
-      include: {
-        model: Users,
-        attributes: ["id", "username"],
-      },
-      order: [["timestamp", "DESC"]],
-    });
-    res.json(versions);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 router.get("/file", async (req, res) => {
   try {

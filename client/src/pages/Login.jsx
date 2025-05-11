@@ -25,9 +25,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 import { useEffect } from "react";
 
-const fullText =
-  "  WORKFLOW AUTOMATION\nSYSTEM for ACScis ORGANIZATION\nIN BICOL UNIVERSITY POLANGUI";
-
 const Login = () => {
   const { setAuthState } = useContext(AuthContext);
   const [email, setEmail] = useState("");
@@ -261,17 +258,17 @@ const Login = () => {
         <div className="flex flex-col justify-center items-center h-full">
           <img src={buLogo} alt="" className="h-auto w-60 my-8" />
           <div className="text-center text-white text-xl">
-          <Typewriter
-    options={{
-      strings: [
-        "WORKFLOW AUTOMATION<br/>SYSTEM for ACScis ORGANIZATION<br/>IN BICOL UNIVERSITY POLANGUI",
-      ],
-      autoStart: true,
-      loop: true,
-      delay: 30,
-      pauseFor: 3000,
-    }}
-  />
+            <Typewriter
+              options={{
+                strings: [
+                  "WORKFLOW AUTOMATION<br/>SYSTEM for ACScis ORGANIZATION<br/>IN BICOL UNIVERSITY POLANGUI",
+                ],
+                autoStart: true,
+                loop: true,
+                delay: 30,
+                pauseFor: 3000,
+              }}
+            />
           </div>
         </div>
       </div>

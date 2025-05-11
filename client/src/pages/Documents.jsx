@@ -1,18 +1,20 @@
 import React from "react";
 import PageLoc from "../components/PageLoc";
-import AddDoc from "../components/AddDoc";
-import AddDocument from "./AddDocument";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchDocuments = async () => {
-  const response = await axios.get(`${API_URL}/api`);
-  return response.data.filter((doc) => !doc.isArchive);
+  const response = await axios.get(`${API_URL}/editor/file`, {
+    withCredentials: true,
+  });
+  return response.data;
 };
 
 const Documents = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const {
     data: documents = [],
     isLoading,
@@ -22,17 +24,18 @@ const Documents = () => {
     queryFn: fetchDocuments,
   });
 
-  const handleArchive = async (id) => {
-    console.log("Archiving document with ID:", id); // Log ID
-    try {
-      const response = await axios.post(`${API_URL}/archive/${id}`, {}, { withCredentials: true });
-      console.log(response); // Log the response
-      alert("Document archived successfully");
-      queryClient.invalidateQueries(["documents"]);
-    } catch (error) {
-      console.error("Failed to archive document", error);
-      alert("Failed to archive document. Please try again.");
-    }
+
+   const formatDate = (date) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true, // 12-hour format with AM/PM
+    };
+    return new Date(date).toLocaleString("en-US", options);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -41,56 +44,52 @@ const Documents = () => {
   return (
     <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Documents" />
-      <div className="relative">
-        <AddDoc />
-        <div
-          className="dropdown menu w-160 h-100 rounded-box bg-base-100 shadow-sm "
-          popover="auto"
-          id="popover-1"
-          style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */}
-        >
-          <AddDocument />
-        </div>
-      </div>
-      <div className="overflow-x-auto rounded-box  bg-white shadow-lg  border border-gray-300">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Version</th>
-              <th>Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {documents
-              .sort((a, b) => {
-                if (a.name === b.name) {
-                  return b.version - a.version;
-                }
-                return a.name.localeCompare(b.name);
-              })
-              .map((doc) => (
-                <tr key={doc.id}>
-                  <td>{doc.version}</td>
-                  <td>
-                    <a
-                      href={`${API_URL}/${doc.path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "black" }}
-                    >
-                      {doc.name}
-                    </a>
-                  </td>
-                  <td>
-                    <button className="btn bg-accent" onClick={() => handleArchive(doc.id)}>
-                      Archive
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+      <div className="flex gap-4 mb-4">
+        {isLoading ? (
+          <p>Loading documents...</p>
+        ) : isError ? (
+          <p>Error loading documents.</p>
+        ) : documents.length === 0 ? (
+          <p>No documents found.</p>
+        ) : (
+          <div className="grid grid-cols-3 gap-4">
+            {documents.map((document) => (
+              <div
+                key={document.id}
+                className="flex flex-col justify-between h-70 w-50 p-4 bg-accent rounded-lg shadow"
+                onClick={() => navigate(`/view-editor/${document.id}`)}
+              >
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-16 text-white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                    />
+                  </svg>
+                </div>
+                <div className="flex flex-col w-full">
+                  <h3 className="font-bold text-white text-xl">
+                    {document.name}
+                  </h3>
+                  <div className="justify-end mt-4 text-xs text-gray-800">
+                    <p>Created: {formatDate(document.createdAt)}</p>
+                    {document.updatedAt && (
+                      <p>Updated: {formatDate(document.updatedAt)}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

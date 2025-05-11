@@ -3,16 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import userAvatar from "../assets/user.png";
 import Profile from "../pages/Profile";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import {
   Sheet,
   SheetContent,
@@ -23,11 +14,6 @@ import {
 
 const NavBar = ({ logout }) => {
   const { authState } = useContext(AuthContext);
-
-  const handleLogout = () => {
-    logout();
-  };
-
   return (
     <div>
       <div className="flex flex-col w-screen fixed z-50">
@@ -59,64 +45,33 @@ const NavBar = ({ logout }) => {
             </div>
 
             <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar mx-4"
-              >
-                <div className="w-10 rounded-full ring-primary ring-offset-base-100 ring ring-offset-2">
-                  <img
-                    src={authState.profilePicture || userAvatar}
-                    alt="User Avatar"
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = userAvatar;
-                    }}
-                  />
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-lg dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow border"
-              >
-                <li>
-                  <Sheet>
-                    <SheetTrigger>
-                      <a className="justify-between">Profile</a>
-                    </SheetTrigger>
-                    <SheetContent>
-                      <SheetHeader>
-                        <SheetTitle>Profile</SheetTitle>
-                        <Profile />
-                      </SheetHeader>
-                    </SheetContent>
-                  </Sheet>
-                </li>
-
-                <li>
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <span className="flex justify-evenly gap-4">
-                        <a>Logout</a>
-                      </span>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you sure you want to logout?
-                        </AlertDialogTitle>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleLogout}>
-                          Logout
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </li>
-              </ul>
+              <Sheet>
+                <SheetTrigger>
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar mx-4"
+                  >
+                    <div className="w-10 rounded-full ring-primary ring-offset-base-100 ring ring-offset-2">
+                      <img
+                        src={authState.profilePicture || userAvatar}
+                        alt="User Avatar"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = userAvatar;
+                        }}
+                      />
+                    </div>
+                  </div>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Profile</SheetTitle>
+                    <Profile logout={logout} />
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
