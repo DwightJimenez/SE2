@@ -82,7 +82,7 @@ function App() {
   }, [authState, navigate]);
 
   // Show loading screen while fetching auth state
-  if (isLoading )
+  if (isLoading || (data && !authState.status && data.status))
     return (
       <div className="w-screen h-screen flex justify-center items-center">
         <span className="loading loading-dots loading-xl text-accent"></span>
@@ -114,7 +114,7 @@ function App() {
       value={{ authState, setAuthState, eventState, setEventState }}
     >
       <div className="flex h-screen w-screen ">
-      <Toaster />
+        <Toaster />
         {authState.status ? (
           authState.email === "" ? (
             <Routes>
