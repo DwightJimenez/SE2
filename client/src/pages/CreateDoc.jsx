@@ -22,6 +22,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchDoc = async () => {
@@ -67,6 +69,7 @@ const CreateDoc = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doc"] });
+      toast.success("Document archived successfully");
     },
   });
 

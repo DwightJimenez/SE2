@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   Evaluation.associate = (models) => {
     Evaluation.hasMany(models.Question, {
-      onDelete: "cascade",
+      onDelete: "Set Null",
+      foreignKey: "EvaluationId",
     });
   };
   return Evaluation;

@@ -2,7 +2,11 @@ import React from "react";
 import PageLoc from "../components/PageLoc";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import axios from "axios";
+
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Question = ({ index, updateQuestion, removeQuestion }) => (
@@ -24,6 +28,8 @@ const AddForm = () => {
   const [title, setTitle] = useState("Untitled Form");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([]);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const saveFormMutation = useMutation({
     mutationFn: async () => {
@@ -40,6 +46,8 @@ const AddForm = () => {
     onSuccess: () => {
       alert("Form saved successfully!");
       queryClient.invalidateQueries(["form"]);
+      toast("Post created successfully!");
+      navigate("/create-form");
     },
     onError: () => {
       alert("Failed to save form.");
@@ -61,7 +69,7 @@ const AddForm = () => {
   };
   return (
     <div className="dark:bg-gray-800 p-4">
-      <PageLoc currentPage="Add Form"  showBack={true} backLink="/create-form"/>
+      <PageLoc currentPage="Add Form" showBack={true} backLink="/create-form" />
       <div className="p-4 bg-accent dark:bg-gray-900 rounded-lg shadow">
         <input
           type="text"
@@ -88,7 +96,7 @@ const AddForm = () => {
       ))}
       <button
         onClick={addQuestion}
-        className="bg-[#f43098] text-white p-2 mt-4 rounded"
+        className="bg-quaternary text-white p-2 mt-4 rounded"
       >
         Add Question
       </button>

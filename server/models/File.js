@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   File.associate = (models) => {
     File.hasMany(models.Version, {
       foreignKey: "fileId",
-      onDelete: "CASCADE",
+      onDelete: "Set Null",
     });
   };
   return File;

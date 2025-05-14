@@ -2,6 +2,19 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import PageLoc from "../components/PageLoc";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchArchivedDocuments = async () => {
@@ -31,7 +44,7 @@ const Archive = () => {
         {},
         { withCredentials: true }
       );
-      alert("Document restored successfully");
+      toast.success("Document restored successfully");
       // Manually re-fetch the documents after restore
       queryClient.invalidateQueries(["archivedDocuments"]);
     } catch (error) {
@@ -44,7 +57,7 @@ const Archive = () => {
       await axios.delete(`${API_URL}/archive/delete/${id}`, {
         withCredentials: true,
       });
-      alert("Document deleted successfully");
+      toast.success("Document deleted successfully");
       // Manually re-fetch the documents after delete
       queryClient.invalidateQueries(["archivedDocuments"]);
     } catch (error) {
@@ -90,19 +103,58 @@ const Archive = () => {
                     {doc.name}
                   </a>
                 </td>
-                <td>
-                  <button
-                    className="btn bg-accent"
-                    onClick={() => restoreArchive(doc.id)}
-                  >
-                    Restore
-                  </button>
-                  <button className="btn"
-                    onClick={() => handleDelete(doc.id)}
-                    style={{ background: "red", color: "white" }}
-                  >
-                    Delete
-                  </button>
+                <td className="flex gap-2">
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <span className="flex justify-evenly gap-4">
+                        <Button className="bg-accent">
+                          Restore
+                        </Button>
+                      </span>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to restore?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => restoreArchive(doc.id)}
+                          className="btn bg-accent"
+                        >
+                          Restore
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <span className="flex justify-evenly gap-4">
+                        <Button className="bg-red-500 hover:bg-red-700">
+                          Delete
+                        </Button>
+                      </span>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDelete(doc.id)}
+                          className="bg-red-500 hover:bg-red-700"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </td>
               </tr>
             ))}

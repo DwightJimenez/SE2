@@ -29,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
     });
     Version.belongsTo(models.File, {
       foreignKey: "fileId",
-      onDelete: "RESTRICT",
+      onDelete: "Set Null",
+    });
+    Version.belongsTo(models.ArchivedDocument, {
+      foreignKey: "archivedFileId",
+      onDelete: "SET NULL",
     });
   };
 

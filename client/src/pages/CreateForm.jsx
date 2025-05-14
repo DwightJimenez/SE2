@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchForm = async () => {
@@ -61,6 +62,7 @@ const CreateForm = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["form"] });
+      toast.success("Form archived successfully");
     },
   });
 

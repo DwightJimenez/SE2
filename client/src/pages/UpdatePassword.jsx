@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const UpdatePassword = () => {
@@ -24,7 +26,7 @@ const UpdatePassword = () => {
       );
 
       if (response.status === 200) {
-        alert("Password updated successfully!");
+        toast.success("Password updated successfully.");
         setOldPassword("");
         setNewPassword("");
       } else {

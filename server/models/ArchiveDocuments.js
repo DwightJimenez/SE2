@@ -16,11 +16,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "archive", // Custom table name
       timestamps: false, // No `updatedAt` column needed
     }
   );
+  ArchivedDocument.associate = (models) => {
+    ArchivedDocument.hasMany(models.Version, {
+      foreignKey: "archivedFileId",
+      onDelete: "SET NULL",
+    });
+  };  
   return ArchivedDocument;
 };

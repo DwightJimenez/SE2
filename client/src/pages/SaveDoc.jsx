@@ -1,27 +1,39 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const SaveDoc = () => {
   const [docName, setDocName] = useState("");
+  const queryClient = useQueryClient();
 
-  const create = async () => {
-    if (!docName.trim()) return alert("Document name cannot be empty.");
-    try {
+  const createMutation = useMutation({
+    mutationFn: async () => {
+      if (!docName.trim()) throw new Error("Document name cannot be empty.");
       await axios.post(
         `${API_URL}/editor/file/create`,
         { name: docName },
         { withCredentials: true }
       );
+    },
+    onSuccess: () => {
       setDocName("");
-      alert("Document created successfully!");
-    } catch (error) {
+      toast("Document created successfully!");
+      // Invalidate or refetch the list of documents
+      queryClient.invalidateQueries(["documents"]);
+    },
+    onError: (error) => {
       console.error("Error creating document:", error);
       alert("Failed to create document.");
-    }
-  };
+    },
+  });
 
+  const handleCreate = () => {
+    createMutation.mutate();
+  };
   return (
     <div className="flex flex-col gap-4">
       <input
@@ -31,7 +43,9 @@ const SaveDoc = () => {
         value={docName}
         onChange={(e) => setDocName(e.target.value)}
       />
-      <Button onClick={create}>Create</Button>
+      <Button onClick={handleCreate} disabled={createMutation.isLoading}>
+        {createMutation.isLoading ? "Creating..." : "Create"}
+      </Button>
     </div>
   );
 };
