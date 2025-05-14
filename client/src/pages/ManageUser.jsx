@@ -88,7 +88,10 @@ function ManageUser() {
       <PageLoc currentPage="Manage User" />
 
       <div className="flex gap-4 ">
-        <AddUser onUserAdded={handleUserAdded} />
+        {userRole === "admin" && (
+          <AddUser onUserAdded={handleUserAdded} />
+        )}
+
         <select
           value={selectedRole}
           onChange={handleRoleChange}
@@ -137,7 +140,7 @@ function ManageUser() {
                             onCheckedChange={() =>
                               handleToggleRole(user.id, user.role)
                             }
-                             className="cursor-pointer data-[state=checked]:bg-orange-400 data-[state=checked]:border-orange-500"
+                            className="cursor-pointer data-[state=checked]:bg-orange-400 data-[state=checked]:border-orange-500"
                           />
                           <div
                             onClick={() => handleDeleteUser(user.id)}

@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     fileId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
+    },
+    archivedFileId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     timestamp: {
       type: DataTypes.DATE,
@@ -25,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Version.belongsTo(models.File, {
       foreignKey: "fileId",
-      onDelete: "CASCADE",
+      onDelete: "RESTRICT",
     });
   };
 

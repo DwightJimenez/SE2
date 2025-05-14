@@ -1,32 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import {
   db,
-  auth,
-  provider,
-  signInWithPopup,
-  signOut,
   collection,
   addDoc,
   onSnapshot,
   query,
   orderBy,
 } from "../firebase";
-
+import { AuthContext } from "../helpers/AuthContext";
 export default function Chat() {
+  const { authState } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const bottomRef = useRef(null);
-
-  // Sign In with Google
-  const signIn = async () => {
-    provider.setCustomParameters({ prompt: "select_account" });
-    await signInWithPopup(auth, provider);
-  };
-
-  // Sign Out
-  const logout = () => {
-    signOut(auth);
-  };
 
   // Send Message
   const sendMessage = async () => {
@@ -35,8 +21,8 @@ export default function Chat() {
     await addDoc(collection(db, "messages"), {
       text: message,
       createdAt: new Date(),
-      user: auth.currentUser.displayName,
-      uid: auth.currentUser.uid,
+      user: authState.username,
+      uid: authState.email,
     });
 
     setMessage("");
@@ -58,29 +44,66 @@ export default function Chat() {
     }
   }, [messages]);
 
+  const formatDate = (timestamp) => {
+    const messageDate = new Date(timestamp * 1000); // Convert Firestore timestamp to JavaScript Date object
+    const today = new Date();
+
+    // Check if the message was sent today
+    const isToday = messageDate.toDateString() === today.toDateString();
+
+    // Format based on whether it's today or not
+    if (isToday) {
+      // Display only the time if today
+      return messageDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } else {
+      // Display full date and time for other days
+      return messageDate.toLocaleString([], {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="bg-primary h-10 flex items-center rounded-t-lg p-4 text-white">
         <h2>Forum</h2>
       </div>
 
-      {auth.currentUser ? (
+      {authState.status ? (
         <>
-          {/* <button onClick={logout}>Logout</button> */}
           <div className="messages h-75 overflow-y-auto p-4">
             {messages.map((msg) => (
-              <p key={msg.id}>
-                <div className="chat chat-end">
-                  <div className="chat-header">
-                    {msg.user}
-                    <time className="text-xs opacity-50">2 hours ago</time>
-                  </div>
-                  <div className="chat-bubble chat-bubble-secondary">
-                    {msg.text}
-                  </div>
-                  <div className="chat-footer opacity-50">Seen</div>
+              <div
+                key={msg.id}
+                className={`chat ${
+                  msg.user === authState.username ? "chat-end" : "chat-start"
+                }`}
+              >
+                <div className="chat-header">
+                  {msg.user}
+                  <time className="text-xs opacity-50">
+                    {formatDate(msg.createdAt.seconds)}{" "}
+                    {/* assuming createdAt is a Firestore timestamp */}
+                  </time>
                 </div>
-              </p>
+                <div
+                  className={`chat-bubble ${
+                    msg.user === authState.username
+                      ? "chat-bubble-secondary"
+                      : ""
+                  }`}
+                >
+                  {msg.text}
+                </div>
+                <div className="chat-footer opacity-50">Seen</div>
+              </div>
             ))}
             <div ref={bottomRef} />
           </div>
@@ -105,7 +128,7 @@ export default function Chat() {
           </div>
         </>
       ) : (
-        <button onClick={signIn}>Sign in with Google</button>
+        <p className="text-center p-4">Please sign in to use the forum.</p>
       )}
     </div>
   );

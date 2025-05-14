@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { Document, ArchivedDocument, AuditLog } = require("../models");
+const { Document, ArchivedDocument, AuditLog, File } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post("/:id", validateToken,  async (req, res) => {
   const user = req.user.username
   
   try {
-    const document = await Document.findByPk(id);
+    const document = await File.findByPk(id);
     if (!document) {
       return res.status(404).json({ error: "Document not found" });
     }
@@ -29,8 +29,6 @@ router.post("/:id", validateToken,  async (req, res) => {
     // Create a new record in the archived table
     await ArchivedDocument.create({
       name: document.name,
-      path: document.path,
-      version: document.version,
     });
 
     // Delete the document from the original table
@@ -56,7 +54,6 @@ router.post("/:id", validateToken,  async (req, res) => {
 router.post("/restore/:id", validateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    const user = req.user.username
     console.log(id)
     const archivedDocument = await ArchivedDocument.findByPk(id);
 
@@ -65,10 +62,8 @@ router.post("/restore/:id", validateToken, async (req, res) => {
     }
 
     // Create a new record in the original documents table
-    await Document.create({
+    await File.create({
       name: archivedDocument.name,
-      path: archivedDocument.path,
-      version: archivedDocument.version,
     });
 
     await AuditLog.create({
@@ -90,7 +85,6 @@ router.post("/restore/:id", validateToken, async (req, res) => {
 router.delete("/delete/:id", validateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    const user = req.user.username
     const archivedDocument = await ArchivedDocument.findByPk(id);
 
     if (!archivedDocument) {

@@ -31,44 +31,49 @@ const EvaluationList = ({ userId, questionId }) => {
   });
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="p-4">
       <PageLoc currentPage="Evaluate" />
-      {isLoading ? (
-        <p>Loading evaluations...</p>
-      ) : isError ? (
-        <p>Error loading evaluations.</p>
-      ) : forms.length === 0 ? (
-        <p>No evaluations found.</p>
-      ) : (
-        <div className="grid grid-cols-3 gap-4">
-          {forms.map((form) => (
-            <div
-              key={form.id}
-              className="h-70 w-50 p-4 rounded-lg shadow-2xl relative flex  border border-gray-300"
-              onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
-            >
-              <h3 className="font-bold">{form.title}</h3>
-              <p>{form.description}</p>
-              <div role="alert" className="alert alert-success absolute bottom-0 left-0 right-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 shrink-0 stroke-current"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span>Evaluated!</span>
+      <div className="flex gap-4 mb-4">
+        {isLoading ? (
+          <p>Loading evaluations...</p>
+        ) : isError ? (
+          <p>Error loading evaluations.</p>
+        ) : forms.length === 0 ? (
+          <p>No evaluations found.</p>
+        ) : (
+          <div className="grid grid-cols-3 gap-4">
+            {forms.map((form) => (
+              <div
+                key={form.id}
+                className="flex flex-col justify-between h-70 w-50 p-4 rounded-lg shadow-2xl relative  border border-tertiary"
+                onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
+              >
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="size-14 text-orange-500"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+
+                <div className="flex flex-col w-full">
+                  <h3 className="font-bold text-xl text-orange-700">
+                    {form.title}
+                  </h3>
+                  <p className="text-orange-700">{form.description}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

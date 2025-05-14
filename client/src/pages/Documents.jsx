@@ -56,7 +56,7 @@ const Documents = () => {
             {documents.map((document) => (
               <div
                 key={document.id}
-                className="flex flex-col justify-between h-70 w-50 p-4 bg-accent rounded-lg shadow"
+                className="flex flex-col justify-between h-70 w-50 p-4 bg-white rounded-lg shadow-2xl border border-primary"
                 onClick={() => navigate(`/view-editor/${document.id}`)}
               >
                 <div>
@@ -66,7 +66,7 @@ const Documents = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-16 text-white"
+                    className="size-16 text-quaternary mb-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -75,11 +75,12 @@ const Documents = () => {
                     />
                   </svg>
                 </div>
+                
                 <div className="flex flex-col w-full">
-                  <h3 className="font-bold text-white text-xl">
+                  <h3 className="font-bold text-primary text-xl">
                     {document.name}
                   </h3>
-                  <div className="justify-end mt-4 text-xs text-gray-800">
+                  <div className="justify-end mt-4 text-xs text-primary">
                     <p>Created: {formatDate(document.createdAt)}</p>
                     {document.updatedAt && (
                       <p>Updated: {formatDate(document.updatedAt)}</p>

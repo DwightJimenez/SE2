@@ -71,6 +71,7 @@ const Login = () => {
   const handleGoogleLogin = async (credentialResponse) => {
     try {
       const { credential } = credentialResponse;
+      console.log(credential)
 
       const response = await axios.post(
         `${API_URL}/google/google-login`,
