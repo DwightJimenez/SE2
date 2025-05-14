@@ -71,7 +71,7 @@ const Archive = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Version</th>
+              <th>Type</th>
               <th>Name</th>
               <th>Action</th>
             </tr>
@@ -79,7 +79,7 @@ const Archive = () => {
           <tbody>
             {archiveDoc.map((doc) => (
               <tr key={doc.id}>
-                <td>{doc.version}</td>
+                <td>{doc.type}</td>
                 <td>
                   <a
                     href={`${API_URL}/${doc.path}`}
