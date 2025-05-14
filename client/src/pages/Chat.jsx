@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import geminiLogo from "../assets/Gemini.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -53,8 +54,9 @@ export default function Chat() {
 
   return (
     <div className="chat-container w-full max-w-xl mx-auto flex flex-col h-full">
-      <div className="bg-primary h-12 flex items-center rounded-t-lg px-4 text-white font-bold">
-        Gemini Chat
+      <div className="border border-quaternary h-12 flex items-center rounded-t-lg px-4 text-white font-bold">
+        <p className="text-quaternary">Smart Assistant with</p>{" "}
+        <img src={geminiLogo} alt="" className="w-20" />
       </div>
 
       <div className="bg-white flex-1 p-4 overflow-y-auto border-x border-b rounded-b-lg space-y-3">
@@ -77,7 +79,7 @@ export default function Chat() {
       <div className="mt-2 flex gap-2">
         <input
           type="text"
-          className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="flex-1 border rounded border-quaternary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           placeholder="Enter prompt..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
