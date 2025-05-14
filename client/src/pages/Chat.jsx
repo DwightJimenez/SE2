@@ -53,7 +53,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="chat-container w-full max-w-xl mx-auto flex flex-col h-full">
+    <div className="chat-container w-full max-w-xl mx-auto flex flex-col h-full border border-quaternary rounded-lg">
       <div className="border border-quaternary h-12 flex items-center rounded-t-lg px-4 text-white font-bold">
         <p className="text-quaternary">Smart Assistant with</p>{" "}
         <img src={geminiLogo} alt="" className="w-20" />
@@ -64,7 +64,7 @@ export default function Chat() {
           <div
             key={idx}
             className={`${
-              msg.role === "user" ? "text-blue-600" : "text-gray-800"
+              msg.role === "user" ? "text-quaternary" : "text-primary"
             }`}
           >
             <span className="font-semibold">
@@ -76,16 +76,17 @@ export default function Chat() {
         <div ref={chatEndRef} />
       </div>
 
-      <div className="mt-2 flex gap-2">
-        <input
+      <div className="m-2 flex gap-2">
+       
+        <textarea
           type="text"
-          className="flex-1 border rounded border-quaternary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="flex-1 border rounded border-quaternary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-quaternary resize-none"
           placeholder="Enter prompt..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           disabled={loading}
-        />
+        ></textarea>
         <button
           onClick={handleSend}
           className="bg-primary text-white px-4 py-2 rounded disabled:opacity-50"

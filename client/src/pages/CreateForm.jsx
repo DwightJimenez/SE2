@@ -50,6 +50,20 @@ const CreateForm = () => {
     return new Date(date).toLocaleString("en-US", options);
   };
 
+  
+  const archiveForm = useMutation({
+    mutationFn: async (id) => {
+      await axios.post(
+        `${API_URL}/archive/form/${id}`,
+        {type:"Form"},
+        { withCredentials: true }
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["form"] });
+    },
+  });
+
   return (
     <div className="dark:bg-gray-800 p-4">
       <PageLoc currentPage="Create Evaluation Form" />
@@ -115,7 +129,7 @@ const CreateForm = () => {
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              // onClick={() => handleDeletePost(post.id)}
+                              onClick={() => archiveForm.mutate(evaluation.id)}
                               className="bg-red-400 hover:bg-red-600 text-white"
                             >
                               Continue

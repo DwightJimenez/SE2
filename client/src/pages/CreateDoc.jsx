@@ -61,7 +61,7 @@ const CreateDoc = () => {
     mutationFn: async (id) => {
       await axios.post(
         `${API_URL}/archive/${id}`,
-        {},
+        {type:"Document"},
         { withCredentials: true }
       );
     },
