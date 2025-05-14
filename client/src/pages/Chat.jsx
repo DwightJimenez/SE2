@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Chat() {
   const [inputValue, setInputValue] = useState("");
-  const [responses, setResponses] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const sendPrompt = async (prompt) => {
     try {
@@ -14,7 +24,7 @@ export default function Chat() {
         { prompt },
         { withCredentials: true }
       );
-      return response.data.response; // response.text() is already parsed by backend
+      return response.data.response;
     } catch (error) {
       console.error("Error generating Gemini content:", error);
       throw error;
@@ -22,49 +32,65 @@ export default function Chat() {
   };
 
   const handleSend = async () => {
-    if (!inputValue.trim()) return;
+    const trimmed = inputValue.trim();
+    if (!trimmed) return;
     setLoading(true);
     try {
-      const geminiResponse = await sendPrompt(inputValue);
-      setResponses([...responses, geminiResponse]);
+      const userMessage = { role: "user", text: trimmed };
+      setMessages((prev) => [...prev, userMessage]);
+
+      const botReply = await sendPrompt(trimmed);
+      const botMessage = { role: "bot", text: botReply };
+      setMessages((prev) => [...prev, botMessage]);
+
       setInputValue("");
     } catch (err) {
-      // handle UI error here
+      // optional: handle error in UI
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="chat-container">
-      <div className="bg-primary h-10 flex items-center rounded-t-lg p-4 text-white">
-        <h2 className="mb-4">Gemini Chat</h2>
+    <div className="chat-container w-full max-w-xl mx-auto flex flex-col h-full">
+      <div className="bg-primary h-12 flex items-center rounded-t-lg px-4 text-white font-bold">
+        Gemini Chat
       </div>
 
-      <input
-        type="text"
-        className="form-control mb-2"
-        placeholder="Enter prompt..."
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        disabled={loading}
-      />
-      <button
-        onClick={handleSend}
-        className="btn btn-primary mb-3"
-        disabled={loading}
-      >
-        {loading ? "Thinking..." : "Send"}
-      </button>
-      <div>
-        {responses.map((res, idx) => (
-          <p
+      <div className="bg-white flex-1 p-4 overflow-y-auto border-x border-b rounded-b-lg space-y-3">
+        {messages.map((msg, idx) => (
+          <div
             key={idx}
-            className={idx === responses.length - 1 ? "fw-bold" : ""}
+            className={`${
+              msg.role === "user" ? "text-blue-600" : "text-gray-800"
+            }`}
           >
-            {res}
-          </p>
+            <span className="font-semibold">
+              {msg.role === "user" ? "You" : "Gemini"}:
+            </span>{" "}
+            {msg.text}
+          </div>
         ))}
+        <div ref={chatEndRef} />
+      </div>
+
+      <div className="mt-2 flex gap-2">
+        <input
+          type="text"
+          className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter prompt..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          disabled={loading}
+        />
+        <button
+          onClick={handleSend}
+          className="bg-primary text-white px-4 py-2 rounded disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? "Thinking..." : "Send"}
+        </button>
       </div>
     </div>
   );
