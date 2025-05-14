@@ -54,6 +54,8 @@ const googleAuth = require("./routes/GoogleAuth");
 app.use("/google", googleAuth);
 const editor = require("./routes/Editor");
 app.use("/editor", editor);
+const geminiRouter = require("./routes/Gemini");
+app.use("/api/gemini", geminiRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(port, "0.0.0.0", () => {
