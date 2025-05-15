@@ -258,7 +258,7 @@ const Login = () => {
       >
         <div className="flex flex-col justify-center items-center h-full">
           <img src={buLogo} alt="" className="h-auto w-60 my-8" />
-          <div className="text-center text-white text-xl">
+          <div className="text-center text-white text-xl" id="typewriter">
             <Typewriter
               options={{
                 strings: [

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @tailwind utilities;
 @plugin "daisyui";
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -20,12 +20,16 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Orbitron', sans-serif;
+  font-family: Helvetica, sans-serif;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+#typewriter {
+  font-family: "Orbitron";
 }
 
 @theme inline {
@@ -147,4 +151,3 @@ h1 {
     @apply bg-background text-foreground;
   }
 }
-
