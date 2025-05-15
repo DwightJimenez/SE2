@@ -3,6 +3,13 @@ import axios from "axios";
 import PageLoc from "../components/PageLoc";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchForm = async () => {
@@ -29,6 +36,19 @@ const EvaluationList = ({ userId, questionId }) => {
     queryFn: fetchForm,
     staleTime: 300000, // 5 minutes
   });
+
+  const formatDate = (date) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true, // 12-hour format with AM/PM
+    };
+    return new Date(date).toLocaleString("en-US", options);
+  };
 
   return (
     <div className="p-4">
@@ -62,13 +82,38 @@ const EvaluationList = ({ userId, questionId }) => {
                     />
                   </svg>
                 </div>
-
-                <div className="flex flex-col w-full">
-                  <h3 className="font-bold text-xl text-orange-700">
-                    {form.title}
-                  </h3>
-                  <p className="text-orange-700">{form.description}</p>
-                </div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex flex-col w-full">
+                        <h3 className="font-bold text-md text-orange-700 truncate">
+                          {form.title}
+                        </h3>
+                        <p className="text-orange-700 text-sm truncate max-w-xs">
+                          {form.description}
+                        </p>
+                        <div className="justify-end mt-4 text-xs text-orange-700">
+                          <p>Created: {formatDate(form.createdAt)}</p>
+                          {form.updatedAt && (
+                            <p>Updated: {formatDate(form.updatedAt)}</p>
+                          )}
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="top"
+                      className="w-100 p-4 bg-tertiary"
+                    >
+                      <div className="flex flex-col w-full">
+                        <h3 className="font-bold text-xl text-orange-700">
+                          {form.title}
+                        </h3>
+                        <p className="text-orange-700">{form.description}</p>
+                        
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             ))}
           </div>

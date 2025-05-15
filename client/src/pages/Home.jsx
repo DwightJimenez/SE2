@@ -398,13 +398,13 @@ const Home = () => {
                 viewport={{ once: false, amount: 0.5 }} // Trigger animation when 50% of the element is in the viewport
               >
                 <div className="flex flex-row card-body text-primary gap-4 p-3">
-                  <div className="flex flex-col p-2 bg-primary h-20 w-20 items-center justify-center rounded-box text-neutral-content">
+                  <div className="flex flex-col p-2 bg-primary max-h-20 max-w-20 min-w-20 items-center justify-center rounded-box text-neutral-content">
                     <span className="font-mono text-4xl leading-none">
                       {day}
                     </span>
                     <span className="text-sm font-bold">{month}</span>
                   </div>
-                  <div className="flex flex-col justify-center gap-1">
+                  <div className="flex flex-col justify-center gap-1 truncate ">
                     <h2 className="card-title">{event.title.toUpperCase()}</h2>
                     <p className="text-md flex gap-2">
                       <div className="badge badge-secondary p-2 text-white">

@@ -23,6 +23,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -63,7 +69,7 @@ const CreateDoc = () => {
     mutationFn: async (id) => {
       await axios.post(
         `${API_URL}/archive/${id}`,
-        {type:"Document"},
+        { type: "Document" },
         { withCredentials: true }
       );
     },
@@ -79,7 +85,7 @@ const CreateDoc = () => {
       <div className="flex gap-4 mb-4">
         <Dialog>
           <DialogTrigger asChild>
-            <div className="h-70 w-50 p-4 bg-accent rounded-lg shadow">
+            <div className="h-70 w-50 p-4 bg-quaternary rounded-lg shadow">
               <h1 className="text-primary">+</h1>
             </div>
           </DialogTrigger>
@@ -155,7 +161,10 @@ const CreateDoc = () => {
                     </li>
                   </ul>
                 </div>
-                <div onClick={() => navigate(`/editor/${document.id}`)}>
+                <div
+                  onClick={() => navigate(`/editor/${document.id}`)}
+                  className="flex flex-col justify-between  h-full"
+                >
                   <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -172,17 +181,39 @@ const CreateDoc = () => {
                       />
                     </svg>
                   </div>
-                  <div className="flex flex-col w-full">
-                    <h3 className="font-bold text-white text-xl">
-                      {document.name}
-                    </h3>
-                    <div className="justify-end mt-4 text-xs text-gray-800">
-                      <p>Created: {formatDate(document.createdAt)}</p>
-                      {document.updatedAt && (
-                        <p>Updated: {formatDate(document.updatedAt)}</p>
-                      )}
-                    </div>
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex flex-col w-full">
+                          <h3 className="font-bold text-white text-xl">
+                            {document.name}
+                          </h3>
+                          <div className="justify-end mt-4 text-xs text-gray-800">
+                            <p>Created: {formatDate(document.createdAt)}</p>
+                            {document.updatedAt && (
+                              <p>Updated: {formatDate(document.updatedAt)}</p>
+                            )}
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="top"
+                        className="w-100 p-4 bg-tertiary"
+                      >
+                        <div className="flex flex-col w-full">
+                          <h3 className="font-bold text-white text-xl">
+                            {document.name}
+                          </h3>
+                          <div className="justify-end mt-4 text-xs text-gray-800">
+                            <p>Created: {formatDate(document.createdAt)}</p>
+                            {document.updatedAt && (
+                              <p>Updated: {formatDate(document.updatedAt)}</p>
+                            )}
+                          </div>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </div>
             ))}

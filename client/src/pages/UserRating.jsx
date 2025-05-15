@@ -5,6 +5,13 @@ import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Question = ({
@@ -59,20 +66,16 @@ const Question = ({
 };
 
 const fetchQuestion = async (id) => {
-  const response = await axios.get(
-    `${API_URL}/evaluation/byId/${id}`,
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axios.get(`${API_URL}/evaluation/byId/${id}`, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
 const fetchUserRatings = async (questionId) => {
-  const response = await axios.get(
-    `${API_URL}/rating/user/${questionId}`,
-    { withCredentials: true }
-  );
+  const response = await axios.get(`${API_URL}/rating/user/${questionId}`, {
+    withCredentials: true,
+  });
 
   return response.data; // Expecting { ratings: [{ questionId, score }] }
 };
@@ -81,8 +84,6 @@ const UserRating = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { authState } = useContext(AuthContext);
-
- 
 
   const {
     data: question,
@@ -173,22 +174,47 @@ const UserRating = () => {
         showBack={true}
         backLink="/evaluation"
       />
-
-      <div className="p-4 my-4 max-w-200 bg-accent dark:bg-gray-900 rounded-lg shadow-2xl">
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="text-3xl w-full p-2 rounded focus:ring-2 focus:ring-blue-400"
-        />
-        <input
-          type="text"
-          value={description}
-          placeholder="Form Description"
-          onChange={(e) => setDescription(e.target.value)}
-          className="mt-2 w-full p-2 rounded focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="p-4 my-4 max-w-200 bg-accent dark:bg-gray-900 rounded-lg shadow-2xl">
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="text-3xl w-full p-2 rounded focus:ring-2 focus:ring-blue-400 truncate"
+              />
+              <input
+                type="text"
+                value={description}
+                placeholder="Form Description"
+                onChange={(e) => setDescription(e.target.value)}
+                className="mt-2 w-full p-2 rounded focus:ring-2 focus:ring-blue-400 truncate"
+              />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent
+            side="bottom"
+            className="w-200 h-full p-4 bg-white border border-accent"
+          >
+            <div className="dark:bg-gray-900">
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="text-accent text-lg  w-full p-2 rounded focus:ring-2 focus:ring-blue-400"
+              />
+              <input
+                type="text"
+                value={description}
+                placeholder="Form Description"
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full h-full p-2 text-accent rounded focus:ring-2 focus:ring-blue-400 textarea resize-none"
+              />
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       {questions.map((q, index) => (
         <Question
@@ -208,7 +234,7 @@ const UserRating = () => {
         ) && (
           <button
             onClick={submitRatings}
-            className="bg-blue-500 text-white p-2 mt-4 rounded"
+            className="bg-quaternary text-white p-2 mt-4 rounded"
           >
             Submit Ratings
           </button>

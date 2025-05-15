@@ -3,6 +3,13 @@ import PageLoc from "../components/PageLoc";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchDocuments = async () => {
@@ -24,8 +31,7 @@ const Documents = () => {
     queryFn: fetchDocuments,
   });
 
-
-   const formatDate = (date) => {
+  const formatDate = (date) => {
     const options = {
       year: "numeric",
       month: "short",
@@ -75,18 +81,36 @@ const Documents = () => {
                     />
                   </svg>
                 </div>
-                
-                <div className="flex flex-col w-full">
-                  <h3 className="font-bold text-primary text-xl">
-                    {document.name}
-                  </h3>
-                  <div className="justify-end mt-4 text-xs text-primary">
-                    <p>Created: {formatDate(document.createdAt)}</p>
-                    {document.updatedAt && (
-                      <p>Updated: {formatDate(document.updatedAt)}</p>
-                    )}
-                  </div>
-                </div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex flex-col w-full">
+                        <h3 className="font-bold text-primary text-md truncate">
+                          {document.name}
+                        </h3>
+                        <div className="justify-end mt-4 text-xs text-primary">
+                          <p>Created: {formatDate(document.createdAt)}</p>
+                          {document.updatedAt && (
+                            <p>Updated: {formatDate(document.updatedAt)}</p>
+                          )}
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="w-100 p-4 border border-quaternary bg-white">
+                      <div className="flex flex-col w-full">
+                        <h3 className="font-bold text-quaternary text-xl">
+                          {document.name}
+                        </h3>
+                        <div className="justify-end mt-4 text-xs text-quaternary">
+                          <p>Created: {formatDate(document.createdAt)}</p>
+                          {document.updatedAt && (
+                            <p>Updated: {formatDate(document.updatedAt)}</p>
+                          )}
+                        </div>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             ))}
           </div>

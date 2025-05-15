@@ -24,7 +24,7 @@ const CreateUser = ({ onUserAdded }) => {
         setUsername("");
         setPassword("");
         onUserAdded(); // Trigger refresh
-      } else {
+      } else {  
         alert("Failed to add user");
       }
     } catch (error) {

@@ -15,6 +15,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchForm = async () => {
@@ -51,12 +58,11 @@ const CreateForm = () => {
     return new Date(date).toLocaleString("en-US", options);
   };
 
-  
   const archiveForm = useMutation({
     mutationFn: async (id) => {
       await axios.post(
         `${API_URL}/archive/form/${id}`,
-        {type:"Form"},
+        { type: "Form" },
         { withCredentials: true }
       );
     },
@@ -71,8 +77,8 @@ const CreateForm = () => {
       <PageLoc currentPage="Create Evaluation Form" />
       <div className="flex gap-4 mb-4">
         <Link to="/evaluation/add">
-          <div className="h-70 w-50 p-4 bg-accent rounded-lg shadow">
-            <h1 className="text-primary">+</h1>
+          <div className="h-70 w-50 p-4 bg-tertiary rounded-lg shadow">
+            <h1 className="text-white">+</h1>
           </div>
         </Link>
 
@@ -87,7 +93,7 @@ const CreateForm = () => {
             {forms.map((evaluation) => (
               <div
                 key={evaluation.id}
-                className="flex flex-col relative justify-between h-70 w-50 p-4 bg-accent rounded-lg shadow"
+                className="flex flex-col relative justify-between h-70 w-50 p-4 bg-white border border-orange-700 rounded-lg shadow"
               >
                 <div className="dropdown dropdown-end absolute top-4 right-4 cursor-pointer z-10">
                   <div tabIndex={0} className="m-1 flex">
@@ -97,7 +103,7 @@ const CreateForm = () => {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="size-6"
+                      className="size-6 text-orange-700"
                     >
                       <path
                         strokeLinecap="round"
@@ -142,7 +148,10 @@ const CreateForm = () => {
                     </li>
                   </ul>
                 </div>
-                <div onClick={() => navigate(`/evaluation/${evaluation.id}`)}>
+                <div
+                  onClick={() => navigate(`/evaluation/${evaluation.id}`)}
+                  className="flex flex-col justify-between  h-full"
+                >
                   {" "}
                   <div>
                     <svg
@@ -151,7 +160,7 @@ const CreateForm = () => {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="size-16 text-white"
+                      className="size-16 text-orange-700"
                     >
                       <path
                         strokeLinecap="round"
@@ -160,18 +169,45 @@ const CreateForm = () => {
                       />
                     </svg>
                   </div>
-                  <div className="flex flex-col w-full">
-                    <h3 className="font-bold text-white text-xl">
-                      {evaluation.title}
-                    </h3>
-                    <p>{evaluation.description}</p>
-                    <div className="justify-end mt-4 text-xs text-gray-500">
-                      <p>Created: {formatDate(evaluation.createdAt)}</p>
-                      {evaluation.updatedAt && (
-                        <p>Updated: {formatDate(evaluation.updatedAt)}</p>
-                      )}
-                    </div>
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex flex-col w-full">
+                          <h3 className="font-bold text-orange-700 text-xl truncate">
+                            {evaluation.title}
+                          </h3>
+                          <p className="text-orange-700 truncate">
+                            {evaluation.description}
+                          </p>
+                          <div className="justify-end mt-4 text-xs text-gray-500">
+                            <p>Created: {formatDate(evaluation.createdAt)}</p>
+                            {evaluation.updatedAt && (
+                              <p>Updated: {formatDate(evaluation.updatedAt)}</p>
+                            )}
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="top"
+                        className="w-100 p-4 bg-tertiary border border-orange-700"
+                      >
+                        <div className="flex flex-col w-full">
+                          <h3 className="font-bold text-orange-700 text-xl truncate">
+                            {evaluation.title}
+                          </h3>
+                          <p className="text-orange-700 truncate">
+                            {evaluation.description}
+                          </p>
+                          <div className="justify-end mt-4 text-xs text-gray-500">
+                            <p>Created: {formatDate(evaluation.createdAt)}</p>
+                            {evaluation.updatedAt && (
+                              <p>Updated: {formatDate(evaluation.updatedAt)}</p>
+                            )}
+                          </div>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </div>
             ))}
