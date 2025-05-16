@@ -5,12 +5,12 @@ import { AuthContext } from "../helpers/AuthContext";
 const Sidebar = () => {
   const { authState } = useContext(AuthContext);
   return (
-    <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-primary border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+    <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r border-primary rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
       <div className="flex flex-col justify-between flex-1">
         <nav className="flex-1 -mx-3 space-y-3 ">
           <Link
             to="/"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="/home"
           >
             <svg
@@ -33,7 +33,7 @@ const Sidebar = () => {
 
           <Link
             to="/events"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-primary  transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="/events"
           >
             <svg
@@ -55,7 +55,7 @@ const Sidebar = () => {
           </Link>
           <Link
             to="/evaluation"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,11 +73,10 @@ const Sidebar = () => {
             </svg>
 
             <span className="mx-2 text-xl font-medium">Evaluation</span>
-            <div className="badge badge-sm badge-secondary">+99</div>
           </Link>
           <Link
             to="/documents"
-            className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="#"
           >
             <svg
@@ -100,10 +99,12 @@ const Sidebar = () => {
 
           {(authState.role === "moderator" || authState.role === "admin") && (
             <>
-              <div className="divider divider-accent text-white">Moderator</div>
+              <div className="customFont divider divider-accent text-quaternary">
+                Moderator
+              </div>
               <Link
                 to="/events/lists"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -125,7 +126,7 @@ const Sidebar = () => {
               </Link>
               <Link
                 to="/create-form"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -147,7 +148,7 @@ const Sidebar = () => {
               </Link>
               <Link
                 to="/create-document"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +170,7 @@ const Sidebar = () => {
 
               <Link
                 to="/archive"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -192,7 +193,7 @@ const Sidebar = () => {
 
               <Link
                 to="/audit-log"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -214,7 +215,7 @@ const Sidebar = () => {
               </Link>
               <Link
                 to="/manage-user"
-                className="flex items-center px-3 py-2 !text-white transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

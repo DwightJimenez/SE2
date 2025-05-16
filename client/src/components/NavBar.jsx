@@ -19,7 +19,9 @@ const NavBar = ({ logout }) => {
       <div className="flex flex-col w-screen fixed z-50">
         <div className="navbar bg-base-100 shadow-sm dark:bg-black">
           <div className="flex-1">
-            <a className="btn btn-ghost text-xl">Software Engineering</a>
+            <a className="btn btn-ghost text-xl">
+              ACSciS Workflow Automation System
+            </a>
           </div>
           <div className="flex gap-2">
             <div className="relative">
