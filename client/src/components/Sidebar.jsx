@@ -5,7 +5,7 @@ import { AuthContext } from "../helpers/AuthContext";
 const Sidebar = () => {
   const { authState } = useContext(AuthContext);
   return (
-    <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r border-primary rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+    <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white shadow-2xl border-r border-primary rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
       <div className="flex flex-col justify-between flex-1">
         <nav className="flex-1 -mx-3 space-y-3 ">
           <Link

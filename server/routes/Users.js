@@ -7,6 +7,7 @@ const { sign, verify } = require("jsonwebtoken");
 const checkRole = require("../middlewares/RoleMiddleware");
 const { Op, where } = require("sequelize");
 
+
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
 
@@ -98,7 +99,7 @@ router.put("/update-password", validateToken, async (req, res) => {
 
 router.post("/set-password", validateToken, async (req, res) => {
   const { password } = req.body;
-  const email = req.user.email
+  const email = req.user.email;
   if (!password || password.length < 6) {
     return res.status(400).json({ error: "Password too short" });
   }
@@ -112,7 +113,7 @@ router.post("/set-password", validateToken, async (req, res) => {
     user.password = hashedPassword;
     await user.save();
 
-    res.json({ message: "Password updated successfully" , email});
+    res.json({ message: "Password updated successfully", email });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update password" });
@@ -120,14 +121,13 @@ router.post("/set-password", validateToken, async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { username, password,} = req.body;
+  const { username, password } = req.body;
 
   const user = await Users.findOne({
     where: {
       [Op.or]: [{ username: username }, { email: username }],
     },
   });
-
 
   if (!user) return res.json({ error: "User Doesn't Exist" });
 
@@ -136,7 +136,13 @@ router.post("/login", async (req, res) => {
       return res.json({ error: "Wrong Username And Password Combination" });
 
     const accessToken = sign(
-      { username: user.username, id: user.id, role: user.role, email: user.email || "" , profilePicture: user.profilePicture || "" },
+      {
+        username: user.username,
+        id: user.id,
+        role: user.role,
+        email: user.email || "",
+        profilePicture: user.profilePicture || "",
+      },
       "importantsecret",
       { expiresIn: "7d" }
     );
@@ -147,7 +153,13 @@ router.post("/login", async (req, res) => {
       maxAge: 3600000,
     });
 
-    res.json({ username: username, id: user.id, role: user.role, email: user.email, profilePicture: user.profilePicture });
+    res.json({
+      username: username,
+      id: user.id,
+      role: user.role,
+      email: user.email,
+      profilePicture: user.profilePicture,
+    });
   });
 });
 
@@ -181,7 +193,7 @@ router.get("/auth", validateToken, (req, res) => {
 router.get("/profile", validateToken, async (req, res) => {
   try {
     const user = await Users.findByPk(req.user.id, {
-      attributes: ["id", "username", "email", "role", "profilePicture"]
+      attributes: ["id", "username", "email", "role", "profilePicture"],
     });
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json({

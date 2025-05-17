@@ -25,6 +25,8 @@ app.use(
 );
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+require('./utils/reminderScheduler'); // start the task
+
 
 // app.use(async (req, res, next) => {
 //   await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for 5 seconds
