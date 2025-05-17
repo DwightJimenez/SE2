@@ -40,6 +40,7 @@ function CalendarApp() {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(`${API_URL}/events`);
+        console.log(response.data);
         const formattedEvents = response.data.map((event) => ({
           id: event.id,
           title: event.title,
