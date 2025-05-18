@@ -11,8 +11,17 @@ const API_URL = import.meta.env.VITE_API_URL;
 const CreatePost = () => {
   const queryClient = useQueryClient();
 
+  const bannedWords = ["inappropriate", "inaprp", "badword", "offensive"];
+
   const schema = yup.object({
-    text: yup.string().required("Text is required"),
+    text: yup.string().required("Text is required").test(
+      "no-banned-words",
+      "Your post contains inappropriate content",
+      (value) => {
+        if (!value) return true;
+        const lower = value.toLowerCase();
+        return !bannedWords.some((word) => lower.includes(word));
+      }),
     file: yup
       .mixed()
       .test("fileSize", "File size must be less than 2MB", (value) => {

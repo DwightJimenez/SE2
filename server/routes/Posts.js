@@ -33,6 +33,35 @@ router.get("/", validateToken, async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+router.get("/public",  async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 15;
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Posts.findAndCountAll({
+      order: [["createdAt", "DESC"]],
+      limit,
+      offset,
+      include: [
+        { model: Likes, attributes: ["UserId"] },
+        { model: Comments, as: "Comments" },
+        { model: Users, attributes: ["username"] },
+      ],
+    });
+
+    const updatedPosts = rows.map((post) => ({
+      ...post.toJSON(),
+      
+      username: post.User ? post.User.username : null,
+    }));
+
+    res.json({ posts: updatedPosts, total: count });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
 
 router.post("/", validateToken, async (req, res) => {
   try {

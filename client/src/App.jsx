@@ -27,7 +27,10 @@ import CreateDoc from "./pages/CreateDoc";
 import ViewEditor from "./pages/ViewEditor";
 import { Toaster } from "@/components/ui/sonner";
 import Chat from "./pages/Chat";
+import Public from "./pages/Public";
+import PublicPost from "./pages/PublicPost";
 import { motion, AnimatePresence } from "framer-motion";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
@@ -236,6 +239,8 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="/public" element={<Public />} />
+              <Route path="/publicpost" element={<PublicPost />} />
             </Routes>
           </div>
         )}
