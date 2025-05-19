@@ -213,6 +213,7 @@ function App() {
                   <Route path="/evaluation/add" element={<AddForm />} />
                   <Route path="/evaluation/:id" element={<EditForm />} />
                   <Route path="/view-editor/:id" element={<ViewEditor />} />
+                  <Route path="/documents" element={<Documents />} />
                   <Route
                     path="/evaluation/evaluate/:id"
                     element={<UserRating />}
@@ -223,7 +224,7 @@ function App() {
                     <>
                       <Route path="/archive" element={<Archive />} />
                       <Route path="/events/lists" element={<EventsList />} />
-                      <Route path="/documents" element={<Documents />} />
+                      
                       <Route path="/manage-user" element={<ManageUser />} />
                       <Route path="/create-form" element={<CreateForm />} />
                       <Route path="/editor/:id" element={<Editor />} />

@@ -34,7 +34,7 @@ function ViewEditor() {
   const [selectedVersion, setSelectedVersion] = useState(null);
   const [diffContent, setDiffContent] = useState("");
   const [showPreview, setShowPreview] = useState(false);
-  const [docName, setDocName] = useState("Lorem");
+  const [docName, setDocName] = useState("Import Document");
   const { id } = useParams();
   const quillRef = useRef(null); // Ref for accessing Quill instance
 

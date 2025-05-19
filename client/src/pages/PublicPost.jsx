@@ -148,10 +148,6 @@ const PublicPost = () => {
   return (
     <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
       <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800">
-        <div className="relative">
-          <PostButton />
-        </div>
-
         {isLoading ? (
           <LoadingSkeleton />
         ) : allPosts.length === 0 ? (

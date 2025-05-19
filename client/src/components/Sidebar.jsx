@@ -10,7 +10,7 @@ const Sidebar = () => {
         <nav className="flex-1 -mx-3 space-y-3 ">
           <Link
             to="/"
-            className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="/home"
           >
             <svg
@@ -33,7 +33,7 @@ const Sidebar = () => {
 
           <Link
             to="/events"
-            className="customFont flex items-center px-3 py-2 !text-primary  transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-black  transition-colors duration-300 transform rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="/events"
           >
             <svg
@@ -55,7 +55,7 @@ const Sidebar = () => {
           </Link>
           <Link
             to="/evaluation"
-            className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ const Sidebar = () => {
           </Link>
           <Link
             to="/documents"
-            className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+            className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
             href="#"
           >
             <svg
@@ -104,7 +104,7 @@ const Sidebar = () => {
               </div>
               <Link
                 to="/events/lists"
-                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -126,7 +126,7 @@ const Sidebar = () => {
               </Link>
               <Link
                 to="/create-form"
-                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -144,11 +144,11 @@ const Sidebar = () => {
                   />
                 </svg>
 
-                <span className="mx-2 text-xl font-medium">Create Form</span>
+                <span className="mx-2 text-xl font-medium">Evaluate</span>
               </Link>
               <Link
                 to="/create-document"
-                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -165,12 +165,12 @@ const Sidebar = () => {
                   />
                 </svg>
 
-                <span className="mx-2 text-xl font-medium">Create Doc</span>
+                <span className="mx-2 text-xl font-medium">New Document</span>
               </Link>
 
               <Link
                 to="/archive"
-                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -193,7 +193,7 @@ const Sidebar = () => {
 
               <Link
                 to="/audit-log"
-                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
                 href="#"
               >
                 <svg
@@ -215,7 +215,7 @@ const Sidebar = () => {
               </Link>
               <Link
                 to="/manage-user"
-                className="customFont flex items-center px-3 py-2 !text-primary transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
+                className="customFont flex items-center px-3 py-2 !text-black transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:!text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
