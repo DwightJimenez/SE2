@@ -18,7 +18,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://192.168.1.6:5173",
-      "1fb5-136-158-100-217.ngrok-free.app",
+      "https://polite-duckanoo-77f0c2.netlify.app/",
     ],
     credentials: true,
   })
