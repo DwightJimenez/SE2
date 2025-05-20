@@ -7,7 +7,6 @@ const { sign, verify } = require("jsonwebtoken");
 const checkRole = require("../middlewares/RoleMiddleware");
 const { Op, where } = require("sequelize");
 
-
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
 
@@ -148,9 +147,9 @@ router.post("/login", async (req, res) => {
     );
     res.cookie("token", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      maxAge: 3600000,
+      secure: true, // Required on Render
+      sameSite: "None", // 👈 REQUIRED for cross-site cookies
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
     });
 
     res.json({
@@ -179,8 +178,8 @@ router.get("/protected", (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Only use secure in production
-    sameSite: "Strict",
+    secure: true, // Only use secure in production
+    sameSite: "None",
   });
   res.status(200).json({ message: "Logged out" });
 });
