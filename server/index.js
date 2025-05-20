@@ -9,20 +9,22 @@ const db = require("./models");
 dotenv.config();
 const port = process.env.PORT;
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
-
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "http://192.168.1.6:5173",
-      "https://polite-duckanoo-77f0c2.netlify.app/",
+      "https://polite-duckanoo-77f0c2.netlify.app",
     ],
     credentials: true,
   })
 );
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+
+
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 require('./utils/reminderScheduler'); // start the task
