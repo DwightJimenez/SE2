@@ -19,6 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Link } from "react-router-dom";
 
 // const API_URL = process.env.REACT_APP_API_URL;
 const API_URL = import.meta.env.VITE_API_URL;
@@ -71,7 +72,7 @@ const Login = () => {
   const handleGoogleLogin = async (credentialResponse) => {
     try {
       const { credential } = credentialResponse;
-      console.log(credential)
+      console.log(credential);
 
       const response = await axios.post(
         `${API_URL}/google/google-login`,
@@ -139,10 +140,26 @@ const Login = () => {
       )}
 
       <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+        <Link to="/public">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+            />
+          </svg>
+        </Link>
+
         <p className="mt-6 text-xl text-center text-gray-600 dark:text-gray-200">
           Welcome back!
         </p>
-
         <div className="mt-6">
           <label
             className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
@@ -159,7 +176,6 @@ const Login = () => {
             }}
           />
         </div>
-
         <div className="mt-4 relative">
           <div className="flex justify-between">
             <label
@@ -228,7 +244,6 @@ const Login = () => {
             )}
           </div>
         </div>
-
         <div className="mt-6">
           <button
             className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
@@ -237,11 +252,9 @@ const Login = () => {
             Sign In
           </button>
         </div>
-
         <div className="flex w-full flex-col">
           <div className="divider divider-accent">or</div>
         </div>
-
         <GoogleLogin
           onSuccess={handleGoogleLogin}
           onError={() =>

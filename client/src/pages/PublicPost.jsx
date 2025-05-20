@@ -9,7 +9,7 @@ import {
 import PostButton from "../components/PostButton";
 import Linkify from "react-linkify";
 import moment from "moment";
-import CommentsSection from "./CommentsSection";
+import PublicCommentSection from "./PublicCommentSection";
 import { AuthContext } from "../helpers/AuthContext";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
@@ -269,7 +269,7 @@ const PublicPost = () => {
                     </div>
 
                     {expandedPost === post.id && (
-                      <CommentsSection PostId={post.id} />
+                      <PublicCommentSection PostId={post.id} />
                     )}
                   </div>
                 ))}

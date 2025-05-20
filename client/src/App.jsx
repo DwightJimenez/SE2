@@ -109,7 +109,7 @@ function App() {
         profilePicture: "",
       });
 
-      navigate("/login");
+      navigate("/public");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -239,7 +239,7 @@ function App() {
           <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
             <Routes>
               <Route path="/login" element={<Login />} />
-              <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="*" element={<Navigate to="/public" />} />
               <Route path="/public" element={<Public />} />
               <Route path="/publicpost" element={<PublicPost />} />
             </Routes>
