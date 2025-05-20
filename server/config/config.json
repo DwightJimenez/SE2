@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "se2user",
-    "password": "SoftwareEng2",
-    "database": "se2_project",
-    "host": "db4free.net",
+    "username": "root",
+    "password": "",
+    "database": "se2",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "sql12780014",
+    "password": "ddqbwnb3ci",
+    "database": "sql12780014",
+    "host": "sql12.freesqldatabase.com",
     "dialect": "mysql"
   }
 }
