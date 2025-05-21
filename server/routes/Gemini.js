@@ -8,8 +8,10 @@ const { validateToken } = require("../middlewares/AuthMiddleware");
 const router = express.Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const SYSTEM_CONTEXT = `
+const today = moment().format("YYYY-MM-DD");
 
+const SYSTEM_CONTEXT = `
+Today's date is ${today}
 You are an assistant inside a web system. In this system:
 - Users can create and comment on posts, but only if they're logged in.
 - Admins can create and delete events, create and delete form for evaluation for user to rate, create, delete and archive document with version control.
@@ -42,7 +44,7 @@ If not creating an event or document, just reply normally as text.
 
 `;
 
-router.post("/generate", validateToken,async (req, res) => {
+router.post("/generate", validateToken, async (req, res) => {
   const { prompt } = req.body;
   const user = req.user?.id || 1; // fallback if not logged in
 
@@ -55,7 +57,7 @@ router.post("/generate", validateToken,async (req, res) => {
 
     // Clean up ```json ... ``` format if it exists
 
-    if (text.startsWith("```json")) { 
+    if (text.startsWith("```json")) {
       text = text.slice(7);
       text = text.slice(0, -4);
     }
