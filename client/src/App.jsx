@@ -138,14 +138,14 @@ function App() {
               <div className="fixed top-16 left-0 h-full bg-base-100 shadow-sm z-40 max-sm:hidden">
                 <Sidebar />
               </div>
-              <div className="sm:hidden">
+              <div className="sm:hidden z-40">
                 <Dock />
               </div>
 
               <div>
                 <button
                   onClick={() => setShowChat((prev) => !prev)}
-                  className="fixed bottom-4 right-4 z-50 p-3 bg-primary text-white rounded-full shadow-md hover:bg-accent transition-all"
+                  className="fixed bottom-4 right-4 max-sm:bottom-20 z-50 p-3 bg-primary text-white rounded-full shadow-md hover:bg-accent transition-all"
                 >
                   {
                     <motion.div
@@ -196,7 +196,7 @@ function App() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "100%", opacity: 0 }}
                       transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="fixed border w-120 h-110 bg-white right-4 bottom-20 z-100 rounded-lg shadow-2xl dark:bg-gray-900"
+                      className="fixed border w-120 h-110 max-sm:w-100 bg-white right-4 bottom-20 max-sm:bottom-40 z-100 rounded-lg shadow-2xl dark:bg-gray-900"
                     >
                       <Chat />
                     </motion.div>

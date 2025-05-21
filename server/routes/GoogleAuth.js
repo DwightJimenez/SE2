@@ -53,9 +53,9 @@ router.post("/link-google", validateToken, async (req, res) => {
     // Update the cookie
     res.cookie("token", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      maxAge: 3600000,
+      secure: true,
+      sameSite: "None",
+      maxAge:  7 * 24 * 60 * 60 * 1000,
     });
 
     res.json({ message: "Google account linked successfully", user });

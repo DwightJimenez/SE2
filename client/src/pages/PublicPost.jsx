@@ -146,8 +146,8 @@ const PublicPost = () => {
   if (isError) return <p className="text-red-500">Error loading posts.</p>;
 
   return (
-    <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
-      <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800">
+    <div className="flex h-[calc(100vh-4rem)] justify-center mt-16">
+      <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800 overflow-y-auto">
         {isLoading ? (
           <LoadingSkeleton />
         ) : allPosts.length === 0 ? (
@@ -279,7 +279,7 @@ const PublicPost = () => {
         )}
       </div>
 
-      <div className="fixed top-16 right-4 w-full sm:w-[350px] md:w-[400px] h-[70vh] p-4 bg-white">
+      <div className="w-full hidden md:block md:w-[400px] h-[70vh] p-4 bg-white">
         <h2 className="text-2xl text-gray-700 font-bold mb-4 sticky top-0 bg-white z-10 p-4">
           Upcoming Events
         </h2>

@@ -106,7 +106,7 @@ const Public = () => {
   }
 
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="flex flex-col w-screen h-screen bg-white">
       <PublicNav page={pageChange}/>
       {page === 1 && (
         <div id="home">
