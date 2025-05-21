@@ -24,27 +24,7 @@ const NavBar = ({ logout }) => {
             </a>
           </div>
           <div className="flex gap-2">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="input input-bordered w-24 md:w-auto"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6 absolute top-2.5 right-2 w-5 h-5 text-gray-500 cursor-pointer"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                />
-              </svg>
-            </div>
+           
 
             <div className="dropdown dropdown-end">
               <Sheet>
