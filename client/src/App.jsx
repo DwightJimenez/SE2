@@ -11,7 +11,7 @@ import Dock from "./components/Dock";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import AuditLog from "./pages/AuditLog";
 import EventsList from "./pages/EventsList";
 import Settings from "./pages/Settings";
@@ -35,6 +35,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [eventState, setEventState] = useState({
     events: [],
   });
@@ -109,6 +110,7 @@ function App() {
         profilePicture: "",
       });
 
+      queryClient.invalidateQueries(["auth"]);
       navigate("/public");
     } catch (error) {
       console.error("Logout failed:", error);
