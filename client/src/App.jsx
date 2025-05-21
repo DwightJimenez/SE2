@@ -88,7 +88,7 @@ function App() {
   }, [authState, navigate]);
 
   // Show loading screen while fetching auth state
-  if (isLoading || (data && !authState.status && data.status))
+  if (isLoading || (!authState.status && data?.status))
     return (
       <div className="w-screen h-screen flex justify-center items-center">
         <span className="loading loading-dots loading-xl text-accent"></span>
@@ -224,7 +224,7 @@ function App() {
                     <>
                       <Route path="/archive" element={<Archive />} />
                       <Route path="/events/lists" element={<EventsList />} />
-                      
+
                       <Route path="/manage-user" element={<ManageUser />} />
                       <Route path="/create-form" element={<CreateForm />} />
                       <Route path="/editor/:id" element={<Editor />} />

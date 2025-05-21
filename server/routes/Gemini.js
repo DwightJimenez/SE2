@@ -55,7 +55,7 @@ router.post("/generate", validateToken,async (req, res) => {
 
     // Clean up ```json ... ``` format if it exists
 
-    if (text.startsWith("```json")) {
+    if (text.startsWith("```json")) { 
       text = text.slice(7);
       text = text.slice(0, -4);
     }
