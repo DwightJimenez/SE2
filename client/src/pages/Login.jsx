@@ -255,11 +255,13 @@ const Login = () => {
         <div className="flex w-full flex-col">
           <div className="divider divider-accent">or</div>
         </div>
+
         <GoogleLogin
           onSuccess={handleGoogleLogin}
           onError={() =>
             setGoogleError("Google login failed. Please try again.")
           }
+          className="flex justify-center"
         />
       </div>
       <div

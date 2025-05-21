@@ -11,9 +11,10 @@ import {
 } from "@schedule-x/calendar";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
 import "@schedule-x/theme-default/dist/index.css";
-import { createResizePlugin } from "@schedule-x/resize";
 import PageLoc from "../components/PageLoc";
 import AddEvent from "../components/AddEvent";
+import { AuthContext } from "../helpers/AuthContext";
+import { useContext } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -21,6 +22,7 @@ function CalendarApp() {
   const [data, setData] = useState([]);
   const [addedEventIds, setAddedEventIds] = useState(new Set());
   const plugins = [createEventsServicePlugin(), createEventModalPlugin()];
+  const { authState } = useContext(AuthContext);
 
   const calendar = useCalendarApp(
     {
@@ -69,7 +71,10 @@ function CalendarApp() {
   return (
     <div className="flex flex-col p-4 dark:bg-gray-800">
       <PageLoc currentPage="Events" />
-      <AddEvent />
+      {(authState.role === "admin" || authState.role === "moderator") && (
+        <AddEvent />
+      )}
+
       <div className="w-full shadow-2xl">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>

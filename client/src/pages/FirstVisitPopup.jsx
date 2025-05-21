@@ -140,6 +140,7 @@ const FirstVisitPopup = () => {
               handleGoogleSignIn(credentialResponse)
             }
             onError={() => alert("Google login failed")}
+            className="flex w-full justify-center"
           />
         </div>
       )}
