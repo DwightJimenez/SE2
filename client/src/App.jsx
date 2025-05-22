@@ -126,7 +126,7 @@ function App() {
         {authState.status ? (
           authState.email === "" ? (
             <Routes>
-              <Route path="/first-visit" element={<FirstVisitPopup />} />
+              <Route path="/first-visit" element={<FirstVisitPopup logout={logout}/>} />
               <Route
                 path="*"
                 element={<Navigate to="/first-visit" replace />}

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 const API_URL = import.meta.env.VITE_API_URL;
 
-const FirstVisitPopup = () => {
+const FirstVisitPopup = ({ logout }) => {
   const [step, setStep] = useState(0); // 0 = intro, 1 = google sign in, 2 = set password
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
@@ -77,14 +77,21 @@ const FirstVisitPopup = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <div
-      className="flex w-screen items-center justify-center bg-base-200"
+      className="flex relative w-screen items-center justify-center bg-base-200"
       style={{
         background:
           "linear-gradient(150deg, rgb(51.81, 15.18, 119.84) 0%, rgb(103, 29.24, 150.8) 59.73%, rgb(255, 71, 242.73) 100%)",
       }}
     >
+      <div className="absolute top-16 right-16 btn">
+        <button onClick={logout}>Cancel</button>
+      </div>
       {step === 0 && (
         <div className="hero min-h-screen">
           <div className="hero-overlay bg-opacity-60"></div>
