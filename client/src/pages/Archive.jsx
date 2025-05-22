@@ -80,7 +80,7 @@ const Archive = () => {
   return (
     <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Archive" />
-      <div className="flex  border border-gray-300 bg-white shadow-2xl rounded-box">
+      <div className="flex  border border-gray-300 bg-white shadow-2xl rounded-box dark:bg-black dark:border-gray-600">
         <table className="table">
           <thead>
             <tr>
@@ -91,7 +91,7 @@ const Archive = () => {
           </thead>
           <tbody>
             {archiveDoc.map((doc) => (
-              <tr key={doc.id}>
+              <tr key={doc.id} className="dark:text-white">
                 <td>{doc.type}</td>
                 <td>
                   <a

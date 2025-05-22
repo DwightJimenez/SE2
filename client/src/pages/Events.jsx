@@ -69,13 +69,13 @@ function CalendarApp() {
   }, [data, calendar, addedEventIds]);
 
   return (
-    <div className="flex flex-col p-4 dark:bg-gray-800">
+    <div className="flex flex-col p-4 dark:bg-gray-800 h-[calc(100vh-4rem)] ">
       <PageLoc currentPage="Events" />
       {(authState.role === "admin" || authState.role === "moderator") && (
         <AddEvent />
       )}
 
-      <div className="w-full shadow-2xl">
+      <div className="w-full shadow-2xl overflow-y-auto">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>
     </div>

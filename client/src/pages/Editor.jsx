@@ -146,10 +146,10 @@ function Editor() {
   };
 
   return (
-    <div className="p-4 flex flex-col">
+    <div className="p-4 flex flex-col h-[calc(100vh-4rem)]">
       <PageLoc
         currentPage={docName}
-        backLink="/create-document" 
+        backLink="/create-document"
         showBack={true}
       />
       <div className="flex">
@@ -158,7 +158,7 @@ function Editor() {
           <button className="btn w-fit" onClick={exportToWord}>
             Export To Word
           </button>
-          <div className="flex gap-4">
+          <div className="flex gap-4 dark:bg-white mt-4">
             <ReactQuill
               ref={quillRef} // Attach the ref here
               theme="snow"
@@ -166,6 +166,7 @@ function Editor() {
               onChange={setEditorContent}
               modules={modules}
               className={showPreview && selectedVersion ? "w-1/2" : "w-full"}
+              style={{ height: "800px" }}
             />
             {showPreview && selectedVersion && (
               <div className="p-4 border rounded bg-white shadow w-1/2">
@@ -201,9 +202,8 @@ function Editor() {
           </div>
         </div>
 
-
         {/* right */}
-        <div className="flex flex-col p-4 border-accent w-90 h-130">
+        <div className="flex flex-col p-4 border-accent w-90 h-130 dark:text-white">
           <div className="flex flex-col gap-2 justify-end p-4">
             <input
               type="text"
@@ -221,12 +221,11 @@ function Editor() {
           </div>
           <h2 className="text-xl font-semibold">Version History</h2>
           <div className="flex flex-col items-end w-60 p-4 overflow-y-scroll">
-            
             <div className="w-full h-full flex flex-col items-end">
               <ul className="timeline timeline-vertical timeline-compact w-full">
                 {versions.map((ver, idx) => (
                   <li key={idx}>
-                    {idx !== 0 && <hr className="bg-accent"/>}
+                    {idx !== 0 && <hr className="bg-accent" />}
                     <div className="timeline-middle">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +264,9 @@ function Editor() {
                       </Tooltip>
                     </TooltipProvider>
 
-                    {idx !== versions.length - 1 && <hr className="bg-accent"/>}
+                    {idx !== versions.length - 1 && (
+                      <hr className="bg-accent" />
+                    )}
                   </li>
                 ))}
               </ul>

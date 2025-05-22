@@ -4,8 +4,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 a {
   font-weight: 500;
   color: #646cff;
@@ -35,7 +33,8 @@ h1 {
   max-height: 90vh;
 }
 
-#typewriter, .customFont {
+#typewriter,
+.customFont {
   font-family: "Orbitron";
 }
 

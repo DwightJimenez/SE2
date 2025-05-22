@@ -23,7 +23,7 @@ const PageLoc = ({ currentPage, showBack = false, backLink = "/" }) => {
   );
 
   return (
-    <div className="flex justify-between items-center border border-gray-300 sticky top-14 z-40 mb-4 p-4 bg-white w-full dark:bg-black rounded-lg shadow-2xl">
+    <div className="flex justify-between items-center border border-gray-300 sticky top-14 z-40 mb-4 p-4 bg-white w-full dark:bg-black dark:text-white dark:border-gray-600 rounded-lg shadow-2xl">
       <span className="text-2xl">{currentPage}</span>
       {showBack && (
         typeof backLink === "string" ? (

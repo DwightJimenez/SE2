@@ -6,6 +6,17 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -78,9 +89,7 @@ function ManageUser() {
   };
 
   const handleDeleteUser = (userId) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      deleteUserMutation.mutate(userId);
-    }
+    deleteUserMutation.mutate(userId);
   };
 
   return (
@@ -88,14 +97,12 @@ function ManageUser() {
       <PageLoc currentPage="Manage User" />
 
       <div className="flex gap-4 ">
-        {userRole === "admin" && (
-          <AddUser onUserAdded={handleUserAdded} />
-        )}
+        {userRole === "admin" && <AddUser onUserAdded={handleUserAdded} />}
 
         <select
           value={selectedRole}
           onChange={handleRoleChange}
-          className="select select-bordered w-50 max-w-xs border"
+          className="select select-bordered w-50 max-w-xs border dark:text-white"
         >
           <option value="">All</option>
           <option value="moderator">Moderators</option>
@@ -118,7 +125,7 @@ function ManageUser() {
         </div>
       ) : (
         <div className="overflow-x-auto rounded-box  border border-gray-300 bg-white shodow-2xl">
-          <table className="table">
+          <table className="table dark:bg-black dark:text-white dark:border-gray-600">
             <thead>
               <tr>
                 <th>Username</th>
@@ -142,25 +149,32 @@ function ManageUser() {
                             }
                             className="cursor-pointer data-[state=checked]:bg-orange-400 data-[state=checked]:border-orange-500"
                           />
-                          <div
-                            onClick={() => handleDeleteUser(user.id)}
-                            className="flex justify-evenly cursor-pointer hover:text-red-500"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="size-6"
-                              color="red"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                              />
-                            </svg>
+                          <div className="flex justify-center items-center h-full w-full cursor-pointer hover:text-red-500">
+                            <AlertDialog>
+                              <AlertDialogTrigger>
+                                <span className="flex justify-evenly gap-4">
+                                  <Button className="bg-red-500 hover:bg-red-700">
+                                    Delete
+                                  </Button>
+                                </span>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    Are you sure you want to delete?
+                                  </AlertDialogTitle>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() => handleDeleteUser(user.id)}
+                                    className="bg-red-500 hover:bg-red-700"
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           </div>
                         </div>
                       )}

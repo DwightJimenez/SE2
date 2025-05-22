@@ -33,7 +33,7 @@ const CreateUser = ({ onUserAdded }) => {
   };
 
   return (
-    <div className="flex flex-col h-full justify-center w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg dark:bg-gray-800">
+    <div className="flex flex-col h-full justify-center w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg dark:bg-black">
       <form className="mt-6" onSubmit={handleSubmit}>
         <div>
           <label

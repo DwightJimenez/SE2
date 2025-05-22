@@ -6,18 +6,15 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Link } from "react-router-dom";
 
@@ -253,7 +250,7 @@ const Login = () => {
           </button>
         </div>
         <div className="flex w-full flex-col">
-          <div className="divider divider-accent">or</div>
+          <div className="divider divider-accent dark:text-white">or</div>
         </div>
 
         <GoogleLogin

@@ -135,6 +135,7 @@ const FirstVisitPopup = () => {
           <p className="mb-4 text-sm text-gray-600">
             Link your account for faster, more secure logins.
           </p>
+          <div className="border"></div>
           <GoogleLogin
             onSuccess={(credentialResponse) =>
               handleGoogleSignIn(credentialResponse)

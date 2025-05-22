@@ -91,7 +91,7 @@ function App() {
   // Show loading screen while fetching auth state
   if (isLoading || (!authState.status && data?.status))
     return (
-      <div className="w-screen h-screen flex justify-center items-center">
+      <div className="w-screen h-screen flex justify-center items-center dark:bg-gray-800">
         <span className="loading loading-dots loading-xl text-accent"></span>
       </div>
     );
@@ -196,7 +196,7 @@ function App() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "100%", opacity: 0 }}
                       transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="fixed border w-120 h-110 max-sm:w-100 bg-white right-4 bottom-20 max-sm:bottom-40 z-100 rounded-lg shadow-2xl dark:bg-gray-900"
+                      className="fixed border w-120 h-110 max-sm:w-90 bg-white right-4 bottom-20 max-sm:bottom-40 z-100 rounded-lg shadow-2xl dark:bg-gray-900"
                     >
                       <Chat />
                     </motion.div>

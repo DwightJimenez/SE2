@@ -14,7 +14,7 @@ import {
 const PostButton = () => {
   const { authState } = useContext(AuthContext);
   return (
-    <div className="flex mb-4 p-4 bg-white max-w-200 dark:bg-black rounded-2xl shadow-lg sticky  border border-gray-300">
+    <div className="flex mb-4 p-4 bg-white max-w-200 dark:bg-black dark:border-gray-700 rounded-2xl shadow-lg sticky  border border-gray-300">
       <div
         tabIndex={0}
         role="button"

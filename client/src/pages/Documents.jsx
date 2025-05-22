@@ -62,7 +62,7 @@ const Documents = () => {
             {documents.map((document) => (
               <div
                 key={document.id}
-                className="flex flex-col justify-between h-70 w-50 p-4 bg-white rounded-lg shadow-2xl border border-primary"
+                className="flex flex-col justify-between h-60 w-40 p-4 bg-white rounded-lg shadow-2xl border border-primary dark:bg-quaternary"
                 onClick={() => navigate(`/view-editor/${document.id}`)}
               >
                 <div>
@@ -72,7 +72,7 @@ const Documents = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-16 text-quaternary mb-4"
+                    className="size-16 text-quaternary mb-4 dark:text-white"
                   >
                     <path
                       strokeLinecap="round"
@@ -88,15 +88,12 @@ const Documents = () => {
                         <h3 className="font-bold text-primary text-md truncate">
                           {document.name}
                         </h3>
-                        <div className="justify-end mt-4 text-xs text-primary">
-                          <p>Created: {formatDate(document.createdAt)}</p>
-                          {document.updatedAt && (
-                            <p>Updated: {formatDate(document.updatedAt)}</p>
-                          )}
-                        </div>
                       </div>
                     </TooltipTrigger>
-                    <TooltipContent side="top" className="w-100 p-4 border border-quaternary bg-white">
+                    <TooltipContent
+                      side="top"
+                      className="w-100 p-4 border border-quaternary bg-white"
+                    >
                       <div className="flex flex-col w-full">
                         <h3 className="font-bold text-quaternary text-xl">
                           {document.name}

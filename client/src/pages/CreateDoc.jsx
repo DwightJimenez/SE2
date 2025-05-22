@@ -85,7 +85,7 @@ const CreateDoc = () => {
       <div className="flex gap-4 mb-4">
         <Dialog>
           <DialogTrigger asChild>
-            <div className="h-70 w-50 p-4 bg-quaternary rounded-lg shadow">
+            <div className="h-60 min-w-40 p-4 bg-quaternary rounded-lg shadow">
               <h1 className="text-primary">+</h1>
             </div>
           </DialogTrigger>
@@ -106,7 +106,7 @@ const CreateDoc = () => {
             {docs.map((document) => (
               <div
                 key={document.id}
-                className="flex flex-col relative justify-between h-70 w-50 p-4 bg-accent rounded-lg shadow"
+                className="flex flex-col relative justify-between h-60 w-40 p-4 bg-accent rounded-lg shadow"
               >
                 <div className="dropdown dropdown-end absolute top-4 right-4 cursor-pointer z-10">
                   <div tabIndex={0} className="m-1 flex">
@@ -127,7 +127,7 @@ const CreateDoc = () => {
                   </div>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300"
+                    className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300 dark:text-white"
                   >
                     <li>
                       <AlertDialog>
@@ -188,12 +188,6 @@ const CreateDoc = () => {
                           <h3 className="font-bold text-white text-xl">
                             {document.name}
                           </h3>
-                          <div className="justify-end mt-4 text-xs text-gray-800">
-                            <p>Created: {formatDate(document.createdAt)}</p>
-                            {document.updatedAt && (
-                              <p>Updated: {formatDate(document.updatedAt)}</p>
-                            )}
-                          </div>
                         </div>
                       </TooltipTrigger>
                       <TooltipContent

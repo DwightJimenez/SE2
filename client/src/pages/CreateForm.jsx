@@ -77,7 +77,7 @@ const CreateForm = () => {
       <PageLoc currentPage="Create Evaluation Form" />
       <div className="flex gap-4 mb-4">
         <Link to="/evaluation/add">
-          <div className="h-70 w-50 p-4 bg-tertiary rounded-lg shadow">
+          <div className="h-60 min-w-40 p-4 bg-tertiary rounded-lg shadow">
             <h1 className="text-white">+</h1>
           </div>
         </Link>
@@ -93,7 +93,7 @@ const CreateForm = () => {
             {forms.map((evaluation) => (
               <div
                 key={evaluation.id}
-                className="flex flex-col relative justify-between h-70 w-50 p-4 bg-white border border-orange-700 rounded-lg shadow"
+                className="flex flex-col relative justify-between h-60 w-40 p-4 bg-white border border-orange-700 rounded-lg shadow"
               >
                 <div className="dropdown dropdown-end absolute top-4 right-4 cursor-pointer z-10">
                   <div tabIndex={0} className="m-1 flex">
@@ -114,7 +114,7 @@ const CreateForm = () => {
                   </div>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300"
+                    className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300 dark:text-white"
                   >
                     <li>
                       <AlertDialog>
@@ -179,12 +179,6 @@ const CreateForm = () => {
                           <p className="text-orange-700 truncate">
                             {evaluation.description}
                           </p>
-                          <div className="justify-end mt-4 text-xs text-gray-500">
-                            <p>Created: {formatDate(evaluation.createdAt)}</p>
-                            {evaluation.updatedAt && (
-                              <p>Updated: {formatDate(evaluation.updatedAt)}</p>
-                            )}
-                          </div>
                         </div>
                       </TooltipTrigger>
                       <TooltipContent

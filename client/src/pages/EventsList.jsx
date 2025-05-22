@@ -6,6 +6,18 @@ import PageLoc from "../components/PageLoc";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../helpers/AuthContext";
 import { useContext } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchEvents = async () => {
@@ -57,6 +69,10 @@ const EventsList = () => {
     console.log(events);
   }, [events]);
 
+  const handleDelete = async (id) => {
+    mutation.mutate(id);
+  };
+
   if (isLoading) return <p>Loading events...</p>;
   if (isError) return <p>Error loading events.</p>;
 
@@ -64,7 +80,7 @@ const EventsList = () => {
     <div className="p-4 dark:bg-gray-800">
       <PageLoc currentPage="Events List" />
       <AddEvent />
-      <div className="overflow-x-auto rounded-box border  bg-white  border-gray-300 shadow-2xl">
+      <div className="overflow-x-auto rounded-box border  bg-white  border-gray-300 shadow-2xl dark:bg-black dark:border-gray-600">
         <table className="table">
           {/* head */}
           <thead>
@@ -77,39 +93,36 @@ const EventsList = () => {
           </thead>
           <tbody>
             {events?.map((event) => (
-              <tr key={event.id}>
+              <tr key={event.id} className="dark:text-white">
                 <td>{event.title.toUpperCase()}</td>
                 <td>{event.start}</td>
                 <td>{event.end}</td>
                 <td>
-                  <button
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          "Are you sure you want to delete this event?"
-                        )
-                      ) {
-                        mutation.mutate(event.id);
-                      }
-                    }}
-                    className="!bg-red-500 p-2 !rounded hover:!bg-red-700"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-5 h-5"
-                      color="white"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <span className="flex justify-evenly gap-4">
+                        <Button className="bg-red-500 hover:bg-red-700">
+                          Delete
+                        </Button>
+                      </span>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDelete(event.id)}
+                          className="bg-red-500 hover:bg-red-700"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </td>
               </tr>
             ))}

@@ -65,7 +65,7 @@ const EvaluationList = ({ userId, questionId }) => {
             {forms.map((form) => (
               <div
                 key={form.id}
-                className="flex flex-col justify-between h-70 w-50 p-4 rounded-lg shadow-2xl relative  border border-tertiary"
+                className="flex flex-col justify-between h-60 w-40 p-4 rounded-lg shadow-2xl relative  border border-tertiary dark:bg-tertiary dark:border-orange-700"
                 onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
               >
                 <div>
@@ -73,7 +73,7 @@ const EvaluationList = ({ userId, questionId }) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="size-14 text-orange-500"
+                    className="size-14 text-orange-500 dark:text-white"
                   >
                     <path
                       fillRule="evenodd"
@@ -92,12 +92,6 @@ const EvaluationList = ({ userId, questionId }) => {
                         <p className="text-orange-700 text-sm truncate max-w-xs">
                           {form.description}
                         </p>
-                        <div className="justify-end mt-4 text-xs text-orange-700">
-                          <p>Created: {formatDate(form.createdAt)}</p>
-                          {form.updatedAt && (
-                            <p>Updated: {formatDate(form.updatedAt)}</p>
-                          )}
-                        </div>
                       </div>
                     </TooltipTrigger>
                     <TooltipContent
@@ -109,7 +103,12 @@ const EvaluationList = ({ userId, questionId }) => {
                           {form.title}
                         </h3>
                         <p className="text-orange-700">{form.description}</p>
-                        
+                        <div className="justify-end mt-4 text-xs text-orange-700">
+                          <p>Created: {formatDate(form.createdAt)}</p>
+                          {form.updatedAt && (
+                            <p>Updated: {formatDate(form.updatedAt)}</p>
+                          )}
+                        </div>
                       </div>
                     </TooltipContent>
                   </Tooltip>
