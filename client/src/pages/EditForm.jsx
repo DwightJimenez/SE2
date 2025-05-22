@@ -13,7 +13,7 @@ const Question = ({
   removeQuestion,
   showRemove = false,
 }) => (
-  <div className="flex flex-col mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
+  <div className="flex flex-col mb-4 bg-gray-100  p-4 rounded-lg shadow-2xl">
     <div className="flex justify-between">
       <input
         type="text"
@@ -160,7 +160,7 @@ const EditForm = () => {
   if (isError) return <p>Error loading form.</p>;
 
   return (
-    <div className="dark:bg-gray-800 p-4">
+    <div className=" p-4">
       <PageLoc
         currentPage="Edit Form"
         showBack={true}
@@ -188,7 +188,7 @@ const EditForm = () => {
           Questions
         </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
-          <div className="p-4 bg-accent mb-4 dark:bg-gray-900 rounded-lg shadow">
+          <div className="p-4 bg-accent mb-4  rounded-lg shadow">
             <input
               type="text"
               value={title}

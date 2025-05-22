@@ -93,7 +93,7 @@ function ManageUser() {
   };
 
   return (
-    <div className="p-4 dark:bg-gray-800">
+    <div className="p-4 ">
       <PageLoc currentPage="Manage User" />
 
       <div className="flex gap-4 ">
@@ -102,7 +102,7 @@ function ManageUser() {
         <select
           value={selectedRole}
           onChange={handleRoleChange}
-          className="select select-bordered w-50 max-w-xs border dark:text-white"
+          className="select select-bordered w-50 max-w-xs border "
         >
           <option value="">All</option>
           <option value="moderator">Moderators</option>
@@ -115,7 +115,7 @@ function ManageUser() {
           placeholder="Search users..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="w- p-2 mb-4 border rounded-md dark:bg-gray-700 dark:text-white"
+          className="w- p-2 mb-4 border rounded-md  "
         />
       </div>
 
@@ -125,7 +125,7 @@ function ManageUser() {
         </div>
       ) : (
         <div className="overflow-x-auto rounded-box  border border-gray-300 bg-white shodow-2xl">
-          <table className="table dark:bg-black dark:text-white dark:border-gray-600">
+          <table className="table   ">
             <thead>
               <tr>
                 <th>Username</th>

@@ -48,7 +48,7 @@ const Documents = () => {
   if (isError) return <div>Failed to load documents.</div>;
 
   return (
-    <div className="p-4 dark:bg-gray-800">
+    <div className="p-4 ">
       <PageLoc currentPage="Documents" />
       <div className="flex gap-4 mb-4">
         {isLoading ? (
@@ -62,7 +62,7 @@ const Documents = () => {
             {documents.map((document) => (
               <div
                 key={document.id}
-                className="flex flex-col justify-between h-60 w-40 p-4 bg-white rounded-lg shadow-2xl border border-primary dark:bg-quaternary"
+                className="flex flex-col justify-between h-60 w-40 p-4 bg-white rounded-lg shadow-2xl border border-primary "
                 onClick={() => navigate(`/view-editor/${document.id}`)}
               >
                 <div>
@@ -72,7 +72,7 @@ const Documents = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-16 text-quaternary mb-4 dark:text-white"
+                    className="size-16 text-quaternary mb-4 "
                   >
                     <path
                       strokeLinecap="round"

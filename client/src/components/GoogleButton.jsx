@@ -15,7 +15,7 @@ export default function GoogleButton({ onLoginSuccess, onLoginError }) {
   return (
     <button
       onClick={() => login()}
-      className="bg-white dark:bg-black  text-white py-2 px-4 rounded w-full"
+      className="bg-white   text-white py-2 px-4 rounded w-full"
     >
       Sign in with Google
     </button>

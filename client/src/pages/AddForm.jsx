@@ -10,7 +10,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Question = ({ index, updateQuestion, removeQuestion }) => (
-  <div className="flex flex-col mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
+  <div className="flex flex-col mb-4 bg-gray-100  p-4 rounded-lg shadow-2xl">
     <div className="flex justify-between">
       <input
         type="text"
@@ -68,9 +68,9 @@ const AddForm = () => {
     setQuestions((prev) => prev.filter((_, i) => i !== index));
   };
   return (
-    <div className="dark:bg-gray-800 p-4">
+    <div className=" p-4">
       <PageLoc currentPage="Add Form" showBack={true} backLink="/create-form" />
-      <div className="p-4 bg-accent dark:bg-gray-900 rounded-lg shadow">
+      <div className="p-4 bg-accent  rounded-lg shadow">
         <input
           type="text"
           value={title}

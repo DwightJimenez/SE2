@@ -33,12 +33,12 @@ const CreateUser = ({ onUserAdded }) => {
   };
 
   return (
-    <div className="flex flex-col h-full justify-center w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg dark:bg-black">
+    <div className="flex flex-col h-full justify-center w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg ">
       <form className="mt-6" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="username"
-            className="block text-sm text-gray-800 dark:text-gray-200"
+            className="block text-sm text-gray-800 "
           >
             Username
           </label>
@@ -46,7 +46,7 @@ const CreateUser = ({ onUserAdded }) => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
             required
           />
         </div>
@@ -54,7 +54,7 @@ const CreateUser = ({ onUserAdded }) => {
         <div className="mt-4">
           <label
             htmlFor="password"
-            className="block text-sm text-gray-800 dark:text-gray-200"
+            className="block text-sm text-gray-800 "
           >
             Password
           </label>
@@ -62,7 +62,7 @@ const CreateUser = ({ onUserAdded }) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
             required
           />
         </div>

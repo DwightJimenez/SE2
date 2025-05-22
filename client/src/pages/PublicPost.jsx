@@ -17,7 +17,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const LoadingSkeleton = () => {
   return (
-    <div className="w-200 justify-center flex flex-col items-center p-4 bg-white dark:bg-gray-800">
+    <div className="w-200 justify-center flex flex-col items-center p-4 bg-white ">
       <span className="loading loading-spinner text-primary"></span>
       <div className="flex w-200 flex-col gap-4 mt-4">
         <div className="skeleton h-32 w-full"></div>
@@ -147,7 +147,7 @@ const PublicPost = () => {
 
   return (
     <div className="flex h-[calc(100vh-4rem)] justify-center mt-16">
-      <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800 overflow-y-auto">
+      <div className="flex flex-col space-y-4 p-4 bg-white  overflow-y-auto">
         {isLoading ? (
           <LoadingSkeleton />
         ) : allPosts.length === 0 ? (

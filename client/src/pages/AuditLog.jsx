@@ -33,9 +33,9 @@ const AuditLog = () => {
   };
 
   return (
-    <div className="p-4 dark:bg-gray-800">
+    <div className="p-4 ">
       <PageLoc currentPage="Audit Log" />
-      <div className="flex flex-col justify-center mb-4 h-auto bg-white rounded-lg shadow-2xl dark:bg-black dark:border-gray-600 p-4  border border-gray-300">
+      <div className="flex flex-col justify-center mb-4 h-auto bg-white rounded-lg shadow-2xl   p-4  border border-gray-300">
         <div className="flex items-center justify-evenly space-x-4 p-4">
           {legendItems.map((item, index) => (
             <div key={index} className="flex items-center space-x-2">
@@ -60,7 +60,7 @@ const AuditLog = () => {
             </thead>
             <tbody>
               {logs.map((log, index) => (
-                <tr key={log.id} className="dark:text-white dark:bg-black">
+                <tr key={log.id} className=" ">
                   <td className="text-sm flex">
                     <div
                       className={`w-4 h-4 rounded-full mr-4 ${getBgColor(

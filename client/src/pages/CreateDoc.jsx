@@ -80,7 +80,7 @@ const CreateDoc = () => {
   });
 
   return (
-    <div className="dark:bg-gray-800 p-4">
+    <div className=" p-4">
       <PageLoc currentPage="Create Document" />
       <div className="flex gap-4 mb-4">
         <Dialog>
@@ -127,7 +127,7 @@ const CreateDoc = () => {
                   </div>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300 dark:text-white"
+                    className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm  border border-gray-300 "
                   >
                     <li>
                       <AlertDialog>

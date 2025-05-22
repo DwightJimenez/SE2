@@ -91,7 +91,7 @@ function App() {
   // Show loading screen while fetching auth state
   if (isLoading || (!authState.status && data?.status))
     return (
-      <div className="w-screen h-screen flex justify-center items-center dark:bg-gray-800">
+      <div className="w-screen h-screen flex justify-center items-center ">
         <span className="loading loading-dots loading-xl text-accent"></span>
       </div>
     );
@@ -196,7 +196,7 @@ function App() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "100%", opacity: 0 }}
                       transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="fixed border w-120 h-110 max-sm:w-90 bg-white right-4 bottom-20 max-sm:bottom-40 z-100 rounded-lg shadow-2xl dark:bg-gray-900"
+                      className="fixed border w-120 h-110 max-sm:w-90 bg-white right-4 bottom-20 max-sm:bottom-40 z-100 rounded-lg shadow-2xl "
                     >
                       <Chat />
                     </motion.div>
@@ -204,7 +204,7 @@ function App() {
                 </AnimatePresence>
               </div>
               {/* Main Content */}
-              <div className="flex-grow ml-0 mt-16  bg-white dark:bg-gray-800 sm:ml-64 mx-sm:w-screen">
+              <div className="flex-grow ml-0 mt-16  bg-white  sm:ml-64 mx-sm:w-screen">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/post/:id" element={<Home />} />
@@ -238,7 +238,7 @@ function App() {
             </>
           )
         ) : (
-          <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+          <div className="flex-grow flex items-center justify-center min-h-screen bg-gray-100 ">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/public" />} />

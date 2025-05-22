@@ -158,7 +158,7 @@ function Editor() {
           <button className="btn w-fit" onClick={exportToWord}>
             Export To Word
           </button>
-          <div className="flex gap-4 dark:bg-white mt-4">
+          <div className="flex gap-4  mt-4">
             <ReactQuill
               ref={quillRef} // Attach the ref here
               theme="snow"
@@ -203,7 +203,7 @@ function Editor() {
         </div>
 
         {/* right */}
-        <div className="flex flex-col p-4 border-accent w-90 h-130 dark:text-white">
+        <div className="flex flex-col p-4 border-accent w-90 h-130 ">
           <div className="flex flex-col gap-2 justify-end p-4">
             <input
               type="text"

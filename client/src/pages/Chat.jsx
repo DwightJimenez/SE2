@@ -53,13 +53,13 @@ export default function Chat() {
   };
 
   return (
-    <div className="chat-container w-full max-w-xl mx-auto flex flex-col h-full border border-quaternary rounded-lg">
+    <div className="chat-container w-full max-w-xl mx-auto flex flex-col h-full border border-quaternary rounded-lg ">
       <div className="border border-quaternary h-12 flex items-center rounded-t-lg px-4 text-white font-bold">
         <p className="text-quaternary">Smart Assistant with</p>{" "}
         <img src={geminiLogo} alt="" className="w-20" />
       </div>
 
-      <div className="bg-white flex-1 p-4 overflow-y-auto border-x border-b rounded-b-lg space-y-3">
+      <div className="bg-white flex-1 p-4 overflow-y-auto border-x border-b rounded-b-lg space-y-3 ">
         {messages.map((msg, idx) => (
           <div
             key={idx}

@@ -65,7 +65,7 @@ const EvaluationList = ({ userId, questionId }) => {
             {forms.map((form) => (
               <div
                 key={form.id}
-                className="flex flex-col justify-between h-60 w-40 p-4 rounded-lg shadow-2xl relative  border border-tertiary dark:bg-tertiary dark:border-orange-700"
+                className="flex flex-col justify-between h-60 w-40 p-4 rounded-lg shadow-2xl relative  border border-tertiary  "
                 onClick={() => navigate(`/evaluation/evaluate/${form.id}`)}
               >
                 <div>
@@ -73,7 +73,7 @@ const EvaluationList = ({ userId, questionId }) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="size-14 text-orange-500 dark:text-white"
+                    className="size-14 text-orange-500 "
                   >
                     <path
                       fillRule="evenodd"

@@ -77,10 +77,10 @@ const EventsList = () => {
   if (isError) return <p>Error loading events.</p>;
 
   return (
-    <div className="p-4 dark:bg-gray-800">
+    <div className="p-4 ">
       <PageLoc currentPage="Events List" />
       <AddEvent />
-      <div className="overflow-x-auto rounded-box border  bg-white  border-gray-300 shadow-2xl dark:bg-black dark:border-gray-600">
+      <div className="overflow-x-auto rounded-box border  bg-white  border-gray-300 shadow-2xl  ">
         <table className="table">
           {/* head */}
           <thead>
@@ -93,7 +93,7 @@ const EventsList = () => {
           </thead>
           <tbody>
             {events?.map((event) => (
-              <tr key={event.id} className="dark:text-white">
+              <tr key={event.id} className="">
                 <td>{event.title.toUpperCase()}</td>
                 <td>{event.start}</td>
                 <td>{event.end}</td>

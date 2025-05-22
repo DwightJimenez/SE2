@@ -20,7 +20,7 @@ const AddEvent = () => {
             Add Event
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-auto dark:bg-black dark:text-white">
+        <DialogContent className="w-auto  ">
           <DialogHeader>Create Event</DialogHeader>
           <CreateEvents />
         </DialogContent>

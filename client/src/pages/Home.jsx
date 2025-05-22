@@ -27,7 +27,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const LoadingSkeleton = () => {
   return (
-    <div className="w-200 justify-center flex flex-col items-center p-4 bg-white dark:bg-gray-800">
+    <div className="w-200 justify-center flex flex-col items-center p-4 bg-white ">
       <span className="loading loading-spinner text-primary"></span>
       <div className="flex w-200 flex-col gap-4 mt-4">
         <div className="skeleton h-32 w-full"></div>
@@ -158,7 +158,7 @@ const Home = () => {
 
   return (
     <div className="flex h-[calc(100vh-4rem)]">
-      <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-gray-800 border-gray-700 overflow-y-auto">
+      <div className="flex flex-col space-y-4 p-4 bg-white  border-gray-700 overflow-y-auto">
         <div className="relative">
           <PostButton />
         </div>
@@ -198,11 +198,11 @@ const Home = () => {
                 {allPosts.map((post) => (
                   <div
                     key={post.id}
-                    className="relative z-10 card bg-white border border-gray-300 dark:bg-black dark:border-gray-700 shadow-2xl p-4"
+                    className="relative z-10 card bg-white border border-gray-300   shadow-2xl p-4"
                   >
                     <div>
                       <div className="flex flex-col space-x-2">
-                        <span className="font-semibold dark:text-white">@{post.username}</span>
+                        <span className="font-semibold ">@{post.username}</span>
                         <span className="text-sm text-gray-500">
                           {new Date(post.createdAt).toLocaleString()}
                         </span>
@@ -279,10 +279,10 @@ const Home = () => {
                           </ul>
                         </div>
                       )}
-                      <p className="my-4 dark:text-white">{post.text}</p>
+                      <p className="my-4 ">{post.text}</p>
                       <div className="flex">
-                        <p className="px-2 dark:text-gray-400">{post.Likes.length} Likes</p>
-                        <p className="px-2 dark:text-gray-400">{post.Comments.length} Comments</p>
+                        <p className="px-2 ">{post.Likes.length} Likes</p>
+                        <p className="px-2 ">{post.Comments.length} Comments</p>
                       </div>
 
                       <span className="divider"></span>
@@ -307,7 +307,7 @@ const Home = () => {
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
-                              className="size-6 dark:text-gray-400"
+                              className="size-6 "
                             >
                               <path
                                 strokeLinecap="round"
@@ -341,7 +341,7 @@ const Home = () => {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="size-6 dark:text-gray-400"
+                            className="size-6 "
                           >
                             <path
                               strokeLinecap="round"
@@ -349,7 +349,7 @@ const Home = () => {
                               d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
                             />
                           </svg>
-                          <p className="px-2 dark:text-gray-400">Comment</p>
+                          <p className="px-2 ">Comment</p>
                         </span>
                       </div>
                     </div>
@@ -365,8 +365,8 @@ const Home = () => {
         )}
       </div>
 
-      <div className="w-full hidden md:block md:w-[400px] h-[70vh] p-4 bg-white dark:bg-gray-800">
-        <h2 className="text-2xl text-gray-700 font-bold mb-4 sticky top-0 bg-white z-10 p-4 dark:bg-gray-800 dark:text-white">
+      <div className="w-full hidden md:block md:w-[400px] h-[70vh] p-4 bg-white ">
+        <h2 className="text-2xl text-gray-700 font-bold mb-4 sticky top-0 bg-white z-10 p-4  ">
           Upcoming Events
         </h2>
         <div className="flex flex-col space-y-4 overflow-y-auto h-[calc(100%-64px)]">
@@ -390,7 +390,7 @@ const Home = () => {
             return (
               <motion.div
                 key={index}
-                className="flex card bg-base-100 border border-primary w-full mb-2 p-0 dark:bg-black"
+                className="flex card bg-base-100 border border-primary w-full mb-2 p-0 "
                 initial={{ opacity: 0, y: 20 }} // Start offscreen with opacity 0
                 whileInView={{ opacity: 1, y: 0 }} // Animate to visible when in view
                 transition={{ duration: 0.5, delay: index * 0.1 }} // Stagger the animation with a delay

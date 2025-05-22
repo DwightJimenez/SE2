@@ -101,7 +101,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
+    <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl">
       {loginError && (
         <AlertDialog open={!!loginError}>
           <AlertDialogContent>
@@ -154,19 +154,19 @@ const Login = () => {
           </svg>
         </Link>
 
-        <p className="mt-6 text-xl text-center text-gray-600 dark:text-gray-200">
+        <p className="mt-6 text-xl text-center text-gray-600 ">
           Welcome back!
         </p>
         <div className="mt-6">
           <label
-            className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+            className="block mb-2 text-sm font-medium text-gray-600 "
             for="LoggingEmailAddress"
           >
             Email Address
           </label>
           <input
             id="LoggingEmailAddress"
-            className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+            className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
             type="email"
             onChange={(event) => {
               setEmail(event.target.value);
@@ -176,14 +176,14 @@ const Login = () => {
         <div className="mt-4 relative">
           <div className="flex justify-between">
             <label
-              className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+              className="block mb-2 text-sm font-medium text-gray-600 "
               for="loggingPassword"
             >
               Password
             </label>
             <a
               href="#"
-              className="text-xs text-gray-500 dark:text-gray-300 hover:underline"
+              className="text-xs text-gray-500  hover:underline"
             >
               Forget Password?
             </a>
@@ -191,7 +191,7 @@ const Login = () => {
 
           <input
             id="loggingPassword"
-            className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+            className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
             type={show ? "text" : "password"}
             onChange={(event) => {
               setPassword(event.target.value);
@@ -250,7 +250,7 @@ const Login = () => {
           </button>
         </div>
         <div className="flex w-full flex-col">
-          <div className="divider divider-accent dark:text-white">or</div>
+          <div className="divider divider-accent ">or</div>
         </div>
         <div className="flex justify-center">
           <GoogleLogin

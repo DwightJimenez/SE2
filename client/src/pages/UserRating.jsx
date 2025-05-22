@@ -29,7 +29,7 @@ const Question = ({
   const effectiveRating = hasRated ? userSavedRating : currentRating;
 
   return (
-    <div className="flex flex-col max-w-200 mb-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-2xl">
+    <div className="flex flex-col max-w-200 mb-4 bg-gray-100  p-4 rounded-lg shadow-2xl">
       <div className="flex justify-between">
         <input
           type="text"
@@ -168,7 +168,7 @@ const UserRating = () => {
   if (isError) return <p>Error loading form.</p>;
 
   return (
-    <div className="dark:bg-gray-800 p-4">
+    <div className=" p-4">
       <PageLoc
         currentPage="Evaluate Question"
         showBack={true}
@@ -177,7 +177,7 @@ const UserRating = () => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="p-4 my-4 max-w-200 bg-accent dark:bg-gray-900 rounded-lg shadow-2xl">
+            <div className="p-4 my-4 max-w-200 bg-accent  rounded-lg shadow-2xl">
               <input
                 type="text"
                 value={title}
@@ -197,7 +197,7 @@ const UserRating = () => {
             side="bottom"
             className="w-200 h-full p-4 bg-white border border-accent"
           >
-            <div className="dark:bg-gray-900">
+            <div className="">
               <input
                 type="text"
                 value={title}

@@ -15,7 +15,7 @@ const AddUser = ({ onUserAdded }) => {
         <DialogTrigger asChild>
           <Button className="btn btn-primary">Add User</Button>
         </DialogTrigger>
-        <DialogContent className="w-auto dark:bg-black dark:text-white">
+        <DialogContent className="w-auto  ">
           <DialogHeader>Add User</DialogHeader>
           <CreateUser onUserAdded={onUserAdded} />
         </DialogContent>

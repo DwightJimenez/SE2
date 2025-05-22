@@ -52,7 +52,7 @@ function CreateEvents() {
   };
 
   return (
-    <div className="flex flex-col justify-evenly items-center h-full dark:text-white">
+    <div className="flex flex-col justify-evenly items-center h-full ">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
