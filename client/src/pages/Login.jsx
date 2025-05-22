@@ -252,14 +252,15 @@ const Login = () => {
         <div className="flex w-full flex-col">
           <div className="divider divider-accent dark:text-white">or</div>
         </div>
-
-        <GoogleLogin
-          onSuccess={handleGoogleLogin}
-          onError={() =>
-            setGoogleError("Google login failed. Please try again.")
-          }
-          className="flex justify-center"
-        />
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() =>
+              setGoogleError("Google login failed. Please try again.")
+            }
+            className="flex w-full justify-center"
+          />
+        </div>
       </div>
       <div
         className="w-full  lg:block lg:w-1/2 hidden"
