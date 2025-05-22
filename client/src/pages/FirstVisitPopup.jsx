@@ -135,14 +135,15 @@ const FirstVisitPopup = () => {
           <p className="mb-4 text-sm text-gray-600">
             Link your account for faster, more secure logins.
           </p>
-          <div className="border"></div>
-          <GoogleLogin
-            onSuccess={(credentialResponse) =>
-              handleGoogleSignIn(credentialResponse)
-            }
-            onError={() => alert("Google login failed")}
-            className="flex w-full justify-center"
-          />
+          <div className="border flex justify-center">
+            <GoogleLogin
+              onSuccess={(credentialResponse) =>
+                handleGoogleSignIn(credentialResponse)
+              }
+              onError={() => alert("Google login failed")}
+              className="flex w-full justify-center"
+            />
+          </div>
         </div>
       )}
 
