@@ -207,7 +207,7 @@ const Home = () => {
                           {new Date(post.createdAt).toLocaleString()}
                         </span>
                       </div>
-                      {authState.username === post.username && (
+                      {(authState.username === post.username || authState.role === "admin") && (
                         <div className="dropdown dropdown-end absolute top-4 right-4 cursor-pointer">
                           <div tabIndex={0} className="m-1 flex">
                             <svg
