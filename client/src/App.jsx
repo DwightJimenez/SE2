@@ -196,7 +196,7 @@ function App() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "100%", opacity: 0 }}
                       transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="fixed border w-120 h-110 max-sm:w-90 bg-white right-4 bottom-20 max-sm:bottom-40 z-100 rounded-lg shadow-2xl "
+                      className="fixed border w-120 h-110 max-sm:w-90 bg-white right-4 bottom-20 max-sm:bottom-40 z-50 rounded-lg shadow-2xl "
                     >
                       <Chat />
                     </motion.div>

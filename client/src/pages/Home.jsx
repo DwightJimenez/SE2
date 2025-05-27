@@ -158,7 +158,10 @@ const Home = () => {
 
   return (
     <div className="flex h-[calc(100vh-4rem)]">
-      <div className="flex flex-col space-y-4 p-4 bg-white  border-gray-700 overflow-y-auto">
+      <div
+        id="scrollableDiv"
+        className="flex flex-col space-y-4 p-4 bg-white  border-gray-700 overflow-y-auto h-full h-full"
+      >
         <div className="relative">
           <PostButton />
         </div>
@@ -175,6 +178,7 @@ const Home = () => {
             next={fetchNextPage}
             hasMore={hasNextPage}
             loader={<LoadingSkeleton />}
+            scrollableTarget="scrollableDiv"
             endMessage={
               <p className="flex justify-center max-w-200 mt-15">
                 No more posts.
@@ -207,7 +211,8 @@ const Home = () => {
                           {new Date(post.createdAt).toLocaleString()}
                         </span>
                       </div>
-                      {(authState.username === post.username || authState.role === "admin") && (
+                      {(authState.username === post.username ||
+                        authState.role === "admin") && (
                         <div className="dropdown dropdown-end absolute top-4 right-4 cursor-pointer">
                           <div tabIndex={0} className="m-1 flex">
                             <svg
